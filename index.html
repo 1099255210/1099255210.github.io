@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto Sans Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="是垃圾桶 也是我的聚宝盆">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hg&#39;s Blog">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hg&#39;s Blog">
+<meta property="og:description" content="是垃圾桶 也是我的聚宝盆">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Han Wang">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Hg's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hg's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习 分享 进步</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/1099255210" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/24/how-to-build-a-hexo-blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Han Wang">
+      <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hg's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/24/how-to-build-a-hexo-blog/" class="post-title-link" itemprop="url">how to build a hexo blog?</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-24 09:27:08" itemprop="dateCreated datePublished" datetime="2022-05-24T09:27:08+08:00">2022-05-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-27 09:52:03" itemprop="dateModified" datetime="2022-05-27T09:52:03+08:00">2022-05-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="How-to-build-a-hexo-blog"><a href="#How-to-build-a-hexo-blog" class="headerlink" title="How to build a hexo blog?"></a>How to build a hexo blog?</h1><h2 id="Format-test"><a href="#Format-test" class="headerlink" title="Format test"></a>Format test</h2><h1 id="YAML-Support-for-GNU-Octave"><a href="#YAML-Support-for-GNU-Octave" class="headerlink" title="YAML Support for GNU-Octave"></a>YAML Support for GNU-Octave</h1><blockquote>
+<p>Name: Han Wang</p>
+<p>Email: jmfymxx@gmail.com</p>
+<p>Github: <a href="https://github.com/1099255210">https://github.com/1099255210</a></p>
+<p>Accout on <a href="https://octave.discourse.group/">Octave Discourse</a>: wh-1099255210</p>
+</blockquote>
+<h2 id="Project-Description"><a href="#Project-Description" class="headerlink" title="Project Description"></a>Project Description</h2><p>YAML, as well as JSON, is a very common data format. GNU Octave has built-in support of JSON, but still lacks of YAML support. The goal of the project is to implementing YAML support into Octave with <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a> (a fast C++ library). During the project, an Octave package containing <code>yamldecode()</code> &amp; <code>yamlencode()</code> functions with proper documentation and unit tests will be created, and the package will be considered to be merged into core Octave. </p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><p>In GSoC 2020, JSON format has been successfully implemented. The package <a href="https://github.com/gnu-octave/pkg-json">pkg-json</a> is a good example on how to encode and decode this kind of data format. The pkg-json used <a href="https://github.com/Tencent/rapidjson">rapidjson</a> (a JSON parser and generator for C++), while in my project I decide to use <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a>, which is a C++ library to parse and emit YAML.</p>
+<h2 id="My-Project-Plan"><a href="#My-Project-Plan" class="headerlink" title="My Project Plan"></a>My Project Plan</h2><p>First, I have to get familiar with YAML data format in case to know the proper conversion between YAML data types and Octave data types. I have made a table on this:</p>
+<p>From YAML to Octave data (will be used in <code>yamldecode()</code>)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>YAML Data Type</th>
+<th>Octave Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Number</td>
+<td>scalar double</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>scalar logical</td>
+</tr>
+<tr>
+<td>String</td>
+<td>character vector</td>
+</tr>
+<tr>
+<td>Dictionary</td>
+<td>scalar struct</td>
+</tr>
+<tr>
+<td>List, of Numbers</td>
+<td>double array</td>
+</tr>
+<tr>
+<td>List, of Booleans</td>
+<td>logical array</td>
+</tr>
+<tr>
+<td>List, of Strings</td>
+<td>string array</td>
+</tr>
+<tr>
+<td>List, of Dictionary - Same field names</td>
+<td>struct array</td>
+</tr>
+<tr>
+<td>List, of Dictionary - Different field names</td>
+<td>cell array of scalar struct</td>
+</tr>
+<tr>
+<td>null, in numeric lists</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td>null, in nonnumeric lists</td>
+<td>Empty double array</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>From Octave data to YAML (will be used in <code>yamlencode()</code>)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Octave Data Type</th>
+<th>YAML Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scalar logical</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>logical vector</td>
+<td>List, of Booleans, reshaped to row vector</td>
+</tr>
+<tr>
+<td>logical array</td>
+<td>List, of Booleans, nested</td>
+</tr>
+<tr>
+<td>scalar numeric</td>
+<td>Number</td>
+</tr>
+<tr>
+<td>numeric vector</td>
+<td>List, of Numbers, reshaped to row vector</td>
+</tr>
+<tr>
+<td>numeric array</td>
+<td>List, of Numbers, nested</td>
+</tr>
+<tr>
+<td>NaN, NA, Inf, -Inf</td>
+<td>null (1) / “NaN”, “NaN”, “Infinity”, “-Infinity” (2)</td>
+</tr>
+<tr>
+<td>character vector</td>
+<td>String</td>
+</tr>
+<tr>
+<td>character array</td>
+<td>List, of Strings</td>
+</tr>
+<tr>
+<td>scalar cell</td>
+<td>List</td>
+</tr>
+<tr>
+<td>cell vector</td>
+<td>List, reshaped to row vector</td>
+</tr>
+<tr>
+<td>cell array</td>
+<td>List, flattened to row vector</td>
+</tr>
+<tr>
+<td>scalar struct</td>
+<td>Dictionary</td>
+</tr>
+<tr>
+<td>struct vector</td>
+<td>List, of Dictionaries, reshaped to row vector</td>
+</tr>
+<tr>
+<td>struct array</td>
+<td>List, of Dictionaries, nested</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>(1) <code>ConvertInfAndNan = true</code></p>
+<p>(2) <code>ConvertInfAndNan = false</code></p>
+<p>With tables above, it will be much easier to convert data from one side to the other side. I just need to recursively decompose data, convert them respectively to what they should be, then put them together as an output.</p>
+<h2 id="My-Timeline"><a href="#My-Timeline" class="headerlink" title="My Timeline"></a>My Timeline</h2><p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220408144000601.png" alt="image-20220408144000601"></p>
+<h2 id="About-Me"><a href="#About-Me" class="headerlink" title="About Me"></a>About Me</h2><p>I’m currently a junior CS student. I’m good at C/C++ programming, and work with JSON/YAML very often, so I’m familiar with them. I’m used to putting my codes on github and using git to manage them, but I’ve never really been a contributor in open source projects. So this is my first time to be a part of the open source community, and I’m really excited about it.</p>
+<p>During the past few weeks, I have joined the <strong>GNU Octave Developer Community,</strong> and have been a member in <strong>Octave discourse</strong>. Under the guidance of the mentor, I have created the <a href="https://github.com/gnu-octave/pkg-yaml">pkg-yaml</a> repository on github, committed my code to it. The package can now be installed, and has the function to parse simple YAML data to Octave data. I also sent a pull request to <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a> to help fix their amalgamate script to generate header files, and it <a href="https://github.com/biojppm/rapidyaml/commit/a04663f55fa1d5a58c873017e24849309a29c226">successfully got merged into master branch</a>.</p>
+<p>I believe with my enthusiasm and patience, I will be up to this job.</p>
+<p>不知道公式能不能正常显示</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/24/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Han Wang">
+      <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hg's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/24/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-24 08:31:03" itemprop="dateCreated datePublished" datetime="2022-05-24T08:31:03+08:00">2022-05-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/08/GSoC%202022%20Proposal%20%E7%94%B3%E8%AF%B7%E4%B9%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Han Wang">
+      <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hg's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/08/GSoC%202022%20Proposal%20%E7%94%B3%E8%AF%B7%E4%B9%A6/" class="post-title-link" itemprop="url">GSoC 2022 Proposal 申请书</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-08 21:17:08" itemprop="dateCreated datePublished" datetime="2022-04-08T21:17:08+08:00">2022-04-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-27 10:12:49" itemprop="dateModified" datetime="2022-05-27T10:12:49+08:00">2022-05-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>今年终于鼓起勇气参加了 GSoC (Google Summer of Code)，加入的组织是去年我就看上的 GNU Octave。</p>
+<p>以下是我的 GSoC 2022 Proposal 申请书。</p>
+<p>（2022/5/21 注：这篇申请书最终没有通过，我的 GSoC 2022 计划最终只能搁浅。具体原因可能有很多吧，不过我还是挺希望自己之后能最终独立完成这个项目。）</p>
+<h1 id="YAML-Support-for-GNU-Octave"><a href="#YAML-Support-for-GNU-Octave" class="headerlink" title="YAML Support for GNU-Octave"></a>YAML Support for GNU-Octave</h1><blockquote>
+<p>Name: Han Wang</p>
+<p>Email: jmfymxx@gmail.com</p>
+<p>Github: <a href="https://github.com/1099255210">https://github.com/1099255210</a></p>
+<p>Accout on <a href="https://octave.discourse.group/">Octave Discourse</a>: wh-1099255210</p>
+</blockquote>
+<h2 id="Project-Description"><a href="#Project-Description" class="headerlink" title="Project Description"></a>Project Description</h2><p>YAML, as well as JSON, is a very common data format. GNU Octave has built-in support of JSON, but still lacks of YAML support. The goal of the project is to implementing YAML support into Octave with <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a> (a fast C++ library). During the project, an Octave package containing <code>yamldecode()</code> &amp; <code>yamlencode()</code> functions with proper documentation and unit tests will be created, and the package will be considered to be merged into core Octave. </p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><p>In GSoC 2020, JSON format has been successfully implemented. The package <a href="https://github.com/gnu-octave/pkg-json">pkg-json</a> is a good example on how to encode and decode this kind of data format. The pkg-json used <a href="https://github.com/Tencent/rapidjson">rapidjson</a> (a JSON parser and generator for C++), while in my project I decide to use <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a>, which is a C++ library to parse and emit YAML.</p>
+<h2 id="My-Project-Plan"><a href="#My-Project-Plan" class="headerlink" title="My Project Plan"></a>My Project Plan</h2><p>First, I have to get familiar with YAML data format in case to know the proper conversion between YAML data types and Octave data types. I have made a table on this:</p>
+<p>From YAML to Octave data (will be used in <code>yamldecode()</code>)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>YAML Data Type</th>
+<th>Octave Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Number</td>
+<td>scalar double</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>scalar logical</td>
+</tr>
+<tr>
+<td>String</td>
+<td>character vector</td>
+</tr>
+<tr>
+<td>Dictionary</td>
+<td>scalar struct</td>
+</tr>
+<tr>
+<td>List, of Numbers</td>
+<td>double array</td>
+</tr>
+<tr>
+<td>List, of Booleans</td>
+<td>logical array</td>
+</tr>
+<tr>
+<td>List, of Strings</td>
+<td>string array</td>
+</tr>
+<tr>
+<td>List, of Dictionary - Same field names</td>
+<td>struct array</td>
+</tr>
+<tr>
+<td>List, of Dictionary - Different field names</td>
+<td>cell array of scalar struct</td>
+</tr>
+<tr>
+<td>null, in numeric lists</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td>null, in nonnumeric lists</td>
+<td>Empty double array</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>From Octave data to YAML (will be used in <code>yamlencode()</code>)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Octave Data Type</th>
+<th>YAML Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scalar logical</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>logical vector</td>
+<td>List, of Booleans, reshaped to row vector</td>
+</tr>
+<tr>
+<td>logical array</td>
+<td>List, of Booleans, nested</td>
+</tr>
+<tr>
+<td>scalar numeric</td>
+<td>Number</td>
+</tr>
+<tr>
+<td>numeric vector</td>
+<td>List, of Numbers, reshaped to row vector</td>
+</tr>
+<tr>
+<td>numeric array</td>
+<td>List, of Numbers, nested</td>
+</tr>
+<tr>
+<td>NaN, NA, Inf, -Inf</td>
+<td>null (1) \  “NaN”, “NaN”, “Infinity”, “-Infinity” (2)</td>
+</tr>
+<tr>
+<td>character vector</td>
+<td>String</td>
+</tr>
+<tr>
+<td>character array</td>
+<td>List, of Strings</td>
+</tr>
+<tr>
+<td>scalar cell</td>
+<td>List</td>
+</tr>
+<tr>
+<td>cell vector</td>
+<td>List, reshaped to row vector</td>
+</tr>
+<tr>
+<td>cell array</td>
+<td>List, flattened to row vector</td>
+</tr>
+<tr>
+<td>scalar struct</td>
+<td>Dictionary</td>
+</tr>
+<tr>
+<td>struct vector</td>
+<td>List, of Dictionaries, reshaped to row vector</td>
+</tr>
+<tr>
+<td>struct array</td>
+<td>List, of Dictionaries, nested</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>(1) <code>ConvertInfAndNan = true</code></p>
+<p>(2) <code>ConvertInfAndNan = false</code></p>
+<p>With tables above, it will be much easier to convert data from one side to the other side. I just need to recursively decompose data, convert them respectively to what they should be, then put them together as an output.</p>
+<h2 id="My-Timeline"><a href="#My-Timeline" class="headerlink" title="My Timeline"></a>My Timeline</h2><p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220408144000601.png" alt="image-20220408144000601"></p>
+<h2 id="About-Me"><a href="#About-Me" class="headerlink" title="About Me"></a>About Me</h2><p>I’m currently a junior CS student. I’m good at C/C++ programming, and work with JSON/YAML very often, so I’m familiar with them. I’m used to putting my codes on github and using git to manage them, but I’ve never really been a contributor in open source projects. So this is my first time to be a part of the open source community, and I’m really excited about it.</p>
+<p>During the past few weeks, I have joined the <strong>GNU Octave Developer Community,</strong> and have been a member in <strong>Octave discourse</strong>. Under the guidance of the mentor, I have created the <a href="https://github.com/gnu-octave/pkg-yaml">pkg-yaml</a> repository on github, committed my code to it. The package can now be installed, and has the function to parse simple YAML data to Octave data. I also sent a pull request to <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a> to help fix their amalgamate script to generate header files, and it <a href="https://github.com/biojppm/rapidyaml/commit/a04663f55fa1d5a58c873017e24849309a29c226">successfully got merged into master branch</a>.</p>
+<p>I believe with my enthusiasm and patience, I will be up to this job.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/19/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E5%AD%A6%20project/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Han Wang">
+      <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hg's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/19/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E5%AD%A6%20project/" class="post-title-link" itemprop="url">计算社会学课程 Project</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-19 15:25:08" itemprop="dateCreated datePublished" datetime="2022-01-19T15:25:08+08:00">2022-01-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-27 11:27:39" itemprop="dateModified" datetime="2022-05-27T11:27:39+08:00">2022-05-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>课堂作业：对班里同学之间的社交关系进行分析</p>
+<h2 id="使用的软件"><a href="#使用的软件" class="headerlink" title="使用的软件"></a>使用的软件</h2><blockquote>
+<p>Gephi 是一款网络分析领域的数据可视化软件</p>
+<p>官方网站 - <a href="https://gephi.org/">Gephi</a></p>
+</blockquote>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119091559013.png" alt="image-20220119091559013"></p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p><img src="./img/flow.drawio.svg" alt="img"></p>
+<h2 id="数据处理与导入"><a href="#数据处理与导入" class="headerlink" title="数据处理与导入"></a>数据处理与导入</h2><p><em>仅单纯导入了班级内各同学之间认识的关系，并没有将个人其他信息加入</em></p>
+<p>简单拉出关系表转换为<code>.csv</code></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119101906964.png" alt="image-20220119101906964"></p>
+<p>使用 <code>python</code> 建立<strong>节点表格</strong>与<strong>边表格</strong>，方便导入 <code>Gephi</code> 软件。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119102109357.png" alt="image-20220119102109357"></p>
+<h2 id="报告"><a href="#报告" class="headerlink" title="报告"></a>报告</h2><h3 id="导入时初始网络图"><a href="#导入时初始网络图" class="headerlink" title="导入时初始网络图"></a>导入时初始网络图</h3><p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/Snipaste_2022-01-19_10-07-44.png" alt="Snipaste_2022-01-19_10-07-44"></p>
+<p><em>使用的布局方式：Force Atlas，斥力强度 200.0</em></p>
+<h3 id="依据节点的度对节点上色与改变大小"><a href="#依据节点的度对节点上色与改变大小" class="headerlink" title="依据节点的度对节点上色与改变大小"></a>依据节点的度对节点上色与改变大小</h3><p><img src="./degree.svg" alt=""></p>
+<p><em>使用的布局方式：Force Atlas，斥力强度 2000.0，部分距离较远节点经过手动调整位置。</em></p>
+<h3 id="聚合系数-Cluster-coefficient"><a href="#聚合系数-Cluster-coefficient" class="headerlink" title="聚合系数 Cluster coefficient"></a>聚合系数 Cluster coefficient</h3><p>聚合系数是网络的局部特征，反映了相邻两个人之间朋友圈子的重合度，即该节点的朋友之间也是朋友的程度。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119094510712.png" alt="image-20220119094510712"></p>
+<p>使用<code>Gephi</code>计算该网络的<strong>平均聚合系数</strong>为 0.587</p>
+<h3 id="平均度数-Avg-degree"><a href="#平均度数-Avg-degree" class="headerlink" title="平均度数 Avg degree"></a>平均度数 Avg degree</h3><p>使用<code>Gephi</code>计算该网络的<strong>平均度数</strong>为 4.119</p>
+<p>度数分布图：</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/degree-distribution.png" alt="degree-distribution"></p>
+<h3 id="平均路径长度-特征路径长度-Avg-path-length"><a href="#平均路径长度-特征路径长度-Avg-path-length" class="headerlink" title="平均路径长度(特征路径长度) Avg path length"></a>平均路径长度(特征路径长度) Avg path length</h3><p>使用<code>Gephi</code>计算该网络的平均路径长度为 2.379</p>
+<p>网络直径：5</p>
+<p>体现<strong>小世界现象</strong></p>
+<h3 id="模块化-Modularity"><a href="#模块化-Modularity" class="headerlink" title="模块化 Modularity"></a>模块化 Modularity</h3><p>使用<code>Gephi</code>计算该网络的<strong>模块化程度</strong>为 0.414</p>
+<p>模块化程度：</p>
+<p><img src="./img/m.jpg" alt=""></p>
+<p>利用模块化的计算，可以进行社区发现 ( Community Detection )</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119103903270.png" alt="image-20220119103903270"></p>
+<p>社区发现可视化结果：</p>
+<p><img src="./module.svg" alt=""></p>
+<p>与其它同学发现的对比：</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119105008234.png" alt="image-20220119105008234"></p>
+<h2 id="附"><a href="#附" class="headerlink" title="附"></a>附</h2><p><code>python</code> 源代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line">header_namelist = [<span class="string">&#x27;Id&#x27;</span>, <span class="string">&#x27;Label&#x27;</span>]</span><br><span class="line">header_relation = [<span class="string">&#x27;Source&#x27;</span>, <span class="string">&#x27;Target&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># generate list</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;namelist.csv&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> nf:</span><br><span class="line">    nfer = csv.writer(nf)</span><br><span class="line">    nfer.writerow(header_namelist)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;res.csv&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f_csv = csv.reader(f)</span><br><span class="line">        <span class="built_in">next</span>(f_csv, <span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> f_csv:</span><br><span class="line">            nfer.writerow([row[<span class="number">0</span>], row[<span class="number">0</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># generate relation</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;relation.csv&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> nf:</span><br><span class="line">    nfer = csv.writer(nf)</span><br><span class="line">    nfer.writerow(header_relation)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;res.csv&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f_csv = csv.reader(f)</span><br><span class="line">        <span class="built_in">next</span>(f_csv, <span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> f_csv:</span><br><span class="line">            source = row[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">for</span> target <span class="keyword">in</span> row[<span class="number">1</span> : -<span class="number">1</span>]:</span><br><span class="line">                <span class="keyword">if</span> target:</span><br><span class="line">                    nfer.writerow([source, target])</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/12/%E9%94%AE%E7%9B%98%E7%AC%94%E8%AE%B0%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Han Wang">
+      <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hg's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/12/%E9%94%AE%E7%9B%98%E7%AC%94%E8%AE%B0%E4%B8%80/" class="post-title-link" itemprop="url">键盘笔记一</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-12 07:27:08" itemprop="dateCreated datePublished" datetime="2021-05-12T07:27:08+08:00">2021-05-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-27 10:03:32" itemprop="dateModified" datetime="2022-05-27T10:03:32+08:00">2022-05-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="键盘组装笔记-202105"><a href="#键盘组装笔记-202105" class="headerlink" title="键盘组装笔记 202105"></a>键盘组装笔记 202105</h1><p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1030789.JPG" alt="P1030789"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这把键盘是我入坑客制化键盘的第二把键盘。第一把键盘我并未想要做过多总结，主要原因在于当时的我对于客制化的了解并不多，虽然上手就采用了比较硬核的焊接方式，中间也有一些有意思的组装过程，但终究没有太多客制化的意味在里面，仅仅算是尝了个鲜；而这回则是一次从内到外的客制化流程体验，让我更多地感受到了客制化的魅力所在，也算是第一次知道键盘的优秀手感能有多让人上瘾。这次的键盘我从 2021 四月初开始筹划，到五月份彻底完成，前前后后是经过很多的调整与修改的，下面我就慢慢讲述整个键盘组装的过程。</p>
+<h2 id="时间线"><a href="#时间线" class="headerlink" title="时间线"></a>时间线</h2><h3 id="第一批购物"><a href="#第一批购物" class="headerlink" title="第一批购物"></a>第一批购物</h3><p>最初购买了 aws84键三模白光版本 的套件，包含 外壳、定位板、PCB、卫星轴、热插拔轴座，同时购买了多款我比较好奇的 TTC轴体，回来装在套件上体验之后我决定使用月白轴作为主要键位使用的轴体、赤瞳ACE轴作为其他键位使用的轴体。接着我购买了 ToxicLab 的 84布局消音棉，Kelowna 的 润轴笔、22058润滑脂、拔轴器、铁氟龙胶带，KBDfans 的佳达隆白色钢板卫星轴。</p>
+<p>我做的第一件事是换卫星轴，原套件中是包含卫星轴的，但是那款卫星轴是白色略透，而定位板是白色铁板，颜色有些不符合。换成 佳达隆变色钢板卫星轴，颜色匹配多了。卫星轴需要剪脚，并拆开，使用 22058润滑脂 进行重新润滑，润滑脂加的可能有一些多，不过最终的效果我还是比较满意的。佳达隆的卫星轴卡在这个定位板上比较紧，卡上去就不是很好拆下来了。卫星轴在PCB上对应的位置我贴上了铁氟龙胶带，效果更佳稳健，噪声更小。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040135.JPG" alt="P1040135"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040133.JPG" alt="P1040133"></p>
+<p>接着是消音棉的处理。这一步其实出现了一点问题：我购买的84布局消音棉（毛毡）实际上和我的套件在螺丝孔位上不是很匹配，炸虾粒 店里应该有为我这个套件定制的消音棉。但是既然都已经买了，就不想再退回去了，反正差不多，我直接对着PCB与定位板之间的孔位在毛毡上开孔，剪开了一些不需要的部分，最后比较顺利地把消音棉夹在了两者之间。唯一的问题是空格键下方的消音棉直接被我抛弃了，也许会产生一些额外的空腔音，不过总体是填满了。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/IMG_20210411_180650.jpg" alt="IMG_20210411_180650"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/IMG_20210411_181243.jpg" alt="IMG_20210411_181243"></p>
+<p>下一步就是装上轴体，没什么好说的。字母区与数字区全部采用 TTC月白轴 ，其余键位均使用线性轴，比如 TTC赤瞳轴，金红轴，凯华奶油轴。线材购买了 酷品世家 的 灰色加粗螺旋线Type-C接口，键帽选的是 KBDfans 的 pbt原厂深灰+浅灰蓝日文键帽，这套键帽算是我买过最贵的键帽了，但是实际效果很让我满意。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040139.JPG" alt="P1040139"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/MVIMG_20210414_182904.jpg" alt="MVIMG_20210414_182904"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/IMG_20210414_125210.jpg" alt="IMG_20210414_125210"></p>
+<p>至此，整部键盘第一次完整地出现在我眼前了。键盘的整体上手的时候还是很让我惊艳的，月白轴的手感在当时的我看来十分新鲜，回弹的手感非常带感。键帽的选择不仅带来手感上的舒适，也很养眼。键盘外框可以简易拆卸，制造悬浮键的视觉效果。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1030796.JPG" alt="P1030796"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/IMG_20210414_190403.jpg" alt="IMG_20210414_190403"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040124.JPG" alt="P1040124"></p>
+<h3 id="第二批购物"><a href="#第二批购物" class="headerlink" title="第二批购物"></a>第二批购物</h3><p>没过几天，我又在b站上看到了几个润轴的视频，于是重新打开淘宝，又进行了一轮的购物。这一次为了键盘的“完整性”，购买了 KBDfans 的 KBD75键盘包，然后是 FBB视物所 的 头文字D 贴纸，贴在键盘外框上，为键盘注入了一波灵魂。最后是让我这次客制化感到极具体验的润滑套装：105与205调配润滑脂、轴体开盖器 与 润轴板。</p>
+<p>键盘包质量很不错，除了出厂有些许异味，内部绒毛材质很不错，做工精良，基本完全包裹键盘外壳，好评。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040141.JPG" alt="P1040141"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040143.JPG" alt="P1040143"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040144.JPG" alt="P1040144"></p>
+<p>贴纸比想象中质量要好（毕竟也是要二十的），贴纸并不是一整块印刷，而是实体切割的，每个笔画都有凸起的质感，贴完立马有内味了是不是？</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040147.JPG" alt="P1040147"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040146.JPG" alt="P1040146"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040118.JPG" alt="P1040118"></p>
+<p>关于润滑套装，润轴板我直接一步到位上了个顶配：毕竟顶配也就三十几的亚克力，槽位多多益善嘛。润滑脂现在总共是有三种：从左至右分别是 22058、105 &amp; 205 MIX和105，分别对应卫星轴、轴体与弹簧的润滑（其中105因为我懒的原因还没有使用，轴体和弹簧我都是用中间的 “万金油” 润滑的）。开轴器是可乐蛙的什么CNC工艺制作的，可开不同类型的轴体，很有分量和设计感，两部分有磁吸设计，合体后能作为试轴器一枚，个人很喜欢。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040127.JPG" alt="P1040127"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040126.JPG" alt="P1040126"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040128.JPG" alt="P1040128"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040131.JPG" alt="P1040131"></p>
+<p>这次的快递到的时候，快递盒里有一些泡泡纸，我想着这键盘 PCB 与 底壳中间还有一段空间，不如把泡泡纸塞在里面。塞完后装回去，仿佛有了那么一丢丢的声音提升（</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040136.JPG" alt="P1040136"></p>
+<p>接下来就是：开始很新鲜，后来有些枯燥的润轴过程了。也不知道自己怎么有耐心的，就能坐着一个一个拆开，然后一片一片刷上润滑脂。彼时天气已经开始转热，寝室开起了空调，我听着音乐，悠然自得地润着轴，心情又变得很愉快起来。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20210512055059071.png" alt="image-20210512055059071"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040105.JPG" alt="P1040105"></p>
+<p>经历了漫长的润滑过程，所有轴体被我装回了键盘，扣回键帽，上手体验一番。到这时候我终于才体会到客制化键盘带来的结果上的愉悦：润滑之后的键盘不单单是敲击手感上有了质的飞跃，键盘音也有了十分可观的改善，可以称得上是悦耳了。具体的打字音如何，后面会拍一个视频，自行体会吧。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="满意之处"><a href="#满意之处" class="headerlink" title="满意之处"></a>满意之处</h3><p>执行力还是不错的，当时想要完成的内容基本都完成了，没有因为偷懒省去某个步骤，最终成品的完成度令我十分满意。</p>
+<p>热插拔轴座使得我不断体验、调整和更换轴体的过程变得轻松惬意。</p>
+<p>所有购入的物品在我看来基本都算是物有所值，没有让我比较失望的购买内容。</p>
+<h3 id="不足之处"><a href="#不足之处" class="headerlink" title="不足之处"></a>不足之处</h3><p>这个套件已经是能看的程度了，虽然有些地方还是想吐槽，比如这个套件的底部，廉价感还是很足：</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040145.JPG" alt="P1040145"></p>
+<p>这个套件也没有脚撑（当然很多高端套件也没有），只有两个磁吸增高垫 ，不过200块钱，要什么自行车嘛!</p>
+<p>然后就是本轻微强迫症患者比较头疼的部分：这个键帽也有一些问题，部分键的高度放在键盘上很奇怪，于是我只能使用其它键代替，于是就有了右侧这个神秘的区域：</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040125.JPG" alt="P1040125"></p>
+<p>真的不是我故意要这么做的，而是原装的键帽放在上面高低不平实在过于违和。这里下面的 <code>PgUp</code> 与 <code>PgDn</code> 实际上是 <code>Home</code> 和 <code>End</code> 键，而右上角的 <code>ScrollLock</code> 键实际上应该是 <code>Delete</code> 键。日常使用当然没有什么问题，这个键盘的布局算是比较常规的，因此没有给我带来太大的困扰，于是就这么凑合了。</p>
+<h2 id="购物清单（仅包含实装在此键盘上的项目）"><a href="#购物清单（仅包含实装在此键盘上的项目）" class="headerlink" title="购物清单（仅包含实装在此键盘上的项目）"></a>购物清单（仅包含实装在此键盘上的项目）</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>物品</th>
+<th>店家</th>
+<th>数量</th>
+<th>价格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aws84键三模白光套件</td>
+<td>爱外设旗舰店</td>
+<td>1</td>
+<td>209</td>
+</tr>
+<tr>
+<td>84布局消音棉</td>
+<td>致命毒物ToxicLab</td>
+<td>1</td>
+<td>16.9</td>
+</tr>
+<tr>
+<td>佳达隆白色钢板卫星轴</td>
+<td>怡科外设KBDfans</td>
+<td>1</td>
+<td>48</td>
+</tr>
+<tr>
+<td>pbt原厂日文键帽</td>
+<td>怡科外设KBDfans</td>
+<td>1</td>
+<td>202.43</td>
+</tr>
+<tr>
+<td>KBD75键盘包</td>
+<td>怡科外设KBDfans</td>
+<td>1</td>
+<td>104</td>
+</tr>
+<tr>
+<td>TTC月白轴</td>
+<td>兴伟达电子</td>
+<td>60</td>
+<td>177.6</td>
+</tr>
+<tr>
+<td>TTC赤瞳轴</td>
+<td>兴伟达电子</td>
+<td>10</td>
+<td>36</td>
+</tr>
+<tr>
+<td>凯华奶油轴</td>
+<td>兴伟达电子</td>
+<td>4</td>
+<td>18.2</td>
+</tr>
+<tr>
+<td>TTC快银轴</td>
+<td>ttc旗舰店</td>
+<td>10</td>
+<td>45</td>
+</tr>
+<tr>
+<td>电话线螺旋机械键盘数据线</td>
+<td>酷品世家</td>
+<td>1</td>
+<td>49</td>
+</tr>
+<tr>
+<td>头文字D 贴纸</td>
+<td>FBB视物所</td>
+<td>1</td>
+<td>20</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>总计：</td>
+<td>926.13</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>真不愧是 <strong>“氪”制化键盘</strong> 啊!</p>
+<h2 id="附"><a href="#附" class="headerlink" title="附"></a>附</h2><p><em>本文章中图片均由本人使用 小米9 与 松下GX85(由czw赞助) 拍摄，没有经过任何修图。</em></p>
+<p><em>购物清单中的价格仅供参考，实际购买可能会有价格浮动</em></p>
+<p><em>Blog : <a href="https://1099255210.github.io/">https://1099255210.github.io/</a></em></p>
+<p><em>Bilibili : <a href="https://space.bilibili.com/7405917">不是吴昊的wh</a></em></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/30/ubuntu%2020.04%20%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Han Wang">
+      <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hg's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/30/ubuntu%2020.04%20%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">Ubuntu 20.04 与 win10 双系统安装笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-30 12:39:08" itemprop="dateCreated datePublished" datetime="2020-09-30T12:39:08+08:00">2020-09-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-27 11:09:08" itemprop="dateModified" datetime="2022-05-27T11:09:08+08:00">2022-05-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Ubuntu-20-04-与-win10-双系统安装笔记"><a href="#Ubuntu-20-04-与-win10-双系统安装笔记" class="headerlink" title="Ubuntu 20.04 与 win10 双系统安装笔记"></a>Ubuntu 20.04 与 win10 双系统安装笔记</h1><h2 id="安装前的认知准备"><a href="#安装前的认知准备" class="headerlink" title="安装前的认知准备"></a>安装前的认知准备</h2><p>在安装之前先了解一下基本的安装知识以及需求，以下为我认知中所需要作的准备：</p>
+<ul>
+<li>一个 8G 以上的u盘(作为启动盘)</li>
+<li>Ubuntu 20.04 系统镜像(从<a href="https://ubuntu.com/download/desktop">Ubuntu官网</a>下载)</li>
+<li>50G 及以上的磁盘空间</li>
+</ul>
+<p>本人电脑型号是 ThinkPad T460s，原操作系统为 win10 2004 x64，BIOS 模式为 UEFI 引导，电脑仅有一块 256G 固态硬盘，无独立显卡，因此应该不会出现N卡驱动缺失的情况。</p>
+<p>以上了解之后开始操作。</p>
+<h2 id="准备与安装全过程"><a href="#准备与安装全过程" class="headerlink" title="准备与安装全过程"></a>准备与安装全过程</h2><p>首先，为系统分出足够空间。右键 <strong>此电脑</strong>，找到 <strong>管理</strong>&gt;<strong>存储</strong>&gt;<strong>磁盘管理</strong> ，右键磁盘，点击压缩卷。在这里我分出了 100G 的空间，应该足够轻度的使用。</p>
+<p>然后开始制作启动盘。下载制作启动盘的软件 <a href="http://rufus.ie/">rufus</a> 并打开，插入u盘，在软件中选择正确的u盘与 ubuntu 镜像， 其余项目并不需要修改，直接开始，提示信息可忽略。耐心等待10-20分钟即可制作完成。</p>
+<p>接下来是 BIOS 的设置。重启电脑前，找到电脑电源设置，关闭快速启动；然后重启电脑，找到本电脑型号进入 BIOS 的快捷键，我的电脑是 DELETE；进入 BIOS 之后，将 Secure Boot 设置为 Disabled，再确认一下 Legacy Boot 为 UEFI，然后插入u盘，将u盘的BOOT优先级提到最高，保存设置并启动。这时候电脑启动时就会进入选择的界面，我们直接选择 ubuntu，这样就进入系统安装的界面了。</p>
+<p>系统安装过程中，没有什么要特别注意的。更新和其他软件那里我选择的是正常安装；安装类型里，网上有教程称需要选择其他选项，在这里我选择了与 Windows Boot Manager 共存，目前并未出现太大问题。等待一阵子，系统应当就准备就绪了。</p>
+<h2 id="对于系统的配置"><a href="#对于系统的配置" class="headerlink" title="对于系统的配置"></a>对于系统的配置</h2><h3 id="替换国内源"><a href="#替换国内源" class="headerlink" title="替换国内源"></a>替换国内源</h3><p>在 <strong>Software &amp; Updates</strong> 中选择国内的镜像，我选择的是阿里云(mirrors.aliyun.com)的镜像</p>
+<p>选择之后 Ctrl+Alt+T 打开终端，输入以下指令更新：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br></pre></td></tr></table></figure>
+<h3 id="中文输入法"><a href="#中文输入法" class="headerlink" title="中文输入法"></a>中文输入法</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ibus-libpinyin</span><br><span class="line">sudo apt install ibus-clutter</span><br></pre></td></tr></table></figure>
+<p>然后重启，找到输入法选项，在 Input Sources 中新增 Chinese(Intelligent Pinyin) 就可以了。</p>
+<h3 id="双系统时间不统一"><a href="#双系统时间不统一" class="headerlink" title="双系统时间不统一"></a>双系统时间不统一</h3><p>这个是系统看待硬件时间方式不一造成的，终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl set-local-rtc 1 --adjust-system-clock</span><br></pre></td></tr></table></figure>
+<p>禁用 Ubuntu 中的 UTC 即可。</p>
+<h3 id="取消-sudo-密码（有风险）"><a href="#取消-sudo-密码（有风险）" class="headerlink" title="取消 sudo 密码（有风险）"></a>取消 sudo 密码（有风险）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/sudoers</span><br><span class="line">sudo visudo</span><br></pre></td></tr></table></figure>
+<p>找到 <code>%sudo ALL=(ALL:ALL) ALL</code> 修改为 <code>%sudo ALL=(ALL:ALL) NOPASSWD:ALL</code> 然后 Ctrl+s, Ctrl+x, 重启即可。</p>
+<h3 id="安装与配置-CMake"><a href="#安装与配置-CMake" class="headerlink" title="安装与配置 CMake"></a>安装与配置 CMake</h3><p>在 CMake 官网下载源码，本次安装使用的版本是 3.18.3 的版本。下载完成后打开终端：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf cmake-3.18.3.tar.gz</span><br><span class="line">cd cmake-3.18.3 </span><br><span class="line">./bootstrap</span><br></pre></td></tr></table></figure>
+<p>出现报错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cannot find a C++ compiler that supports both C++11 and the specified C++ flags.</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>通过指令更新 g++：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install g++</span><br></pre></td></tr></table></figure>
+<p>继续报错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cannot find appropriate Makefile processor on this system.</span><br><span class="line">Please specify one using environment variable MAKE.</span><br></pre></td></tr></table></figure>
+<p> 输入指令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br></pre></td></tr></table></figure>
+<p><code>./bootstrap</code> 运行到最后再次出错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Could not find OpenSSL. Install an OpenSSL development package or configure CMake with -DCMAIKE_USE_OPENSSL=OFF to build without OpenSSL.</span><br></pre></td></tr></table></figure>
+<p>安装 openssl 的编译依赖：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libssl-dev</span><br></pre></td></tr></table></figure>
+<p>成功运行，输入<code>make</code> ，耐心等待，这一步时间较长。完成后，输入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>完成，查看版本 <code>cmake --version</code> 看到 <code>cmake version 3.18.3</code> 安装成功</p>
+<h3 id="配置-boost"><a href="#配置-boost" class="headerlink" title="配置 boost"></a>配置 boost</h3><p>这里选用的版本是 boost 1.69.0 (其实我也不知道该装哪一个版本)</p>
+<p>首先官网下载，解包，进入文件夹：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap.sh</span><br></pre></td></tr></table></figure>
+<p>没有问题，下一步</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./b2</span><br></pre></td></tr></table></figure>
+<p>这一步也比较长，完成之后：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./b2 install</span><br></pre></td></tr></table></figure>
+<p>配置完成。</p>
+<h3 id="配置-OpenCV"><a href="#配置-OpenCV" class="headerlink" title="配置 OpenCV"></a>配置 OpenCV</h3><p>到现在再配置 OpenCV 是考虑到 OpenCV 需要使用 CMake 以及个人感觉配置可能需要一些库的安装。</p>
+<p>同样首先到官网下载源码，<code>unzip</code> 解压，进入目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
+<p>如果没有问题，下一步：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>配置完成</p>
+<h3 id="配置-git"><a href="#配置-git" class="headerlink" title="配置 git"></a>配置 git</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br><span class="line">git --version</span><br></pre></td></tr></table></figure>
+<p>控制台输出 <code>git version 2.25.1</code> 安装完成</p>
+<h2 id="使用过程中的其他经验在之后进行补充"><a href="#使用过程中的其他经验在之后进行补充" class="headerlink" title="使用过程中的其他经验在之后进行补充"></a>使用过程中的其他经验在之后进行补充</h2><p>总体来说，由于很早之前有安装的经验，这次的安装并没有碰到太大的问题，还算顺利。</p>
+<p>CSDN链接：<a href="https://blog.csdn.net/wwh010802/article/details/108857863">https://blog.csdn.net/wwh010802/article/details/108857863</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/28/CSGO%20%E4%B8%AD%E7%9A%84%20cfg%20%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Han Wang">
+      <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hg's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/28/CSGO%20%E4%B8%AD%E7%9A%84%20cfg%20%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">CS:GO中的cfg系统</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-28 17:02:08" itemprop="dateCreated datePublished" datetime="2020-09-28T17:02:08+08:00">2020-09-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-27 11:19:38" itemprop="dateModified" datetime="2022-05-27T11:19:38+08:00">2022-05-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="导语"><a href="#导语" class="headerlink" title="导语"></a>导语</h2><p>本人写文章的时候，<strong>CS:GO</strong>游戏时长已经来到了1800小时。这个游戏不仅仅是竞技的快感让我无法自拔，游戏系统与生俱来的“程序员”风格也是让我无法割舍的（毕竟是v社的游戏）。在遇到CS:GO前，我无法想象一个游戏的<strong>控制台系统</strong>能够强大到让我痴迷。离开了控制台，也就离开了这个游戏的特色。那么谈到控制台，就不得不谈谈<strong>cfg</strong>。本文希望能用较为简单易懂的语言来谈谈CS:GO中的cfg系统，希望能给大家一些帮助。</p>
+<h2 id="知识补充"><a href="#知识补充" class="headerlink" title="知识补充"></a>知识补充</h2><h3 id="简单设置"><a href="#简单设置" class="headerlink" title="简单设置"></a>简单设置</h3><p><strong>cfg</strong>其实就是设置(config)的缩写。.cfg也是文件的后缀名，我们在游戏根目录里能找到许多这样的文件。这些文件的作用就是储存我们在游戏里的设置参数。打个比方，我的游戏音量是1.0，那么我就能在.cfg的文件里找到这么一行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volume &quot;1.0&quot;</span><br></pre></td></tr></table></figure>
+<p>前面的volume指的是音量，后面的”1.0”是数值，代表音量的值为1.0。这个例子反映了大部分设置的基本格式，基本都是一个<strong>设置项目名</strong>，后面跟着一个<strong>具体的数值</strong>。一对一的关系还是很易懂的。由此，我们了解了调整设置的基本语法为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[设置项目名] &quot;[具体数值]&quot;</span><br></pre></td></tr></table></figure>
+<p>双引号在这里不是必须的，但有些时候需要，为了规范我们尽量加上(游戏中控制台不需要)。</p>
+<p>我们可以将上面这一行代码称为一个指令。</p>
+<p>我们再举几个真实文件中的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">cl_crosshair_drawoutline 					        &quot;1&quot;</span><br><span class="line">cl_crosshair_dynamic_maxdist_splitratio 	&quot;0.35&quot;</span><br><span class="line">cl_crosshair_dynamic_splitalpha_innermod 	&quot;1&quot;</span><br><span class="line">cl_crosshair_dynamic_splitalpha_outermod 	&quot;0.5&quot;</span><br><span class="line">cl_crosshair_dynamic_splitdist 				    &quot;7&quot;</span><br><span class="line">cl_crosshair_friendly_warning 				    &quot;1&quot;</span><br><span class="line">cl_crosshair_outlinethickness 				    &quot;1.067771&quot;</span><br><span class="line">cl_crosshair_sniper_show_normal_inaccuracy&quot;0&quot;</span><br><span class="line">cl_crosshair_sniper_width 					      &quot;1&quot;</span><br><span class="line">cl_crosshair_t 								            &quot;0&quot;</span><br><span class="line">cl_crosshairalpha 							          &quot;255.000000&quot;</span><br><span class="line">cl_crosshaircolor 							          &quot;5&quot;</span><br><span class="line">cl_crosshaircolor_b	 						          &quot;0.000000&quot;</span><br><span class="line">cl_crosshaircolor_g 						          &quot;255.000000&quot;</span><br><span class="line">cl_crosshaircolor_r 						          &quot;255.000000&quot;</span><br><span class="line">cl_crosshairdot 							            &quot;0.000000&quot;</span><br><span class="line">cl_crosshairgap 							            &quot;0.076290&quot;</span><br><span class="line">cl_crosshairgap_useweaponvalue 				    &quot;0&quot;</span><br><span class="line">cl_crosshairsize 							            &quot;2.917408&quot;</span><br><span class="line">cl_crosshairstyle 							          &quot;4.000000&quot;</span><br><span class="line">cl_crosshairthickness 						        &quot;1.692905&quot;</span><br><span class="line">cl_crosshairusealpha 						          &quot;1&quot;</span><br></pre></td></tr></table></figure>
+<p>这是控制<strong>游戏准星</strong>相关的代码，由很多行指令组成。crosshair意思是准星，因此我们知道带有crosshair的内容都是和准星有关的，这段代码也是本人在游戏中的所使用的准星设置。我带着大家解读几行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cl_crosshair_drawoutline 					&quot;1&quot;</span><br></pre></td></tr></table></figure>
+<p>字面意思来看，crosshair_drawoutline显然指的是准星的轮廓，这里后面的数值则应该为1或0，表示有或无轮廓。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cl_crosshairalpha 							&quot;255.000000&quot;</span><br></pre></td></tr></table></figure>
+<p>字面意思来看，crosshairalpha显然指的是准星的透明度，这里后面的数值我设置的是255，表示透明度为100%。</p>
+<p>实际上我们可以发现，cfg中的简单设置内容往往都很易懂，用最少的词表达得很清楚，后面的数值也自然容易理解。这一类的设置我们不再多说，后面会详细介绍几个常用的设置内容。</p>
+<h3 id="cfg中指令的类型"><a href="#cfg中指令的类型" class="headerlink" title="cfg中指令的类型"></a>cfg中指令的类型</h3><p>上面提到的<strong>[设置项目名]+[一个具体的数值]</strong>只是指令中的一种，cfg中可不止这一种指令。</p>
+<p>下面我们介绍的这些指令是<strong>只有名称，没有值</strong>的。这种指令往往是一个动作，比如：清除血迹、重新投掷上一个投掷物、退出服务器等等：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">r_cleaardecals;								//清除血迹</span><br><span class="line">sv_rethrow_last_grenade;					//重新投掷上一个投掷物</span><br><span class="line">disconnect;									//断开连接</span><br><span class="line">quit;										//退出游戏(光速白给)</span><br><span class="line">retry;										//重新连接</span><br></pre></td></tr></table></figure>
+<p>这些指令和上面介绍的设置指令可以说都是具体的指令，下面我们介绍的一些指令类型，则是属于非具体的指令，我们可以将其理解为一些函数，那么我们开始吧。</p>
+<h3 id="bind的作用"><a href="#bind的作用" class="headerlink" title="bind的作用"></a>bind的作用</h3><p>cfg中不只是有简单的设置，按键的绑定也是cfg中不可或缺的。按键绑定的基本代码是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;[按键]&quot; &quot;[指令]&quot;</span><br></pre></td></tr></table></figure>
+<p>我列举一些游戏中基础的绑定代码展示一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;w&quot; &quot;+forward&quot;</span><br><span class="line">bind &quot;a&quot; &quot;+moveleft&quot;</span><br><span class="line">bind &quot;s&quot; &quot;+back&quot;</span><br><span class="line">bind &quot;d&quot; &quot;+moveright&quot;</span><br><span class="line">bind &quot;b&quot; &quot;buymenu&quot;</span><br><span class="line">bind &quot;m&quot; &quot;teammenu&quot;</span><br><span class="line">bind &quot;q&quot; &quot;lastinv&quot;</span><br><span class="line">bind &quot;r&quot; &quot;+reload&quot;</span><br><span class="line">bind &quot;SPACE&quot; &quot;+jump&quot;</span><br><span class="line">bind &quot;TAB&quot; &quot;+showscores&quot;</span><br><span class="line">bind &quot;SHIFT&quot; &quot;+speed&quot;</span><br><span class="line">bind &quot;CTRL&quot; &quot;+duck&quot;</span><br><span class="line">bind &quot;MOUSE1&quot; &quot;+attack&quot;</span><br><span class="line">bind &quot;MOUSE2&quot; &quot;+attack2&quot;</span><br></pre></td></tr></table></figure>
+<p>这些基本是游戏基本按键的绑定了，前四行简单明了，wasd控制前后左右，b键购买菜单(buymenu)，m键选择队伍(teammenu)，q键切回上一个武器(lastinv)，r键换弹，空格(space)跳跃，Tab键看战绩，Shift行走，Ctrl键蹲下，左键(MOUSE1)攻击或者射击，右键(MOUSE2)武器第二操作。这些都是十分易懂的代码行，因此读到这里应该不算困难。</p>
+<p>以上所有的代码都是一个按键对应一个指令。那么下面我提出一个问题，如果我想要用一个按键操作两个动作可以实现吗？</p>
+<p>答案是肯定的，我们看下面这行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;f&quot; &quot;+lookatweapon;r_cleardecals&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>f</strong>键本来是检视武器(+lookatweapon)的按钮，这里我们后面加了个分号，又写了一个r_cleardecals，这是什么意思呢？解释一下，后面这个指令是清除血迹和弹孔的指令。这两个指令被双引号括起来，相当于是打了个包，按下f键的时候就会同时执行后面的两个指令。</p>
+<p>因此我们将bind指令的用法重新定义一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;[按键]&quot; &quot;[指令或指令集]&quot;</span><br></pre></td></tr></table></figure>
+<p>指令集里的每个指令之间一定要记得打分号。</p>
+<p>又比如我想要在按Shift键的时候同时走路和清除血迹，那么我们应该这样修改代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;SHIFT&quot; &quot;+speed;r_cleardecals&quot;</span><br></pre></td></tr></table></figure>
+<p>再来一个：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;CAPSLOCK&quot; &quot;+jump;-attack;-attack2;-jump&quot;</span><br></pre></td></tr></table></figure>
+<p>这是本人的跳投绑定，这也是最简单的实现跳投的方式。我们可以看到后面的指令集有四个指令。第一个是按下跳跃键，第二第三个是松开攻击键，最后是松开跳跃键，仔细想想是不是很简单呢？</p>
+<p>当然，如果你想解绑一个按键，则可以使用unbind指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unbind &quot;[按键]&quot;</span><br></pre></td></tr></table></figure>
+<p>比如我想取消上面绑定的跳投键，则可以这么写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unbind &quot;CAPSLOCK&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="toggle的作用"><a href="#toggle的作用" class="headerlink" title="toggle的作用"></a>toggle的作用</h3><p>你是否碰到这种情况：队友全部牺牲，只剩你一人面对残局，你聚精会神，这时候队友却吵吵闹闹，让你完全没法集中注意力——这时的你是否想要一个按钮，让该死的队友赶紧闭嘴？很幸运，我们有一个指令能够做到这一点。</p>
+<p>有的人可能会说，这个不是很简单吗，我直接绑定一个按键（比如”ALT”键）到静音指令上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;ALT&quot; &quot;voice_scale 0&quot;</span><br></pre></td></tr></table></figure>
+<p>这么做固然能达到效果，但是残局打完以后呢？你保持在了静音队友的状态，想要调回去还得去设置里重新设置，较为繁琐。</p>
+<p>这里我向大家介绍一个新的指令——<strong>toggle</strong>，指令用法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">toggle &quot;[设置项目名] [数值1] [数值2] ...[数值n]&quot;</span><br></pre></td></tr></table></figure>
+<p>这个指令看起来有很多参数，但是用法十分简单。toggle的意思为拨动，这里是switch from的意思。我们大概也能猜到了：toggle就是让指定设置项目的数值在后面的数值1、数值2…中变动。</p>
+<p>我们来用toggle实现我们上面的需求：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;ALT&quot; &quot;toggle voice_scale 0 1&quot;</span><br></pre></td></tr></table></figure>
+<p>这一行的意思就是，当我按下alt键的时候，voice_scale的值变为0；当我再按一次，值变为1，再按一次，又变为0…这样我们就实现了随时静音和恢复语音的功能。</p>
+<p>由我们上面的定义，可知toggle的数值可以不止2个，利用这个我们可以进行一些设置较为细微的调整，比如游戏音量的调整：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;PGUP&quot; &quot;toggle volume 0 0.1 0.2 0.3 0.5 0.7 0.9&quot;</span><br></pre></td></tr></table></figure>
+<p>还有准星透明度的调整：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;PGDN&quot; &quot;toggle cl_crosshairalpha 0 64 128 192 255&quot;</span><br></pre></td></tr></table></figure>
+<p>这样我们就能够实现一个通过按”Pgdn”键逐渐增加准星透明度的效果。</p>
+<p>当然，大部分时候我们不会用到这么细的调整，很多时候设置的数值都只需要在0和1之间切换而已。这时候我们有个简单一些的新指令BindToggle：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BindToggle &quot;[按键]&quot; &quot;[指令]&quot;</span><br></pre></td></tr></table></figure>
+<p>我们举个例子，cl_righthand 1指的是人物右手持枪，cl_righthand 0是左手持枪，我们想要用v键切换左右手：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BindToggle &quot;v&quot; &quot;cl_righthand&quot;</span><br></pre></td></tr></table></figure>
+<p>这时候按下v，cl_righthand的值就会在0和1之间切换了。</p>
+<p>注意：这个BindToggle后面的指令只能是一个而不能是指令集，也就是说使用这个指令的话你无法用一个键控制几个设置项的变动。</p>
+<blockquote>
+<h2 id="练习1"><a href="#练习1" class="headerlink" title="练习1:"></a>练习<sup>1</sup>:</h2><p>如果我要把上面这个切换左右手的这个方法用toggle写，该怎么写呢？如果我要用一个键同时控制cl_righthand和volume这两个值呢？</p>
+</blockquote>
+<h3 id="加与减的作用"><a href="#加与减的作用" class="headerlink" title="加与减的作用"></a>加与减的作用</h3><p>在步入真正高级的内容之前，我们先回顾一下之前讲的知识点，是否有一些没有提及的细节还未涉及呢？</p>
+<p>可能有的人早已有了一个疑问：有些指令中的+和-是什么意思？</p>
+<p>回到bind那里，我列举了一些指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;w&quot; &quot;+forward&quot;</span><br><span class="line">bind &quot;a&quot; &quot;+moveleft&quot;</span><br><span class="line">bind &quot;s&quot; &quot;+back&quot;</span><br><span class="line">bind &quot;d&quot; &quot;+moveright&quot;</span><br></pre></td></tr></table></figure>
+<p>这些指令前面的加号，其实是模拟键盘”按下”的这个动作。我们按下w键，一定是在按住的时候人物才会一直向前走，松开以后，这个前进的动作就停止了。</p>
+<p>由这个”+”的定义，我们也不难猜测”-“的意思：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;CAPSLOCK&quot; &quot;+jump;-attack;-attack2;-jump&quot;</span><br></pre></td></tr></table></figure>
+<p>我们跳投的时候，往往是先拉引信，对准参照物，然后按下跳投键，这里面的”-attack;-attack2”就是模拟松开攻击键的动作；后面的”-jump”则是模拟松开跳跃键的动作。</p>
+<p>为什么在这里介绍加与减的概念？因为下一个指令中会涉及加与减的运用，也是十分有意思的内容。</p>
+<h3 id="alias的作用"><a href="#alias的作用" class="headerlink" title="alias的作用"></a>alias的作用</h3><p>cfg中还有一种高级的操作，alias，这在普通的cfg中几乎用不到，但是如果你想要拥有一个高端的cfg，这个指令就十分地重要了。</p>
+<p>alias基本语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias &quot;名称&quot; &quot;指令或指令集&quot;</span><br></pre></td></tr></table></figure>
+<p>这看上去有点像函数，只不过没有传递参数。它的功能就是打包一个指令集。</p>
+<p>没有听明白？我们举个例子来解释就行了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alias &quot;Jumpthrow&quot; &quot;+jump;-attack;-attack2;-jump&quot;</span><br><span class="line">bind &quot;CAPSLOCK&quot; &quot;Jumpthrow&quot;</span><br></pre></td></tr></table></figure>
+<p>这段代码也是跳投的代码，和上面只用bind指令的效果是一样的，或者说是等价的。这段代码先将跳投的一系列指令放到一起，命名为”Jumpthrow”，然后将”Jumpthrow”绑定在CAPSLOCK键上。</p>
+<p>理解了上面的代码，我们来介绍灵性的部分：加与减要来了！</p>
+<p>上一栏提到的加与减，是模拟按下与松开的操作。那么alias定义的名称，是不是也能加与减呢？我们看下面的代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alias &quot;+Jumpthrow&quot; &quot;+jump;-attack;-attack2&quot;</span><br><span class="line">alias &quot;-Jumpthrow&quot; &quot;-jump&quot;</span><br><span class="line">bind &quot;CAPSLOCK&quot; &quot;+Jumpthrow&quot;</span><br></pre></td></tr></table></figure>
+<p>如果我说这几行代码和之前的跳投是等效的，你能够理解其中加和减的含义吗？</p>
+<p>其实，alias的真正内涵在这里有了体现：alias其实就是创造一个新的指令，这个指令和jump、forward、speed等等系统内置的一些指令一样，拥有”按下和松开”的状态。</p>
+<p>知道这一点我们再去解读上面的代码，意思便是如果我按下”CAPSLOCK”这个键，那么就进行”+Jumpthrow”里的操作；如果我松开，那么就执行”-Jumpthrow”里的操作。这样是不是就明白了？</p>
+<p>那么我们再举一个只能用alias实现的例子来帮助理解：大跳指令(理论上可以有其他方式，但是实战测试只有alias能用，如果有人知道原因欢迎与我交流)</p>
+<p>大跳其实是一种按键技巧，由于游戏引擎的特性，在跳跃之前半蹲可以跳得更高。但是也有很多人练习多次依然无法百分百成功。这时候我们就可以通过指令帮助我们达到100%的成功率：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alias &quot;+Highjump&quot; &quot;+duck;+jump&quot;</span><br><span class="line">alias &quot;-Highjump&quot; &quot;-duck;-jump&quot;</span><br><span class="line">bind &quot;v&quot; &quot;+Highjump&quot;</span><br></pre></td></tr></table></figure>
+<p>这个代码也很好理解：按v触发”+Highjump”中的内容：按下蹲和跳；松开v触发”-Highjump”中的内容：松开蹲和跳。(提示：大跳虽然好，但是不建议绑在默认的跳跃键上，因为不需要大跳的时候先蹲再跳会导致跳跃失误，比如从边缘掉下去等等)</p>
+<p>alias还有一个常用的功能是将一些难记的代码简化，比如重新投掷上一次的投掷物的指令是sv_rethrow_last_grenade，这个太难记了，那么我简化一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias &quot;rethrow&quot; &quot;sv_rethrow_last_grenade&quot;</span><br></pre></td></tr></table></figure>
+<p>这样一来以后，在控制台输入rethrow即可执行sv_rethrow_last_grenade；或者我们也可以绑定”rethrow”到一个具体的按键上，都是可行的。当然这个简化的例子并不是很好，我们最常用到的简化代码的例子还是在一键买枪中比较多见。</p>
+<blockquote>
+<h2 id="练习2"><a href="#练习2" class="headerlink" title="练习2:"></a>练习<sup>2</sup>:</h2><p>跳投的指令能不能这样写？：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alias &quot;+Jumpthrow&quot; &quot;+jump&quot;</span><br><span class="line">alias &quot;-Jumpthrow&quot; &quot;-attack;-attack2;-jump&quot;</span><br><span class="line">bind &quot;CAPSLOCK&quot; &quot;+Jumpthrow&quot;</span><br></pre></td></tr></table></figure>
+<p>如果不能，你是否能指出这样操作的问题所在？</p>
+</blockquote>
+<ul>
+<li>后续内容待补充</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>显然这不是CS:GO中独有的，但是CS:GO把cfg文件开放给玩家，让玩家可以任意调整任何设置的值，甚至可以在设置里写函数，可以说是把cfg的运用发挥到了极致。这也是我关于这款游戏最喜欢的内容。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8Fwebp%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Han Wang">
+      <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hg's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8Fwebp%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">如何利用 webp 进行小程序图片加载速度的优化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-18 06:56:08" itemprop="dateCreated datePublished" datetime="2020-08-18T06:56:08+08:00">2020-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-27 11:14:15" itemprop="dateModified" datetime="2022-05-27T11:14:15+08:00">2022-05-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="如何利用-webp-进行小程序图片加载速度的优化"><a href="#如何利用-webp-进行小程序图片加载速度的优化" class="headerlink" title="如何利用 webp 进行小程序图片加载速度的优化"></a>如何利用 webp 进行小程序图片加载速度的优化</h1><h2 id="导语"><a href="#导语" class="headerlink" title="导语"></a>导语</h2><p>最近很长一段时间没有更新博客，一方面是自己最近参与了小程序的开发，另一方面也是自己略有些怠惰，给自己记个过~那么现在既然回到学校那么还是要分享一些知识的。</p>
+<p>前一阵子参与微信小程序开发时遇到了一个小问题，就是图片的加载速度不理想。即使我们对于图像的大小一缩再缩，但后台服务器中200-300KB的图片在小程序里往往需要等待数十秒才能加载完毕（仅在安卓机上测试过，苹果应该优化得好一些），这个图片加载的速度导致我们的小程序体验比较糟糕。我经过搜索发现webp这种图片格式可能可以为我们提供一个可行的替代方案。</p>
+<h2 id="知识补充"><a href="#知识补充" class="headerlink" title="知识补充"></a>知识补充</h2><blockquote>
+<p>WebP（发音：weppy）是一种同时提供了有损压缩与无损压缩（可逆压缩）的图片文件格式，派生自影像编码格式VP8，被认为是WebM多媒体格式的姊妹项目，是由Google在购买On2 Technologies后发展出来，以BSD授权条款发布。<br>WebP最初在2010年发布，目标是减少文件大小，但达到和JPEG格式相同的图片质量，希望能够减少图片档在网络上的发送时间。根据Google较早的测试，WebP的无损压缩比网络上找到的PNG档少了45％的文件大小，即使这些PNG档在使用pngcrush和PNGOUT处理过，WebP还是可以减少28％的文件大小。</p>
+<p align="right">维基百科</p>
+
+</blockquote>
+<p>说人话？好。webp就是谷歌发布的一款可以在保证图片质量较为完整的情况下压缩率较高的网络图片格式。</p>
+<p>这么一看，webp岂不是无敌？实际上对于我们的项目它目前还是有局限性的：iOS端的微信小程序是不支持webp的。</p>
+<p>但是方法总是有的，既然iOS有它自己的优化方法，那么我就不让它搭上webp这班车了，我们可以判断设备的类型，然后针对安卓的手机进行优化。</p>
+<h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><h3 id="作案工具"><a href="#作案工具" class="headerlink" title="作案工具"></a>作案工具</h3><ul>
+<li>vscode</li>
+<li>微信小程序开发工具</li>
+</ul>
+<h3 id="手段"><a href="#手段" class="headerlink" title="手段"></a>手段</h3><p>首先我们需要定义一个全局变量作为判断是否为苹果设备的依据。所有的全局变量均在app.js里定义，在app.js中加入全局变量iOS，并用wx.getSystemInfo获取设备信息进行判断：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">App</span>(&#123;</span><br><span class="line">  <span class="attr">onLaunch</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> that = <span class="variable language_">this</span>;</span><br><span class="line">    wx.<span class="title function_">getSystemInfo</span>(&#123;</span><br><span class="line">      <span class="attr">success</span>: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(res);                           <span class="comment">//res是一个对象，包含设备信息。其中res.system的内容则是设备系统的版本</span></span><br><span class="line">        <span class="keyword">if</span> (res.<span class="property">system</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;iOS&quot;</span>) != -<span class="number">1</span>) &#123;      <span class="comment">//如果系统版本中有iOS三个字母，则判定为苹果设备</span></span><br><span class="line">          that.<span class="property">globalData</span>.<span class="property">iOS</span> = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">  <span class="attr">globalData</span>: &#123;</span><br><span class="line">    <span class="attr">iOS</span>: <span class="literal">false</span>,                                     <span class="comment">//默认iOS的值为false</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>到这里我们做好了设备类型的判断，接下来我们就要在独立的页面中进行链接替换。打个比方，如果这台设备是苹果，那么图片链接就使用 ../a.png ；如果是安卓，那么链接就换成 ../a.webp 。</p>
+<p>给出一个示例页面：</p>
+<p>html:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--简单的页面，一个view标签，一张图，图片链接用js传入数据--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span> = <span class="string">&#x27;&#123;&#123;img1&#125;&#125;&#x27;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>javascript:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Page</span>(&#123;                                              <span class="comment">//传入页面的数据</span></span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">img1</span>:<span class="string">&quot;../a.png&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这时我们在js中加入链接替换的内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> app = <span class="title function_">getApp</span>();                               <span class="comment">//这行代码很重要，用来从app.js中获取全局变量</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Page</span>(&#123;</span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">img1</span>:<span class="string">&quot;../a.png&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//事件处理函数，onLoad指在页面加载中的操作</span></span><br><span class="line">  <span class="attr">onLoad</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!app.<span class="property">globalData</span>.<span class="property">iOS</span>) &#123;                      <span class="comment">//app.globalData.iOS即为上面定义的全局变量，如果iOS为假，则替换链接</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setData</span>(&#123;</span><br><span class="line">        <span class="attr">img1</span>:<span class="string">&quot;../a.webp&quot;</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这样就完成了webp的替换，还是挺容易的，没有想象中的那么复杂。唯一的问题是页面多了以后替换起来会比较麻烦，不过如果都把图片的数据写在js里的话，替换起来会快很多。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Han Wang</p>
+  <div class="site-description" itemprop="description">是垃圾桶 也是我的聚宝盆</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Han Wang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
