@@ -1,13 +1,14 @@
 ---
-title: how to build a hexo blog?
-date: 2022-05-24 09:27:08
+title: GSoC 2022 Proposal 申请书
+date: 2022-04-08 21:17:08
 tags:
-mathjax: true
 ---
 
-# How to build a hexo blog?
+今年终于鼓起勇气参加了 GSoC (Google Summer of Code)，加入的组织是去年我就看上的 GNU Octave。
 
-## Format test
+以下是我的 GSoC 2022 Proposal 申请书。
+
+（2022/5/21 注：这篇申请书最终没有通过，我的 GSoC 2022 计划最终只能搁浅。具体原因可能有很多吧，不过我还是挺希望自己之后能最终独立完成这个项目。）
 
 # YAML Support for GNU-Octave
 
@@ -57,7 +58,7 @@ From Octave data to YAML (will be used in `yamlencode()`)
 | scalar numeric     | Number                                                |
 | numeric vector     | List, of Numbers, reshaped to row vector              |
 | numeric array      | List, of Numbers, nested                              |
-| NaN, NA, Inf, -Inf | null (1) / "NaN", "NaN", "Infinity", "-Infinity" (2) |
+| NaN, NA, Inf, -Inf | null (1) \  "NaN", "NaN", "Infinity", "-Infinity" (2) |
 | character vector   | String                                                |
 | character array    | List, of Strings                                      |
 | scalar cell        | List                                                  |
@@ -84,6 +85,3 @@ I'm currently a junior CS student. I'm good at C/C++ programming, and work with 
 During the past few weeks, I have joined the **GNU Octave Developer Community,** and have been a member in **Octave discourse**. Under the guidance of the mentor, I have created the [pkg-yaml](https://github.com/gnu-octave/pkg-yaml) repository on github, committed my code to it. The package can now be installed, and has the function to parse simple YAML data to Octave data. I also sent a pull request to [Rapid YAML](https://github.com/biojppm/rapidyaml) to help fix their amalgamate script to generate header files, and it [successfully got merged into master branch](https://github.com/biojppm/rapidyaml/commit/a04663f55fa1d5a58c873017e24849309a29c226).
 
 I believe with my enthusiasm and patience, I will be up to this job.
-
-
-不知道公式能不能正常显示
