@@ -6,6 +6,12 @@ tags:
 
 今年终于鼓起勇气参加了 GSoC (Google Summer of Code)，加入的组织是去年我就看上的 GNU Octave。
 
+今年的 GSoC 我还是做了一些准备工作，写下了一些官方相关文档的解释，感兴趣的可以查看：
+
+[Time management for contributors 开发时间安排](https://hackmd.io/@1099255210/S117Bf6Qq)
+
+[GSoC 2022 Timeline 时间线](https://hackmd.io/@1099255210/S1SUtEKQc)
+
 以下是我的 GSoC 2022 Proposal 申请书。
 
 （2022/5/21 注：这篇申请书最终没有通过，我的 GSoC 2022 计划最终只能搁浅。具体原因可能有很多吧，不过我还是挺希望自己之后能最终独立完成这个项目。）
