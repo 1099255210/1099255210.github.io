@@ -20,32 +20,30 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="如何利用 webp 进行小程序图片加载速度的优化导语最近很长一段时间没有更新博客，一方面是自己最近参与了小程序的开发，另一方面也是自己略有些怠惰，给自己记个过~那么现在既然回到学校那么还是要分享一些知识的。 前一阵子参与微信小程序开发时遇到了一个小问题，就是图片的加载速度不理想。即使我们对于图像的大小一缩再缩，但后台服务器中200-300KB的图片在小程序里往往需要等待数十秒才能加载完毕（仅在安卓">
-<meta property="og:type" content="article">
-<meta property="og:title" content="如何利用 webp 进行小程序图片加载速度的优化">
-<meta property="og:url" content="http://example.com/2020/08/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8Fwebp%E4%BC%98%E5%8C%96/index.html">
+  <meta name="description" content="是垃圾桶 也是我的聚宝盆">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hg&#39;s Blog">
+<meta property="og:url" content="http://example.com/page/10/index.html">
 <meta property="og:site_name" content="Hg&#39;s Blog">
-<meta property="og:description" content="如何利用 webp 进行小程序图片加载速度的优化导语最近很长一段时间没有更新博客，一方面是自己最近参与了小程序的开发，另一方面也是自己略有些怠惰，给自己记个过~那么现在既然回到学校那么还是要分享一些知识的。 前一阵子参与微信小程序开发时遇到了一个小问题，就是图片的加载速度不理想。即使我们对于图像的大小一缩再缩，但后台服务器中200-300KB的图片在小程序里往往需要等待数十秒才能加载完毕（仅在安卓">
+<meta property="og:description" content="是垃圾桶 也是我的聚宝盆">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-08-17T22:56:08.000Z">
-<meta property="article:modified_time" content="2022-05-27T03:14:15.156Z">
 <meta property="article:author" content="Han Wang">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2020/08/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8Fwebp%E4%BC%98%E5%8C%96/">
+<link rel="canonical" href="http://example.com/page/10/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : false,
-    isPost : true,
+    isHome : true,
+    isPost : false,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>如何利用 webp 进行小程序图片加载速度的优化 | Hg's Blog</title>
+  <title>Hg's Blog</title>
   
 
 
@@ -156,10 +154,9 @@
         <div class="content-wrap">
           
 
-          <div class="content post posts-expand">
+          <div class="content index posts-expand">
             
-
-    
+      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -175,9 +172,10 @@
       <meta itemprop="name" content="Hg's Blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          如何利用 webp 进行小程序图片加载速度的优化
-        </h1>
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8Fwebp%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">如何利用 webp 进行小程序图片加载速度的优化</a>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -207,7 +205,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="如何利用-webp-进行小程序图片加载速度的优化"><a href="#如何利用-webp-进行小程序图片加载速度的优化" class="headerlink" title="如何利用 webp 进行小程序图片加载速度的优化"></a>如何利用 webp 进行小程序图片加载速度的优化</h1><h2 id="导语"><a href="#导语" class="headerlink" title="导语"></a>导语</h2><p>最近很长一段时间没有更新博客，一方面是自己最近参与了小程序的开发，另一方面也是自己略有些怠惰，给自己记个过~那么现在既然回到学校那么还是要分享一些知识的。</p>
+          <h1 id="如何利用-webp-进行小程序图片加载速度的优化"><a href="#如何利用-webp-进行小程序图片加载速度的优化" class="headerlink" title="如何利用 webp 进行小程序图片加载速度的优化"></a>如何利用 webp 进行小程序图片加载速度的优化</h1><h2 id="导语"><a href="#导语" class="headerlink" title="导语"></a>导语</h2><p>最近很长一段时间没有更新博客，一方面是自己最近参与了小程序的开发，另一方面也是自己略有些怠惰，给自己记个过~那么现在既然回到学校那么还是要分享一些知识的。</p>
 <p>前一阵子参与微信小程序开发时遇到了一个小问题，就是图片的加载速度不理想。即使我们对于图像的大小一缩再缩，但后台服务器中200-300KB的图片在小程序里往往需要等待数十秒才能加载完毕（仅在安卓机上测试过，苹果应该优化得好一些），这个图片加载的速度导致我们的小程序体验比较糟糕。我经过搜索发现webp这种图片格式可能可以为我们提供一个可行的替代方案。</p>
 <h2 id="知识补充"><a href="#知识补充" class="headerlink" title="知识补充"></a>知识补充</h2><blockquote>
 <p>WebP（发音：weppy）是一种同时提供了有损压缩与无损压缩（可逆压缩）的图片文件格式，派生自影像编码格式VP8，被认为是WebM多媒体格式的姊妹项目，是由Google在购买On2 Technologies后发展出来，以BSD授权条款发布。<br>WebP最初在2010年发布，目标是减少文件大小，但达到和JPEG格式相同的图片质量，希望能够减少图片档在网络上的发送时间。根据Google较早的测试，WebP的无损压缩比网络上找到的PNG档少了45％的文件大小，即使这些PNG档在使用pngcrush和PNGOUT处理过，WebP还是可以减少28％的文件大小。</p>
@@ -233,31 +231,25 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> app = <span class="title function_">getApp</span>();                               <span class="comment">//这行代码很重要，用来从app.js中获取全局变量</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Page</span>(&#123;</span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">img1</span>:<span class="string">&quot;../a.png&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//事件处理函数，onLoad指在页面加载中的操作</span></span><br><span class="line">  <span class="attr">onLoad</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!app.<span class="property">globalData</span>.<span class="property">iOS</span>) &#123;                      <span class="comment">//app.globalData.iOS即为上面定义的全局变量，如果iOS为假，则替换链接</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setData</span>(&#123;</span><br><span class="line">        <span class="attr">img1</span>:<span class="string">&quot;../a.webp&quot;</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>这样就完成了webp的替换，还是挺容易的，没有想象中的那么复杂。唯一的问题是页面多了以后替换起来会比较麻烦，不过如果都把图片的数据写在js里的话，替换起来会快很多。</p>
 
+      
     </div>
 
     
     
     
-
       <footer class="post-footer">
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item"></div>
-      <div class="post-nav-item">
-    <a href="/2020/09/28/CSGO%20%E4%B8%AD%E7%9A%84%20cfg%20%E7%B3%BB%E7%BB%9F/" rel="next" title="CS:GO中的cfg系统">
-      CS:GO中的cfg系统 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
+        <div class="post-eof"></div>
       </footer>
-    
   </article>
   
   
   
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span>
+  </nav>
 
 
 
@@ -309,7 +301,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8-webp-%E8%BF%9B%E8%A1%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">如何利用 webp 进行小程序图片加载速度的优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E8%AF%AD"><span class="nav-number">1.1.</span> <span class="nav-text">导语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85"><span class="nav-number">1.2.</span> <span class="nav-text">知识补充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%99%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E6%A1%88%E5%B7%A5%E5%85%B7"><span class="nav-number">1.3.1.</span> <span class="nav-text">作案工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E6%AE%B5"><span class="nav-number">1.3.2.</span> <span class="nav-text">手段</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

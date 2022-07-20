@@ -117,7 +117,12 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/home/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -155,10 +160,10 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/30/ubuntu%2020.04%20%E5%AE%89%E8%A3%85/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/08/GSoC%202022%20Proposal%20%E7%94%B3%E8%AF%B7%E4%B9%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/Hg-icon-10.png">
       <meta itemprop="name" content="Han Wang">
       <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
     </span>
@@ -169,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/30/ubuntu%2020.04%20%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">Ubuntu 20.04 与 win10 双系统安装笔记</a>
+            <a href="/2022/04/08/GSoC%202022%20Proposal%20%E7%94%B3%E8%AF%B7%E4%B9%A6/" class="post-title-link" itemprop="url">GSoC 2022 Proposal 申请书</a>
         </h2>
 
         <div class="post-meta">
@@ -179,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-09-30 12:39:08" itemprop="dateCreated datePublished" datetime="2020-09-30T12:39:08+08:00">2020-09-30</time>
+              <time title="创建时间：2022-04-08 21:17:08" itemprop="dateCreated datePublished" datetime="2022-04-08T21:17:08+08:00">2022-04-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-27 11:09:08" itemprop="dateModified" datetime="2022-05-27T11:09:08+08:00">2022-05-27</time>
+                <time title="修改时间：2022-07-19 10:58:27" itemprop="dateModified" datetime="2022-07-19T10:58:27+08:00">2022-07-19</time>
               </span>
 
           
@@ -200,63 +205,158 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Ubuntu-20-04-与-win10-双系统安装笔记"><a href="#Ubuntu-20-04-与-win10-双系统安装笔记" class="headerlink" title="Ubuntu 20.04 与 win10 双系统安装笔记"></a>Ubuntu 20.04 与 win10 双系统安装笔记</h1><h2 id="安装前的认知准备"><a href="#安装前的认知准备" class="headerlink" title="安装前的认知准备"></a>安装前的认知准备</h2><p>在安装之前先了解一下基本的安装知识以及需求，以下为我认知中所需要作的准备：</p>
-<ul>
-<li>一个 8G 以上的u盘(作为启动盘)</li>
-<li>Ubuntu 20.04 系统镜像(从<a href="https://ubuntu.com/download/desktop">Ubuntu官网</a>下载)</li>
-<li>50G 及以上的磁盘空间</li>
-</ul>
-<p>本人电脑型号是 ThinkPad T460s，原操作系统为 win10 2004 x64，BIOS 模式为 UEFI 引导，电脑仅有一块 256G 固态硬盘，无独立显卡，因此应该不会出现N卡驱动缺失的情况。</p>
-<p>以上了解之后开始操作。</p>
-<h2 id="准备与安装全过程"><a href="#准备与安装全过程" class="headerlink" title="准备与安装全过程"></a>准备与安装全过程</h2><p>首先，为系统分出足够空间。右键 <strong>此电脑</strong>，找到 <strong>管理</strong>&gt;<strong>存储</strong>&gt;<strong>磁盘管理</strong> ，右键磁盘，点击压缩卷。在这里我分出了 100G 的空间，应该足够轻度的使用。</p>
-<p>然后开始制作启动盘。下载制作启动盘的软件 <a href="http://rufus.ie/">rufus</a> 并打开，插入u盘，在软件中选择正确的u盘与 ubuntu 镜像， 其余项目并不需要修改，直接开始，提示信息可忽略。耐心等待10-20分钟即可制作完成。</p>
-<p>接下来是 BIOS 的设置。重启电脑前，找到电脑电源设置，关闭快速启动；然后重启电脑，找到本电脑型号进入 BIOS 的快捷键，我的电脑是 DELETE；进入 BIOS 之后，将 Secure Boot 设置为 Disabled，再确认一下 Legacy Boot 为 UEFI，然后插入u盘，将u盘的BOOT优先级提到最高，保存设置并启动。这时候电脑启动时就会进入选择的界面，我们直接选择 ubuntu，这样就进入系统安装的界面了。</p>
-<p>系统安装过程中，没有什么要特别注意的。更新和其他软件那里我选择的是正常安装；安装类型里，网上有教程称需要选择其他选项，在这里我选择了与 Windows Boot Manager 共存，目前并未出现太大问题。等待一阵子，系统应当就准备就绪了。</p>
-<h2 id="对于系统的配置"><a href="#对于系统的配置" class="headerlink" title="对于系统的配置"></a>对于系统的配置</h2><h3 id="替换国内源"><a href="#替换国内源" class="headerlink" title="替换国内源"></a>替换国内源</h3><p>在 <strong>Software &amp; Updates</strong> 中选择国内的镜像，我选择的是阿里云(mirrors.aliyun.com)的镜像</p>
-<p>选择之后 Ctrl+Alt+T 打开终端，输入以下指令更新：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br></pre></td></tr></table></figure>
-<h3 id="中文输入法"><a href="#中文输入法" class="headerlink" title="中文输入法"></a>中文输入法</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ibus-libpinyin</span><br><span class="line">sudo apt install ibus-clutter</span><br></pre></td></tr></table></figure>
-<p>然后重启，找到输入法选项，在 Input Sources 中新增 Chinese(Intelligent Pinyin) 就可以了。</p>
-<h3 id="双系统时间不统一"><a href="#双系统时间不统一" class="headerlink" title="双系统时间不统一"></a>双系统时间不统一</h3><p>这个是系统看待硬件时间方式不一造成的，终端输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl set-local-rtc 1 --adjust-system-clock</span><br></pre></td></tr></table></figure>
-<p>禁用 Ubuntu 中的 UTC 即可。</p>
-<h3 id="取消-sudo-密码（有风险）"><a href="#取消-sudo-密码（有风险）" class="headerlink" title="取消 sudo 密码（有风险）"></a>取消 sudo 密码（有风险）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/sudoers</span><br><span class="line">sudo visudo</span><br></pre></td></tr></table></figure>
-<p>找到 <code>%sudo ALL=(ALL:ALL) ALL</code> 修改为 <code>%sudo ALL=(ALL:ALL) NOPASSWD:ALL</code> 然后 Ctrl+s, Ctrl+x, 重启即可。</p>
-<h3 id="安装与配置-CMake"><a href="#安装与配置-CMake" class="headerlink" title="安装与配置 CMake"></a>安装与配置 CMake</h3><p>在 CMake 官网下载源码，本次安装使用的版本是 3.18.3 的版本。下载完成后打开终端：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf cmake-3.18.3.tar.gz</span><br><span class="line">cd cmake-3.18.3 </span><br><span class="line">./bootstrap</span><br></pre></td></tr></table></figure>
-<p>出现报错：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cannot find a C++ compiler that supports both C++11 and the specified C++ flags.</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
-<p>通过指令更新 g++：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install g++</span><br></pre></td></tr></table></figure>
-<p>继续报错：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cannot find appropriate Makefile processor on this system.</span><br><span class="line">Please specify one using environment variable MAKE.</span><br></pre></td></tr></table></figure>
-<p> 输入指令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br></pre></td></tr></table></figure>
-<p><code>./bootstrap</code> 运行到最后再次出错：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Could not find OpenSSL. Install an OpenSSL development package or configure CMake with -DCMAIKE_USE_OPENSSL=OFF to build without OpenSSL.</span><br></pre></td></tr></table></figure>
-<p>安装 openssl 的编译依赖：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libssl-dev</span><br></pre></td></tr></table></figure>
-<p>成功运行，输入<code>make</code> ，耐心等待，这一步时间较长。完成后，输入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<p>完成，查看版本 <code>cmake --version</code> 看到 <code>cmake version 3.18.3</code> 安装成功</p>
-<h3 id="配置-boost"><a href="#配置-boost" class="headerlink" title="配置 boost"></a>配置 boost</h3><p>这里选用的版本是 boost 1.69.0 (其实我也不知道该装哪一个版本)</p>
-<p>首先官网下载，解包，进入文件夹：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap.sh</span><br></pre></td></tr></table></figure>
-<p>没有问题，下一步</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./b2</span><br></pre></td></tr></table></figure>
-<p>这一步也比较长，完成之后：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./b2 install</span><br></pre></td></tr></table></figure>
-<p>配置完成。</p>
-<h3 id="配置-OpenCV"><a href="#配置-OpenCV" class="headerlink" title="配置 OpenCV"></a>配置 OpenCV</h3><p>到现在再配置 OpenCV 是考虑到 OpenCV 需要使用 CMake 以及个人感觉配置可能需要一些库的安装。</p>
-<p>同样首先到官网下载源码，<code>unzip</code> 解压，进入目录：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
-<p>如果没有问题，下一步：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-<p>配置完成</p>
-<h3 id="配置-git"><a href="#配置-git" class="headerlink" title="配置 git"></a>配置 git</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br><span class="line">git --version</span><br></pre></td></tr></table></figure>
-<p>控制台输出 <code>git version 2.25.1</code> 安装完成</p>
-<h2 id="使用过程中的其他经验在之后进行补充"><a href="#使用过程中的其他经验在之后进行补充" class="headerlink" title="使用过程中的其他经验在之后进行补充"></a>使用过程中的其他经验在之后进行补充</h2><p>总体来说，由于很早之前有安装的经验，这次的安装并没有碰到太大的问题，还算顺利。</p>
-<p>CSDN链接：<a href="https://blog.csdn.net/wwh010802/article/details/108857863">https://blog.csdn.net/wwh010802/article/details/108857863</a></p>
+          <p>今年终于鼓起勇气参加了 GSoC (Google Summer of Code)，加入的组织是去年我就看上的 GNU Octave。</p>
+<p>今年的 GSoC 我还是做了一些准备工作，写下了一些官方相关文档的解释，感兴趣的可以查看：</p>
+<p><a href="https://hackmd.io/@1099255210/S117Bf6Qq">Time management for contributors 开发时间安排</a></p>
+<p><a href="https://hackmd.io/@1099255210/S1SUtEKQc">GSoC 2022 Timeline 时间线</a></p>
+<p>以下是我的 GSoC 2022 Proposal 申请书。</p>
+<p>（2022/5/21 注：这篇申请书最终没有通过，我的 GSoC 2022 计划最终只能搁浅。具体原因可能有很多吧，不过我还是挺希望自己之后能最终独立完成这个项目。）</p>
+<h1 id="YAML-Support-for-GNU-Octave"><a href="#YAML-Support-for-GNU-Octave" class="headerlink" title="YAML Support for GNU-Octave"></a>YAML Support for GNU-Octave</h1><blockquote>
+<p>Name: Han Wang</p>
+<p>Email: jmfymxx@gmail.com</p>
+<p>Github: <a href="https://github.com/1099255210">https://github.com/1099255210</a></p>
+<p>Accout on <a href="https://octave.discourse.group/">Octave Discourse</a>: wh-1099255210</p>
+</blockquote>
+<h2 id="Project-Description"><a href="#Project-Description" class="headerlink" title="Project Description"></a>Project Description</h2><p>YAML, as well as JSON, is a very common data format. GNU Octave has built-in support of JSON, but still lacks of YAML support. The goal of the project is to implementing YAML support into Octave with <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a> (a fast C++ library). During the project, an Octave package containing <code>yamldecode()</code> &amp; <code>yamlencode()</code> functions with proper documentation and unit tests will be created, and the package will be considered to be merged into core Octave. </p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><p>In GSoC 2020, JSON format has been successfully implemented. The package <a href="https://github.com/gnu-octave/pkg-json">pkg-json</a> is a good example on how to encode and decode this kind of data format. The pkg-json used <a href="https://github.com/Tencent/rapidjson">rapidjson</a> (a JSON parser and generator for C++), while in my project I decide to use <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a>, which is a C++ library to parse and emit YAML.</p>
+<h2 id="My-Project-Plan"><a href="#My-Project-Plan" class="headerlink" title="My Project Plan"></a>My Project Plan</h2><p>First, I have to get familiar with YAML data format in case to know the proper conversion between YAML data types and Octave data types. I have made a table on this:</p>
+<p>From YAML to Octave data (will be used in <code>yamldecode()</code>)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>YAML Data Type</th>
+<th>Octave Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Number</td>
+<td>scalar double</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>scalar logical</td>
+</tr>
+<tr>
+<td>String</td>
+<td>character vector</td>
+</tr>
+<tr>
+<td>Dictionary</td>
+<td>scalar struct</td>
+</tr>
+<tr>
+<td>List, of Numbers</td>
+<td>double array</td>
+</tr>
+<tr>
+<td>List, of Booleans</td>
+<td>logical array</td>
+</tr>
+<tr>
+<td>List, of Strings</td>
+<td>string array</td>
+</tr>
+<tr>
+<td>List, of Dictionary - Same field names</td>
+<td>struct array</td>
+</tr>
+<tr>
+<td>List, of Dictionary - Different field names</td>
+<td>cell array of scalar struct</td>
+</tr>
+<tr>
+<td>null, in numeric lists</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td>null, in nonnumeric lists</td>
+<td>Empty double array</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>From Octave data to YAML (will be used in <code>yamlencode()</code>)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Octave Data Type</th>
+<th>YAML Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scalar logical</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>logical vector</td>
+<td>List, of Booleans, reshaped to row vector</td>
+</tr>
+<tr>
+<td>logical array</td>
+<td>List, of Booleans, nested</td>
+</tr>
+<tr>
+<td>scalar numeric</td>
+<td>Number</td>
+</tr>
+<tr>
+<td>numeric vector</td>
+<td>List, of Numbers, reshaped to row vector</td>
+</tr>
+<tr>
+<td>numeric array</td>
+<td>List, of Numbers, nested</td>
+</tr>
+<tr>
+<td>NaN, NA, Inf, -Inf</td>
+<td>null (1) \  “NaN”, “NaN”, “Infinity”, “-Infinity” (2)</td>
+</tr>
+<tr>
+<td>character vector</td>
+<td>String</td>
+</tr>
+<tr>
+<td>character array</td>
+<td>List, of Strings</td>
+</tr>
+<tr>
+<td>scalar cell</td>
+<td>List</td>
+</tr>
+<tr>
+<td>cell vector</td>
+<td>List, reshaped to row vector</td>
+</tr>
+<tr>
+<td>cell array</td>
+<td>List, flattened to row vector</td>
+</tr>
+<tr>
+<td>scalar struct</td>
+<td>Dictionary</td>
+</tr>
+<tr>
+<td>struct vector</td>
+<td>List, of Dictionaries, reshaped to row vector</td>
+</tr>
+<tr>
+<td>struct array</td>
+<td>List, of Dictionaries, nested</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>(1) <code>ConvertInfAndNan = true</code></p>
+<p>(2) <code>ConvertInfAndNan = false</code></p>
+<p>With tables above, it will be much easier to convert data from one side to the other side. I just need to recursively decompose data, convert them respectively to what they should be, then put them together as an output.</p>
+<h2 id="My-Timeline"><a href="#My-Timeline" class="headerlink" title="My Timeline"></a>My Timeline</h2><p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220408144000601.png" alt="image-20220408144000601"></p>
+<h2 id="About-Me"><a href="#About-Me" class="headerlink" title="About Me"></a>About Me</h2><p>I’m currently a junior CS student. I’m good at C/C++ programming, and work with JSON/YAML very often, so I’m familiar with them. I’m used to putting my codes on github and using git to manage them, but I’ve never really been a contributor in open source projects. So this is my first time to be a part of the open source community, and I’m really excited about it.</p>
+<p>During the past few weeks, I have joined the <strong>GNU Octave Developer Community,</strong> and have been a member in <strong>Octave discourse</strong>. Under the guidance of the mentor, I have created the <a href="https://github.com/gnu-octave/pkg-yaml">pkg-yaml</a> repository on github, committed my code to it. The package can now be installed, and has the function to parse simple YAML data to Octave data. I also sent a pull request to <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a> to help fix their amalgamate script to generate header files, and it <a href="https://github.com/biojppm/rapidyaml/commit/a04663f55fa1d5a58c873017e24849309a29c226">successfully got merged into master branch</a>.</p>
+<p>I believe with my enthusiasm and patience, I will be up to this job.</p>
 
       
     </div>
@@ -275,7 +375,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -333,6 +433,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Han Wang"
+      src="/images/Hg-icon-10.png">
   <p class="site-author-name" itemprop="name">Han Wang</p>
   <div class="site-description" itemprop="description">是垃圾桶 也是我的聚宝盆</div>
 </div>
@@ -341,7 +443,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
