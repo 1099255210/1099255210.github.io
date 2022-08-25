@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto Sans Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="项目开源地址 目的对于 DUC2004 数据集的 50 个 topic 生成文本摘要，并将生成的摘要与 baseline，共同和专家组的摘要做 Rouge 评分。 数据集地址：(https:&#x2F;&#x2F;www-nlpir.nist.gov&#x2F;projects&#x2F;duc&#x2F;data&#x2F;2004_data.html) 预处理数据预处理数据分为以下几步： 句子切分句子切分一开始我使用的是用 . 即英文的句号进行分割，但">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动文本摘要 (TF-ISF)">
+<meta property="og:url" content="http://example.com/2022/07/10/%E8%87%AA%E5%8A%A8%E6%96%87%E6%9C%AC%E6%91%98%E8%A6%81(TF-ISF)/index.html">
+<meta property="og:site_name" content="Hg&#39;s Blog">
+<meta property="og:description" content="项目开源地址 目的对于 DUC2004 数据集的 50 个 topic 生成文本摘要，并将生成的摘要与 baseline，共同和专家组的摘要做 Rouge 评分。 数据集地址：(https:&#x2F;&#x2F;www-nlpir.nist.gov&#x2F;projects&#x2F;duc&#x2F;data&#x2F;2004_data.html) 预处理数据预处理数据分为以下几步： 句子切分句子切分一开始我使用的是用 . 即英文的句号进行分割，但">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-l.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/srouge-1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/srouge-2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/srouge-l.png">
+<meta property="article:published_time" content="2022-07-10T04:00:06.000Z">
+<meta property="article:modified_time" content="2022-07-20T01:28:37.232Z">
+<meta property="article:author" content="Han Wang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-1.png">
+
+<link rel="canonical" href="http://example.com/2022/07/10/%E8%87%AA%E5%8A%A8%E6%96%87%E6%9C%AC%E6%91%98%E8%A6%81(TF-ISF)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>自动文本摘要 (TF-ISF) | Hg's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hg's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习 分享 进步</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/home/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/1099255210" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/10/%E8%87%AA%E5%8A%A8%E6%96%87%E6%9C%AC%E6%91%98%E8%A6%81(TF-ISF)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Hg-icon-10.png">
+      <meta itemprop="name" content="Han Wang">
+      <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hg's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          自动文本摘要 (TF-ISF)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-10 12:00:06" itemprop="dateCreated datePublished" datetime="2022-07-10T12:00:06+08:00">2022-07-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-20 09:28:37" itemprop="dateModified" datetime="2022-07-20T09:28:37+08:00">2022-07-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="https://github.com/1099255210/Auto-Text-Summarization-Based-on-TF-ISF">项目开源地址</a></p>
+<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>对于 <code>DUC2004</code> 数据集的 50 个 topic 生成文本摘要，并将生成的摘要与 baseline，共同和专家组的摘要做 Rouge 评分。</p>
+<p>数据集地址：(<a href="https://www-nlpir.nist.gov/projects/duc/data/2004_data.html">https://www-nlpir.nist.gov/projects/duc/data/2004_data.html</a>)</p>
+<h2 id="预处理数据"><a href="#预处理数据" class="headerlink" title="预处理数据"></a>预处理数据</h2><p>预处理数据分为以下几步：</p>
+<h3 id="句子切分"><a href="#句子切分" class="headerlink" title="句子切分"></a>句子切分</h3><p>句子切分一开始我使用的是用 <code>.</code> 即英文的句号进行分割，但是后来在检查结果的时候发现有些单词比如 <code>U. N.</code> 会被误认为是多个句子。于是我借用了 <code>nltk</code> 库的 <code>tokenize</code> 函数进行句子的分割，有效避免了这个问题，当然也同时避免了无法区分以非英文句号为结尾的句子的情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tokenizer = nltk.data.load(<span class="string">&#x27;tokenizers/punkt/english.pickle&#x27;</span>)</span><br><span class="line">filestat.sentenselist = tokenizer.tokenize(file.content)</span><br></pre></td></tr></table></figure>
+<h3 id="去除停用词"><a href="#去除停用词" class="headerlink" title="去除停用词"></a>去除停用词</h3><p>句子切分完之后，就可以以空格为分割符提取句子中的每个单词。提取的时候要注意的地方是：单词前后可能有特殊符号需要去除；单词可以直接统一转为小写；单词中的数字也要去除。这里用正则表达式对单词处理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">word = re.sub(<span class="string">&quot;[^A-Za-z]+&quot;</span>, <span class="string">&#x27; &#x27;</span>, <span class="built_in">str</span>(word)).lower().strip()</span><br></pre></td></tr></table></figure>
+<p>得到每一个单词之后，需要去除停用词，比如 <code>a, the</code> 等等。</p>
+<p>停用词去除的工作也是调用 <code>nltk</code> 库中的 <code>stopwords</code> ，只要检查单词是否在停用词中然后省略即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> nltk.corpus <span class="keyword">import</span> stopwords</span><br><span class="line"><span class="keyword">if</span> word <span class="keyword">in</span> stopwords.words(<span class="string">&#x27;english&#x27;</span>):</span><br><span class="line">    <span class="comment"># Get rid of this word.</span></span><br></pre></td></tr></table></figure>
+<h3 id="单词词干化（https-tartarus-org-martin-PorterStemmer-）"><a href="#单词词干化（https-tartarus-org-martin-PorterStemmer-）" class="headerlink" title="单词词干化（https://tartarus.org/martin/PorterStemmer/）"></a>单词词干化（<a href="https://tartarus.org/martin/PorterStemmer/）">https://tartarus.org/martin/PorterStemmer/）</a></h3><p> 这一步课件里给出了一个停用词去除的库 <code>PorterStemmer</code> 网站上直接可以下载到源码。保存至 <code>porterstemming.py</code> 之后实例化一个 <code>PorterStemmer</code> 对象，之后进行单词词干化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> porterstemming</span><br><span class="line">PS = porterstemming.PorterStemmer()</span><br><span class="line">word = PS.stem(word, <span class="number">0</span>, <span class="built_in">len</span>(word) - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>对每一个句子进行如上操作之后，将句子与句子中经过处理的单词序列存入一个数据结构中待使用；每篇文章里的所有句子也存入一个数据结构中，用于下一步分析单词与句子的统计特性。</p>
+<h2 id="DUC-文本数据转化为数值型数据"><a href="#DUC-文本数据转化为数值型数据" class="headerlink" title="DUC 文本数据转化为数值型数据"></a>DUC 文本数据转化为数值型数据</h2><p>这里课件里引入 <code>TF-IDF</code> 的概念：</p>
+<blockquote>
+<p>$词频(TF) = \frac{某个词在文章中的出现次数}{文章的总词数}$</p>
+<p>$逆文档频率(IDF)=log(\frac{语料库的文档总数}{包含该词的文档数+1})$</p>
+<p>$TF-IDF=词频(TF)×逆文档频率(IDF)$</p>
+</blockquote>
+<p>但是要用这样的概念生成 句子-词语 矩阵，似乎不可行，因为这其中没有句子的概念。这里可以采用另一个概念 <code>TF-ISF</code> 来生成矩阵：</p>
+<blockquote>
+<p>$词频(TF) = \frac{某个词在句子中的出现次数}{句子的总词数}$</p>
+<p>$逆文档频率(ISF)=log(\frac{语料库的句子总数}{包含该词的句子数+1})$</p>
+<p>$TF-ISF=词频(TF)×逆文档频率(ISF)$</p>
+</blockquote>
+<p>通过这样的公式，对每一个 <code>topic</code> 中的句子与单词分别计算 句子-词语 矩阵。</p>
+<p>为了方便后期的处理，在矩阵的最后一列加入一行 同一个主题里所有句子拼接起来的一个长句子。</p>
+<h2 id="计算相似度"><a href="#计算相似度" class="headerlink" title="计算相似度"></a>计算相似度</h2><p>生成的矩阵现在可以用于计算句子与句子间的相似度。我们将所有的句子与最后的长句子（所有句子拼接而成的句子）进行余弦相似度的计算，公式如下：</p>
+<p>$\cos\theta=\frac{\sum_{i=1}^n(A_i×B_i)}{\sqrt{\sum_{i=1}^n(A_i)^2}×{\sqrt{\sum_{i=1}^n(B_i)^2}}} \\ = \frac{A\cdot{B}}{\mid{A}\mid×\mid{B}\mid}$</p>
+<p>定义函数 <code>calSimilarity(arr1:numpy.ndarray, arr2:numpy.ndarray)</code> 输入两个向量计算相似度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Similarity Calculation</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calSimilarity</span>(<span class="params">arr1:numpy.ndarray, arr2:numpy.ndarray</span>):</span><br><span class="line">  <span class="keyword">return</span> numpy.dot(arr1, arr2) / (numpy.linalg.norm(arr1) * numpy.linalg.norm(arr2))</span><br></pre></td></tr></table></figure>
+<p>得到每个句子对最后的长句子的相似度之后进行排序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">simvaluedict = <span class="built_in">sorted</span>(simvaluedict.items(), key=<span class="keyword">lambda</span> item: item[<span class="number">1</span>], reverse=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>最终得到一个按照相似度数值高低排序的矩阵，每行代表一个句子以及其相似度值。</p>
+<h2 id="冗余控制与摘要生成"><a href="#冗余控制与摘要生成" class="headerlink" title="冗余控制与摘要生成"></a>冗余控制与摘要生成</h2><p>上一步得到的矩阵中，我们选取相似度值最高的句子放入最终的摘要中，然后选取第二句，与第一句作相似度计算，如果高于某个阈值，则丢弃，直到文本的大小达到 665byte 为止。这里的阈值我经过试验之后设为了 0.4，实验中如果阈值过高很可能导致摘要长度还未达到规定大小就生成结束，最终导致摘要过短。</p>
+<p>至此，每个 <code>topic</code> 的摘要内容生成完毕。</p>
+<h2 id="摘要性能评测"><a href="#摘要性能评测" class="headerlink" title="摘要性能评测"></a>摘要性能评测</h2><p>对于生成的摘要，我将其与数据集中专家给出的几份摘要都作 ROUGE 的计算，得到的最高分计入最终结果。这里的 ROUGE 评分主要有三项：ROUGE-1, ROUGE-2, ROUGE-l，着重关注的是回归率 r。</p>
+<p>为了作对比，还需要提供一个 <code>Baseline</code> 结果，这里对于每一个 <code>topic</code> 里的每一篇文章选取第一句话拼接为一个摘要，长度同样为 665byte，再对比专家组结果作 ROUGE 评分。</p>
+<p>将两者进行对比，绘制直方图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-1.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-2.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-l.png" alt=""></p>
+<p>红色部分为算法生成的结果，蓝色部分为基线结果，可以看到在大部分 <code>topic</code> 中得到的效果要高于或等于基线效果(33/50)。</p>
+<h2 id="关于算法的改进"><a href="#关于算法的改进" class="headerlink" title="关于算法的改进"></a>关于算法的改进</h2><p>改进方法中我选择了改进方法2进行实验。</p>
+<p>调查了一下 <code>sentence2vec</code> 的方法，发现首先需要有个词向量的数据 (word2vec)。网络上找到的方法是使用 <code>gensim</code> 库对语料库进行训练，得到 <code>word2vec</code> 的数据之后再计算句向量，剩下的内容就和之前差不多了，也是计算相似度之后排序生成摘要。</p>
+<p>我尝试用原始的文档训练词向量，然后计算句向量，但是得到的结果有很大的问题。问题主要在于使用原始文档训练出来的词向量计算出的句向量，这些向量之间的相似度极高，基本都高达 99% 以上，对这样的相似度数据进行排序显然没有任何意义。</p>
+<p>于是我找到了一个预训练的数据集 <code>GloVe: Global Vectors for Word Representation</code>，选取了其中一个 50 维的词向量数据集作为参考。这里就注意不需要对每个词进行词干化了，否则在词向量数据中是找不到对应向量的，默认会置0，也就是没有意义的。</p>
+<p><code>sentence2vec</code> 句向量的计算参照以下公式：</p>
+<p>$v_s\leftarrow{\frac{1}{\mid s \mid}}\sum_{w\in s}{\frac{a}{a+p(w)}v_w}$</p>
+<p>算出句向量之后就可以像之前一样进行相似度计算排序然后生成了。</p>
+<p>但是令人意外的是这样生成的摘要得到的效果反而不如之前的算法生成的效果，结果如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/srouge-1.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/srouge-2.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/srouge-l.png" alt=""></p>
+<p>但是结果确实是如此，我检查代码也没有发现有什么明显的问题。可能这个词向量的数据集对于该任务来说并不适合吧。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/08/GSoC%202022%20Proposal%20%E7%94%B3%E8%AF%B7%E4%B9%A6/" rel="prev" title="GSoC 2022 Proposal 申请书">
+      <i class="fa fa-chevron-left"></i> GSoC 2022 Proposal 申请书
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/12/Hugging%20Face%20%E5%AD%A6%E4%B9%A0(1)/" rel="next" title="Hugging Face 学习(1)">
+      Hugging Face 学习(1) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">预处理数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%A5%E5%AD%90%E5%88%87%E5%88%86"><span class="nav-number">2.1.</span> <span class="nav-text">句子切分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%BB%E9%99%A4%E5%81%9C%E7%94%A8%E8%AF%8D"><span class="nav-number">2.2.</span> <span class="nav-text">去除停用词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D%E8%AF%8D%E5%B9%B2%E5%8C%96%EF%BC%88https-tartarus-org-martin-PorterStemmer-%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">单词词干化（https:&#x2F;&#x2F;tartarus.org&#x2F;martin&#x2F;PorterStemmer&#x2F;）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DUC-%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE%E8%BD%AC%E5%8C%96%E4%B8%BA%E6%95%B0%E5%80%BC%E5%9E%8B%E6%95%B0%E6%8D%AE"><span class="nav-number">3.</span> <span class="nav-text">DUC 文本数据转化为数值型数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E7%9B%B8%E4%BC%BC%E5%BA%A6"><span class="nav-number">4.</span> <span class="nav-text">计算相似度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%97%E4%BD%99%E6%8E%A7%E5%88%B6%E4%B8%8E%E6%91%98%E8%A6%81%E7%94%9F%E6%88%90"><span class="nav-number">5.</span> <span class="nav-text">冗余控制与摘要生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81%E6%80%A7%E8%83%BD%E8%AF%84%E6%B5%8B"><span class="nav-number">6.</span> <span class="nav-text">摘要性能评测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%AE%97%E6%B3%95%E7%9A%84%E6%94%B9%E8%BF%9B"><span class="nav-number">7.</span> <span class="nav-text">关于算法的改进</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Han Wang"
+      src="/images/Hg-icon-10.png">
+  <p class="site-author-name" itemprop="name">Han Wang</p>
+  <div class="site-description" itemprop="description">是垃圾桶 也是我的聚宝盆</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Han Wang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

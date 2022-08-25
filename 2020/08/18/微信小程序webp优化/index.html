@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto Sans Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="如何利用 webp 进行小程序图片加载速度的优化导语最近很长一段时间没有更新博客，一方面是自己最近参与了小程序的开发，另一方面也是自己略有些怠惰，给自己记个过~那么现在既然回到学校那么还是要分享一些知识的。 前一阵子参与微信小程序开发时遇到了一个小问题，就是图片的加载速度不理想。即使我们对于图像的大小一缩再缩，但后台服务器中200-300KB的图片在小程序里往往需要等待数十秒才能加载完毕（仅在安卓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何利用 webp 进行小程序图片加载速度的优化">
+<meta property="og:url" content="http://example.com/2020/08/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8Fwebp%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="Hg&#39;s Blog">
+<meta property="og:description" content="如何利用 webp 进行小程序图片加载速度的优化导语最近很长一段时间没有更新博客，一方面是自己最近参与了小程序的开发，另一方面也是自己略有些怠惰，给自己记个过~那么现在既然回到学校那么还是要分享一些知识的。 前一阵子参与微信小程序开发时遇到了一个小问题，就是图片的加载速度不理想。即使我们对于图像的大小一缩再缩，但后台服务器中200-300KB的图片在小程序里往往需要等待数十秒才能加载完毕（仅在安卓">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-17T22:56:08.000Z">
+<meta property="article:modified_time" content="2022-05-27T03:14:15.156Z">
+<meta property="article:author" content="Han Wang">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/08/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8Fwebp%E4%BC%98%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>如何利用 webp 进行小程序图片加载速度的优化 | Hg's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hg's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习 分享 进步</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/home/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/1099255210" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8Fwebp%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Hg-icon-10.png">
+      <meta itemprop="name" content="Han Wang">
+      <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hg's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何利用 webp 进行小程序图片加载速度的优化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-18 06:56:08" itemprop="dateCreated datePublished" datetime="2020-08-18T06:56:08+08:00">2020-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-27 11:14:15" itemprop="dateModified" datetime="2022-05-27T11:14:15+08:00">2022-05-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="如何利用-webp-进行小程序图片加载速度的优化"><a href="#如何利用-webp-进行小程序图片加载速度的优化" class="headerlink" title="如何利用 webp 进行小程序图片加载速度的优化"></a>如何利用 webp 进行小程序图片加载速度的优化</h1><h2 id="导语"><a href="#导语" class="headerlink" title="导语"></a>导语</h2><p>最近很长一段时间没有更新博客，一方面是自己最近参与了小程序的开发，另一方面也是自己略有些怠惰，给自己记个过~那么现在既然回到学校那么还是要分享一些知识的。</p>
+<p>前一阵子参与微信小程序开发时遇到了一个小问题，就是图片的加载速度不理想。即使我们对于图像的大小一缩再缩，但后台服务器中200-300KB的图片在小程序里往往需要等待数十秒才能加载完毕（仅在安卓机上测试过，苹果应该优化得好一些），这个图片加载的速度导致我们的小程序体验比较糟糕。我经过搜索发现webp这种图片格式可能可以为我们提供一个可行的替代方案。</p>
+<h2 id="知识补充"><a href="#知识补充" class="headerlink" title="知识补充"></a>知识补充</h2><blockquote>
+<p>WebP（发音：weppy）是一种同时提供了有损压缩与无损压缩（可逆压缩）的图片文件格式，派生自影像编码格式VP8，被认为是WebM多媒体格式的姊妹项目，是由Google在购买On2 Technologies后发展出来，以BSD授权条款发布。<br>WebP最初在2010年发布，目标是减少文件大小，但达到和JPEG格式相同的图片质量，希望能够减少图片档在网络上的发送时间。根据Google较早的测试，WebP的无损压缩比网络上找到的PNG档少了45％的文件大小，即使这些PNG档在使用pngcrush和PNGOUT处理过，WebP还是可以减少28％的文件大小。</p>
+<p align="right">维基百科</p>
+
+</blockquote>
+<p>说人话？好。webp就是谷歌发布的一款可以在保证图片质量较为完整的情况下压缩率较高的网络图片格式。</p>
+<p>这么一看，webp岂不是无敌？实际上对于我们的项目它目前还是有局限性的：iOS端的微信小程序是不支持webp的。</p>
+<p>但是方法总是有的，既然iOS有它自己的优化方法，那么我就不让它搭上webp这班车了，我们可以判断设备的类型，然后针对安卓的手机进行优化。</p>
+<h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><h3 id="作案工具"><a href="#作案工具" class="headerlink" title="作案工具"></a>作案工具</h3><ul>
+<li>vscode</li>
+<li>微信小程序开发工具</li>
+</ul>
+<h3 id="手段"><a href="#手段" class="headerlink" title="手段"></a>手段</h3><p>首先我们需要定义一个全局变量作为判断是否为苹果设备的依据。所有的全局变量均在app.js里定义，在app.js中加入全局变量iOS，并用wx.getSystemInfo获取设备信息进行判断：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">App</span>(&#123;</span><br><span class="line">  <span class="attr">onLaunch</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> that = <span class="variable language_">this</span>;</span><br><span class="line">    wx.<span class="title function_">getSystemInfo</span>(&#123;</span><br><span class="line">      <span class="attr">success</span>: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(res);                           <span class="comment">//res是一个对象，包含设备信息。其中res.system的内容则是设备系统的版本</span></span><br><span class="line">        <span class="keyword">if</span> (res.<span class="property">system</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;iOS&quot;</span>) != -<span class="number">1</span>) &#123;      <span class="comment">//如果系统版本中有iOS三个字母，则判定为苹果设备</span></span><br><span class="line">          that.<span class="property">globalData</span>.<span class="property">iOS</span> = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">  <span class="attr">globalData</span>: &#123;</span><br><span class="line">    <span class="attr">iOS</span>: <span class="literal">false</span>,                                     <span class="comment">//默认iOS的值为false</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>到这里我们做好了设备类型的判断，接下来我们就要在独立的页面中进行链接替换。打个比方，如果这台设备是苹果，那么图片链接就使用 ../a.png ；如果是安卓，那么链接就换成 ../a.webp 。</p>
+<p>给出一个示例页面：</p>
+<p>html:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--简单的页面，一个view标签，一张图，图片链接用js传入数据--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span> = <span class="string">&#x27;&#123;&#123;img1&#125;&#125;&#x27;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>javascript:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Page</span>(&#123;                                              <span class="comment">//传入页面的数据</span></span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">img1</span>:<span class="string">&quot;../a.png&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这时我们在js中加入链接替换的内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> app = <span class="title function_">getApp</span>();                               <span class="comment">//这行代码很重要，用来从app.js中获取全局变量</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Page</span>(&#123;</span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">img1</span>:<span class="string">&quot;../a.png&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//事件处理函数，onLoad指在页面加载中的操作</span></span><br><span class="line">  <span class="attr">onLoad</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!app.<span class="property">globalData</span>.<span class="property">iOS</span>) &#123;                      <span class="comment">//app.globalData.iOS即为上面定义的全局变量，如果iOS为假，则替换链接</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setData</span>(&#123;</span><br><span class="line">        <span class="attr">img1</span>:<span class="string">&quot;../a.webp&quot;</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这样就完成了webp的替换，还是挺容易的，没有想象中的那么复杂。唯一的问题是页面多了以后替换起来会比较麻烦，不过如果都把图片的数据写在js里的话，替换起来会快很多。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/28/CSGO%20%E4%B8%AD%E7%9A%84%20cfg%20%E7%B3%BB%E7%BB%9F/" rel="next" title="CS:GO中的cfg系统">
+      CS:GO中的cfg系统 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8-webp-%E8%BF%9B%E8%A1%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">如何利用 webp 进行小程序图片加载速度的优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E8%AF%AD"><span class="nav-number">1.1.</span> <span class="nav-text">导语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85"><span class="nav-number">1.2.</span> <span class="nav-text">知识补充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%99%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E6%A1%88%E5%B7%A5%E5%85%B7"><span class="nav-number">1.3.1.</span> <span class="nav-text">作案工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E6%AE%B5"><span class="nav-number">1.3.2.</span> <span class="nav-text">手段</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Han Wang"
+      src="/images/Hg-icon-10.png">
+  <p class="site-author-name" itemprop="name">Han Wang</p>
+  <div class="site-description" itemprop="description">是垃圾桶 也是我的聚宝盆</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Han Wang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

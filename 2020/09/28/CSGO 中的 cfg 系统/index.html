@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto Sans Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="导语本人写文章的时候，CS:GO游戏时长已经来到了1800小时。这个游戏不仅仅是竞技的快感让我无法自拔，游戏系统与生俱来的“程序员”风格也是让我无法割舍的（毕竟是v社的游戏）。在遇到CS:GO前，我无法想象一个游戏的控制台系统能够强大到让我痴迷。离开了控制台，也就离开了这个游戏的特色。那么谈到控制台，就不得不谈谈cfg。本文希望能用较为简单易懂的语言来谈谈CS:GO中的cfg系统，希望能给大家一些">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS:GO中的cfg系统">
+<meta property="og:url" content="http://example.com/2020/09/28/CSGO%20%E4%B8%AD%E7%9A%84%20cfg%20%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="Hg&#39;s Blog">
+<meta property="og:description" content="导语本人写文章的时候，CS:GO游戏时长已经来到了1800小时。这个游戏不仅仅是竞技的快感让我无法自拔，游戏系统与生俱来的“程序员”风格也是让我无法割舍的（毕竟是v社的游戏）。在遇到CS:GO前，我无法想象一个游戏的控制台系统能够强大到让我痴迷。离开了控制台，也就离开了这个游戏的特色。那么谈到控制台，就不得不谈谈cfg。本文希望能用较为简单易懂的语言来谈谈CS:GO中的cfg系统，希望能给大家一些">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-28T09:02:08.000Z">
+<meta property="article:modified_time" content="2022-05-27T03:19:38.304Z">
+<meta property="article:author" content="Han Wang">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/09/28/CSGO%20%E4%B8%AD%E7%9A%84%20cfg%20%E7%B3%BB%E7%BB%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CS:GO中的cfg系统 | Hg's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hg's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习 分享 进步</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/home/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/1099255210" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/28/CSGO%20%E4%B8%AD%E7%9A%84%20cfg%20%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Hg-icon-10.png">
+      <meta itemprop="name" content="Han Wang">
+      <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hg's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CS:GO中的cfg系统
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-28 17:02:08" itemprop="dateCreated datePublished" datetime="2020-09-28T17:02:08+08:00">2020-09-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-27 11:19:38" itemprop="dateModified" datetime="2022-05-27T11:19:38+08:00">2022-05-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="导语"><a href="#导语" class="headerlink" title="导语"></a>导语</h2><p>本人写文章的时候，<strong>CS:GO</strong>游戏时长已经来到了1800小时。这个游戏不仅仅是竞技的快感让我无法自拔，游戏系统与生俱来的“程序员”风格也是让我无法割舍的（毕竟是v社的游戏）。在遇到CS:GO前，我无法想象一个游戏的<strong>控制台系统</strong>能够强大到让我痴迷。离开了控制台，也就离开了这个游戏的特色。那么谈到控制台，就不得不谈谈<strong>cfg</strong>。本文希望能用较为简单易懂的语言来谈谈CS:GO中的cfg系统，希望能给大家一些帮助。</p>
+<h2 id="知识补充"><a href="#知识补充" class="headerlink" title="知识补充"></a>知识补充</h2><h3 id="简单设置"><a href="#简单设置" class="headerlink" title="简单设置"></a>简单设置</h3><p><strong>cfg</strong>其实就是设置(config)的缩写。.cfg也是文件的后缀名，我们在游戏根目录里能找到许多这样的文件。这些文件的作用就是储存我们在游戏里的设置参数。打个比方，我的游戏音量是1.0，那么我就能在.cfg的文件里找到这么一行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volume &quot;1.0&quot;</span><br></pre></td></tr></table></figure>
+<p>前面的volume指的是音量，后面的”1.0”是数值，代表音量的值为1.0。这个例子反映了大部分设置的基本格式，基本都是一个<strong>设置项目名</strong>，后面跟着一个<strong>具体的数值</strong>。一对一的关系还是很易懂的。由此，我们了解了调整设置的基本语法为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[设置项目名] &quot;[具体数值]&quot;</span><br></pre></td></tr></table></figure>
+<p>双引号在这里不是必须的，但有些时候需要，为了规范我们尽量加上(游戏中控制台不需要)。</p>
+<p>我们可以将上面这一行代码称为一个指令。</p>
+<p>我们再举几个真实文件中的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">cl_crosshair_drawoutline 					        &quot;1&quot;</span><br><span class="line">cl_crosshair_dynamic_maxdist_splitratio 	&quot;0.35&quot;</span><br><span class="line">cl_crosshair_dynamic_splitalpha_innermod 	&quot;1&quot;</span><br><span class="line">cl_crosshair_dynamic_splitalpha_outermod 	&quot;0.5&quot;</span><br><span class="line">cl_crosshair_dynamic_splitdist 				    &quot;7&quot;</span><br><span class="line">cl_crosshair_friendly_warning 				    &quot;1&quot;</span><br><span class="line">cl_crosshair_outlinethickness 				    &quot;1.067771&quot;</span><br><span class="line">cl_crosshair_sniper_show_normal_inaccuracy&quot;0&quot;</span><br><span class="line">cl_crosshair_sniper_width 					      &quot;1&quot;</span><br><span class="line">cl_crosshair_t 								            &quot;0&quot;</span><br><span class="line">cl_crosshairalpha 							          &quot;255.000000&quot;</span><br><span class="line">cl_crosshaircolor 							          &quot;5&quot;</span><br><span class="line">cl_crosshaircolor_b	 						          &quot;0.000000&quot;</span><br><span class="line">cl_crosshaircolor_g 						          &quot;255.000000&quot;</span><br><span class="line">cl_crosshaircolor_r 						          &quot;255.000000&quot;</span><br><span class="line">cl_crosshairdot 							            &quot;0.000000&quot;</span><br><span class="line">cl_crosshairgap 							            &quot;0.076290&quot;</span><br><span class="line">cl_crosshairgap_useweaponvalue 				    &quot;0&quot;</span><br><span class="line">cl_crosshairsize 							            &quot;2.917408&quot;</span><br><span class="line">cl_crosshairstyle 							          &quot;4.000000&quot;</span><br><span class="line">cl_crosshairthickness 						        &quot;1.692905&quot;</span><br><span class="line">cl_crosshairusealpha 						          &quot;1&quot;</span><br></pre></td></tr></table></figure>
+<p>这是控制<strong>游戏准星</strong>相关的代码，由很多行指令组成。crosshair意思是准星，因此我们知道带有crosshair的内容都是和准星有关的，这段代码也是本人在游戏中的所使用的准星设置。我带着大家解读几行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cl_crosshair_drawoutline 					&quot;1&quot;</span><br></pre></td></tr></table></figure>
+<p>字面意思来看，crosshair_drawoutline显然指的是准星的轮廓，这里后面的数值则应该为1或0，表示有或无轮廓。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cl_crosshairalpha 							&quot;255.000000&quot;</span><br></pre></td></tr></table></figure>
+<p>字面意思来看，crosshairalpha显然指的是准星的透明度，这里后面的数值我设置的是255，表示透明度为100%。</p>
+<p>实际上我们可以发现，cfg中的简单设置内容往往都很易懂，用最少的词表达得很清楚，后面的数值也自然容易理解。这一类的设置我们不再多说，后面会详细介绍几个常用的设置内容。</p>
+<h3 id="cfg中指令的类型"><a href="#cfg中指令的类型" class="headerlink" title="cfg中指令的类型"></a>cfg中指令的类型</h3><p>上面提到的<strong>[设置项目名]+[一个具体的数值]</strong>只是指令中的一种，cfg中可不止这一种指令。</p>
+<p>下面我们介绍的这些指令是<strong>只有名称，没有值</strong>的。这种指令往往是一个动作，比如：清除血迹、重新投掷上一个投掷物、退出服务器等等：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">r_cleaardecals;								//清除血迹</span><br><span class="line">sv_rethrow_last_grenade;					//重新投掷上一个投掷物</span><br><span class="line">disconnect;									//断开连接</span><br><span class="line">quit;										//退出游戏(光速白给)</span><br><span class="line">retry;										//重新连接</span><br></pre></td></tr></table></figure>
+<p>这些指令和上面介绍的设置指令可以说都是具体的指令，下面我们介绍的一些指令类型，则是属于非具体的指令，我们可以将其理解为一些函数，那么我们开始吧。</p>
+<h3 id="bind的作用"><a href="#bind的作用" class="headerlink" title="bind的作用"></a>bind的作用</h3><p>cfg中不只是有简单的设置，按键的绑定也是cfg中不可或缺的。按键绑定的基本代码是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;[按键]&quot; &quot;[指令]&quot;</span><br></pre></td></tr></table></figure>
+<p>我列举一些游戏中基础的绑定代码展示一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;w&quot; &quot;+forward&quot;</span><br><span class="line">bind &quot;a&quot; &quot;+moveleft&quot;</span><br><span class="line">bind &quot;s&quot; &quot;+back&quot;</span><br><span class="line">bind &quot;d&quot; &quot;+moveright&quot;</span><br><span class="line">bind &quot;b&quot; &quot;buymenu&quot;</span><br><span class="line">bind &quot;m&quot; &quot;teammenu&quot;</span><br><span class="line">bind &quot;q&quot; &quot;lastinv&quot;</span><br><span class="line">bind &quot;r&quot; &quot;+reload&quot;</span><br><span class="line">bind &quot;SPACE&quot; &quot;+jump&quot;</span><br><span class="line">bind &quot;TAB&quot; &quot;+showscores&quot;</span><br><span class="line">bind &quot;SHIFT&quot; &quot;+speed&quot;</span><br><span class="line">bind &quot;CTRL&quot; &quot;+duck&quot;</span><br><span class="line">bind &quot;MOUSE1&quot; &quot;+attack&quot;</span><br><span class="line">bind &quot;MOUSE2&quot; &quot;+attack2&quot;</span><br></pre></td></tr></table></figure>
+<p>这些基本是游戏基本按键的绑定了，前四行简单明了，wasd控制前后左右，b键购买菜单(buymenu)，m键选择队伍(teammenu)，q键切回上一个武器(lastinv)，r键换弹，空格(space)跳跃，Tab键看战绩，Shift行走，Ctrl键蹲下，左键(MOUSE1)攻击或者射击，右键(MOUSE2)武器第二操作。这些都是十分易懂的代码行，因此读到这里应该不算困难。</p>
+<p>以上所有的代码都是一个按键对应一个指令。那么下面我提出一个问题，如果我想要用一个按键操作两个动作可以实现吗？</p>
+<p>答案是肯定的，我们看下面这行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;f&quot; &quot;+lookatweapon;r_cleardecals&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>f</strong>键本来是检视武器(+lookatweapon)的按钮，这里我们后面加了个分号，又写了一个r_cleardecals，这是什么意思呢？解释一下，后面这个指令是清除血迹和弹孔的指令。这两个指令被双引号括起来，相当于是打了个包，按下f键的时候就会同时执行后面的两个指令。</p>
+<p>因此我们将bind指令的用法重新定义一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;[按键]&quot; &quot;[指令或指令集]&quot;</span><br></pre></td></tr></table></figure>
+<p>指令集里的每个指令之间一定要记得打分号。</p>
+<p>又比如我想要在按Shift键的时候同时走路和清除血迹，那么我们应该这样修改代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;SHIFT&quot; &quot;+speed;r_cleardecals&quot;</span><br></pre></td></tr></table></figure>
+<p>再来一个：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;CAPSLOCK&quot; &quot;+jump;-attack;-attack2;-jump&quot;</span><br></pre></td></tr></table></figure>
+<p>这是本人的跳投绑定，这也是最简单的实现跳投的方式。我们可以看到后面的指令集有四个指令。第一个是按下跳跃键，第二第三个是松开攻击键，最后是松开跳跃键，仔细想想是不是很简单呢？</p>
+<p>当然，如果你想解绑一个按键，则可以使用unbind指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unbind &quot;[按键]&quot;</span><br></pre></td></tr></table></figure>
+<p>比如我想取消上面绑定的跳投键，则可以这么写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unbind &quot;CAPSLOCK&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="toggle的作用"><a href="#toggle的作用" class="headerlink" title="toggle的作用"></a>toggle的作用</h3><p>你是否碰到这种情况：队友全部牺牲，只剩你一人面对残局，你聚精会神，这时候队友却吵吵闹闹，让你完全没法集中注意力——这时的你是否想要一个按钮，让该死的队友赶紧闭嘴？很幸运，我们有一个指令能够做到这一点。</p>
+<p>有的人可能会说，这个不是很简单吗，我直接绑定一个按键（比如”ALT”键）到静音指令上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;ALT&quot; &quot;voice_scale 0&quot;</span><br></pre></td></tr></table></figure>
+<p>这么做固然能达到效果，但是残局打完以后呢？你保持在了静音队友的状态，想要调回去还得去设置里重新设置，较为繁琐。</p>
+<p>这里我向大家介绍一个新的指令——<strong>toggle</strong>，指令用法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">toggle &quot;[设置项目名] [数值1] [数值2] ...[数值n]&quot;</span><br></pre></td></tr></table></figure>
+<p>这个指令看起来有很多参数，但是用法十分简单。toggle的意思为拨动，这里是switch from的意思。我们大概也能猜到了：toggle就是让指定设置项目的数值在后面的数值1、数值2…中变动。</p>
+<p>我们来用toggle实现我们上面的需求：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;ALT&quot; &quot;toggle voice_scale 0 1&quot;</span><br></pre></td></tr></table></figure>
+<p>这一行的意思就是，当我按下alt键的时候，voice_scale的值变为0；当我再按一次，值变为1，再按一次，又变为0…这样我们就实现了随时静音和恢复语音的功能。</p>
+<p>由我们上面的定义，可知toggle的数值可以不止2个，利用这个我们可以进行一些设置较为细微的调整，比如游戏音量的调整：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;PGUP&quot; &quot;toggle volume 0 0.1 0.2 0.3 0.5 0.7 0.9&quot;</span><br></pre></td></tr></table></figure>
+<p>还有准星透明度的调整：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;PGDN&quot; &quot;toggle cl_crosshairalpha 0 64 128 192 255&quot;</span><br></pre></td></tr></table></figure>
+<p>这样我们就能够实现一个通过按”Pgdn”键逐渐增加准星透明度的效果。</p>
+<p>当然，大部分时候我们不会用到这么细的调整，很多时候设置的数值都只需要在0和1之间切换而已。这时候我们有个简单一些的新指令BindToggle：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BindToggle &quot;[按键]&quot; &quot;[指令]&quot;</span><br></pre></td></tr></table></figure>
+<p>我们举个例子，cl_righthand 1指的是人物右手持枪，cl_righthand 0是左手持枪，我们想要用v键切换左右手：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BindToggle &quot;v&quot; &quot;cl_righthand&quot;</span><br></pre></td></tr></table></figure>
+<p>这时候按下v，cl_righthand的值就会在0和1之间切换了。</p>
+<p>注意：这个BindToggle后面的指令只能是一个而不能是指令集，也就是说使用这个指令的话你无法用一个键控制几个设置项的变动。</p>
+<blockquote>
+<h2 id="练习1"><a href="#练习1" class="headerlink" title="练习1:"></a>练习<sup>1</sup>:</h2><p>如果我要把上面这个切换左右手的这个方法用toggle写，该怎么写呢？如果我要用一个键同时控制cl_righthand和volume这两个值呢？</p>
+</blockquote>
+<h3 id="加与减的作用"><a href="#加与减的作用" class="headerlink" title="加与减的作用"></a>加与减的作用</h3><p>在步入真正高级的内容之前，我们先回顾一下之前讲的知识点，是否有一些没有提及的细节还未涉及呢？</p>
+<p>可能有的人早已有了一个疑问：有些指令中的+和-是什么意思？</p>
+<p>回到bind那里，我列举了一些指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;w&quot; &quot;+forward&quot;</span><br><span class="line">bind &quot;a&quot; &quot;+moveleft&quot;</span><br><span class="line">bind &quot;s&quot; &quot;+back&quot;</span><br><span class="line">bind &quot;d&quot; &quot;+moveright&quot;</span><br></pre></td></tr></table></figure>
+<p>这些指令前面的加号，其实是模拟键盘”按下”的这个动作。我们按下w键，一定是在按住的时候人物才会一直向前走，松开以后，这个前进的动作就停止了。</p>
+<p>由这个”+”的定义，我们也不难猜测”-“的意思：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind &quot;CAPSLOCK&quot; &quot;+jump;-attack;-attack2;-jump&quot;</span><br></pre></td></tr></table></figure>
+<p>我们跳投的时候，往往是先拉引信，对准参照物，然后按下跳投键，这里面的”-attack;-attack2”就是模拟松开攻击键的动作；后面的”-jump”则是模拟松开跳跃键的动作。</p>
+<p>为什么在这里介绍加与减的概念？因为下一个指令中会涉及加与减的运用，也是十分有意思的内容。</p>
+<h3 id="alias的作用"><a href="#alias的作用" class="headerlink" title="alias的作用"></a>alias的作用</h3><p>cfg中还有一种高级的操作，alias，这在普通的cfg中几乎用不到，但是如果你想要拥有一个高端的cfg，这个指令就十分地重要了。</p>
+<p>alias基本语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias &quot;名称&quot; &quot;指令或指令集&quot;</span><br></pre></td></tr></table></figure>
+<p>这看上去有点像函数，只不过没有传递参数。它的功能就是打包一个指令集。</p>
+<p>没有听明白？我们举个例子来解释就行了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alias &quot;Jumpthrow&quot; &quot;+jump;-attack;-attack2;-jump&quot;</span><br><span class="line">bind &quot;CAPSLOCK&quot; &quot;Jumpthrow&quot;</span><br></pre></td></tr></table></figure>
+<p>这段代码也是跳投的代码，和上面只用bind指令的效果是一样的，或者说是等价的。这段代码先将跳投的一系列指令放到一起，命名为”Jumpthrow”，然后将”Jumpthrow”绑定在CAPSLOCK键上。</p>
+<p>理解了上面的代码，我们来介绍灵性的部分：加与减要来了！</p>
+<p>上一栏提到的加与减，是模拟按下与松开的操作。那么alias定义的名称，是不是也能加与减呢？我们看下面的代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alias &quot;+Jumpthrow&quot; &quot;+jump;-attack;-attack2&quot;</span><br><span class="line">alias &quot;-Jumpthrow&quot; &quot;-jump&quot;</span><br><span class="line">bind &quot;CAPSLOCK&quot; &quot;+Jumpthrow&quot;</span><br></pre></td></tr></table></figure>
+<p>如果我说这几行代码和之前的跳投是等效的，你能够理解其中加和减的含义吗？</p>
+<p>其实，alias的真正内涵在这里有了体现：alias其实就是创造一个新的指令，这个指令和jump、forward、speed等等系统内置的一些指令一样，拥有”按下和松开”的状态。</p>
+<p>知道这一点我们再去解读上面的代码，意思便是如果我按下”CAPSLOCK”这个键，那么就进行”+Jumpthrow”里的操作；如果我松开，那么就执行”-Jumpthrow”里的操作。这样是不是就明白了？</p>
+<p>那么我们再举一个只能用alias实现的例子来帮助理解：大跳指令(理论上可以有其他方式，但是实战测试只有alias能用，如果有人知道原因欢迎与我交流)</p>
+<p>大跳其实是一种按键技巧，由于游戏引擎的特性，在跳跃之前半蹲可以跳得更高。但是也有很多人练习多次依然无法百分百成功。这时候我们就可以通过指令帮助我们达到100%的成功率：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alias &quot;+Highjump&quot; &quot;+duck;+jump&quot;</span><br><span class="line">alias &quot;-Highjump&quot; &quot;-duck;-jump&quot;</span><br><span class="line">bind &quot;v&quot; &quot;+Highjump&quot;</span><br></pre></td></tr></table></figure>
+<p>这个代码也很好理解：按v触发”+Highjump”中的内容：按下蹲和跳；松开v触发”-Highjump”中的内容：松开蹲和跳。(提示：大跳虽然好，但是不建议绑在默认的跳跃键上，因为不需要大跳的时候先蹲再跳会导致跳跃失误，比如从边缘掉下去等等)</p>
+<p>alias还有一个常用的功能是将一些难记的代码简化，比如重新投掷上一次的投掷物的指令是sv_rethrow_last_grenade，这个太难记了，那么我简化一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias &quot;rethrow&quot; &quot;sv_rethrow_last_grenade&quot;</span><br></pre></td></tr></table></figure>
+<p>这样一来以后，在控制台输入rethrow即可执行sv_rethrow_last_grenade；或者我们也可以绑定”rethrow”到一个具体的按键上，都是可行的。当然这个简化的例子并不是很好，我们最常用到的简化代码的例子还是在一键买枪中比较多见。</p>
+<blockquote>
+<h2 id="练习2"><a href="#练习2" class="headerlink" title="练习2:"></a>练习<sup>2</sup>:</h2><p>跳投的指令能不能这样写？：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alias &quot;+Jumpthrow&quot; &quot;+jump&quot;</span><br><span class="line">alias &quot;-Jumpthrow&quot; &quot;-attack;-attack2;-jump&quot;</span><br><span class="line">bind &quot;CAPSLOCK&quot; &quot;+Jumpthrow&quot;</span><br></pre></td></tr></table></figure>
+<p>如果不能，你是否能指出这样操作的问题所在？</p>
+</blockquote>
+<ul>
+<li>后续内容待补充</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>显然这不是CS:GO中独有的，但是CS:GO把cfg文件开放给玩家，让玩家可以任意调整任何设置的值，甚至可以在设置里写函数，可以说是把cfg的运用发挥到了极致。这也是我关于这款游戏最喜欢的内容。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8Fwebp%E4%BC%98%E5%8C%96/" rel="prev" title="如何利用 webp 进行小程序图片加载速度的优化">
+      <i class="fa fa-chevron-left"></i> 如何利用 webp 进行小程序图片加载速度的优化
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/30/ubuntu%2020.04%20%E5%AE%89%E8%A3%85/" rel="next" title="Ubuntu 20.04 与 win10 双系统安装笔记">
+      Ubuntu 20.04 与 win10 双系统安装笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">导语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85"><span class="nav-number">2.</span> <span class="nav-text">知识补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">简单设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cfg%E4%B8%AD%E6%8C%87%E4%BB%A4%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">cfg中指令的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bind%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.3.</span> <span class="nav-text">bind的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toggle%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.4.</span> <span class="nav-text">toggle的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E4%B9%A01"><span class="nav-number">3.</span> <span class="nav-text">练习1:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E4%B8%8E%E5%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">3.1.</span> <span class="nav-text">加与减的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alias%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">alias的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E4%B9%A02"><span class="nav-number">4.</span> <span class="nav-text">练习2:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.1.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Han Wang"
+      src="/images/Hg-icon-10.png">
+  <p class="site-author-name" itemprop="name">Han Wang</p>
+  <div class="site-description" itemprop="description">是垃圾桶 也是我的聚宝盆</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Han Wang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
