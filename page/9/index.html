@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/08/GSoC%202022%20Proposal%20%E7%94%B3%E8%AF%B7%E4%B9%A6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/Hugging%20Face%20%E5%AD%A6%E4%B9%A0(1)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/04/08/GSoC%202022%20Proposal%20%E7%94%B3%E8%AF%B7%E4%B9%A6/" class="post-title-link" itemprop="url">GSoC 2022 Proposal 申请书</a>
+            <a href="/2022/07/12/Hugging%20Face%20%E5%AD%A6%E4%B9%A0(1)/" class="post-title-link" itemprop="url">Hugging Face 学习(1)</a>
         </h2>
 
         <div class="post-meta">
@@ -184,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-04-08 21:17:08" itemprop="dateCreated datePublished" datetime="2022-04-08T21:17:08+08:00">2022-04-08</time>
+              <time title="创建时间：2022-07-12 12:00:06" itemprop="dateCreated datePublished" datetime="2022-07-12T12:00:06+08:00">2022-07-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-19 10:58:27" itemprop="dateModified" datetime="2022-07-19T10:58:27+08:00">2022-07-19</time>
+                <time title="修改时间：2022-08-25 21:13:32" itemprop="dateModified" datetime="2022-08-25T21:13:32+08:00">2022-08-25</time>
               </span>
 
           
@@ -205,158 +205,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>今年终于鼓起勇气参加了 GSoC (Google Summer of Code)，加入的组织是去年我就看上的 GNU Octave。</p>
-<p>今年的 GSoC 我还是做了一些准备工作，写下了一些官方相关文档的解释，感兴趣的可以查看：</p>
-<p><a href="https://hackmd.io/@1099255210/S117Bf6Qq">Time management for contributors 开发时间安排</a></p>
-<p><a href="https://hackmd.io/@1099255210/S1SUtEKQc">GSoC 2022 Timeline 时间线</a></p>
-<p>以下是我的 GSoC 2022 Proposal 申请书。</p>
-<p>（2022/5/21 注：这篇申请书最终没有通过，我的 GSoC 2022 计划最终只能搁浅。具体原因可能有很多吧，不过我还是挺希望自己之后能最终独立完成这个项目。）</p>
-<h1 id="YAML-Support-for-GNU-Octave"><a href="#YAML-Support-for-GNU-Octave" class="headerlink" title="YAML Support for GNU-Octave"></a>YAML Support for GNU-Octave</h1><blockquote>
-<p>Name: Han Wang</p>
-<p>Email: jmfymxx@gmail.com</p>
-<p>Github: <a href="https://github.com/1099255210">https://github.com/1099255210</a></p>
-<p>Accout on <a href="https://octave.discourse.group/">Octave Discourse</a>: wh-1099255210</p>
-</blockquote>
-<h2 id="Project-Description"><a href="#Project-Description" class="headerlink" title="Project Description"></a>Project Description</h2><p>YAML, as well as JSON, is a very common data format. GNU Octave has built-in support of JSON, but still lacks of YAML support. The goal of the project is to implementing YAML support into Octave with <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a> (a fast C++ library). During the project, an Octave package containing <code>yamldecode()</code> &amp; <code>yamlencode()</code> functions with proper documentation and unit tests will be created, and the package will be considered to be merged into core Octave. </p>
-<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><p>In GSoC 2020, JSON format has been successfully implemented. The package <a href="https://github.com/gnu-octave/pkg-json">pkg-json</a> is a good example on how to encode and decode this kind of data format. The pkg-json used <a href="https://github.com/Tencent/rapidjson">rapidjson</a> (a JSON parser and generator for C++), while in my project I decide to use <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a>, which is a C++ library to parse and emit YAML.</p>
-<h2 id="My-Project-Plan"><a href="#My-Project-Plan" class="headerlink" title="My Project Plan"></a>My Project Plan</h2><p>First, I have to get familiar with YAML data format in case to know the proper conversion between YAML data types and Octave data types. I have made a table on this:</p>
-<p>From YAML to Octave data (will be used in <code>yamldecode()</code>)</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>YAML Data Type</th>
-<th>Octave Data Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Number</td>
-<td>scalar double</td>
-</tr>
-<tr>
-<td>Boolean</td>
-<td>scalar logical</td>
-</tr>
-<tr>
-<td>String</td>
-<td>character vector</td>
-</tr>
-<tr>
-<td>Dictionary</td>
-<td>scalar struct</td>
-</tr>
-<tr>
-<td>List, of Numbers</td>
-<td>double array</td>
-</tr>
-<tr>
-<td>List, of Booleans</td>
-<td>logical array</td>
-</tr>
-<tr>
-<td>List, of Strings</td>
-<td>string array</td>
-</tr>
-<tr>
-<td>List, of Dictionary - Same field names</td>
-<td>struct array</td>
-</tr>
-<tr>
-<td>List, of Dictionary - Different field names</td>
-<td>cell array of scalar struct</td>
-</tr>
-<tr>
-<td>null, in numeric lists</td>
-<td>NaN</td>
-</tr>
-<tr>
-<td>null, in nonnumeric lists</td>
-<td>Empty double array</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>From Octave data to YAML (will be used in <code>yamlencode()</code>)</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>Octave Data Type</th>
-<th>YAML Data Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>scalar logical</td>
-<td>Boolean</td>
-</tr>
-<tr>
-<td>logical vector</td>
-<td>List, of Booleans, reshaped to row vector</td>
-</tr>
-<tr>
-<td>logical array</td>
-<td>List, of Booleans, nested</td>
-</tr>
-<tr>
-<td>scalar numeric</td>
-<td>Number</td>
-</tr>
-<tr>
-<td>numeric vector</td>
-<td>List, of Numbers, reshaped to row vector</td>
-</tr>
-<tr>
-<td>numeric array</td>
-<td>List, of Numbers, nested</td>
-</tr>
-<tr>
-<td>NaN, NA, Inf, -Inf</td>
-<td>null (1) \  “NaN”, “NaN”, “Infinity”, “-Infinity” (2)</td>
-</tr>
-<tr>
-<td>character vector</td>
-<td>String</td>
-</tr>
-<tr>
-<td>character array</td>
-<td>List, of Strings</td>
-</tr>
-<tr>
-<td>scalar cell</td>
-<td>List</td>
-</tr>
-<tr>
-<td>cell vector</td>
-<td>List, reshaped to row vector</td>
-</tr>
-<tr>
-<td>cell array</td>
-<td>List, flattened to row vector</td>
-</tr>
-<tr>
-<td>scalar struct</td>
-<td>Dictionary</td>
-</tr>
-<tr>
-<td>struct vector</td>
-<td>List, of Dictionaries, reshaped to row vector</td>
-</tr>
-<tr>
-<td>struct array</td>
-<td>List, of Dictionaries, nested</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>(1) <code>ConvertInfAndNan = true</code></p>
-<p>(2) <code>ConvertInfAndNan = false</code></p>
-<p>With tables above, it will be much easier to convert data from one side to the other side. I just need to recursively decompose data, convert them respectively to what they should be, then put them together as an output.</p>
-<h2 id="My-Timeline"><a href="#My-Timeline" class="headerlink" title="My Timeline"></a>My Timeline</h2><p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220408144000601.png" alt="image-20220408144000601"></p>
-<h2 id="About-Me"><a href="#About-Me" class="headerlink" title="About Me"></a>About Me</h2><p>I’m currently a junior CS student. I’m good at C/C++ programming, and work with JSON/YAML very often, so I’m familiar with them. I’m used to putting my codes on github and using git to manage them, but I’ve never really been a contributor in open source projects. So this is my first time to be a part of the open source community, and I’m really excited about it.</p>
-<p>During the past few weeks, I have joined the <strong>GNU Octave Developer Community,</strong> and have been a member in <strong>Octave discourse</strong>. Under the guidance of the mentor, I have created the <a href="https://github.com/gnu-octave/pkg-yaml">pkg-yaml</a> repository on github, committed my code to it. The package can now be installed, and has the function to parse simple YAML data to Octave data. I also sent a pull request to <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a> to help fix their amalgamate script to generate header files, and it <a href="https://github.com/biojppm/rapidyaml/commit/a04663f55fa1d5a58c873017e24849309a29c226">successfully got merged into master branch</a>.</p>
-<p>I believe with my enthusiasm and patience, I will be up to this job.</p>
+          <h1 id="Hugging-Face-学习-1"><a href="#Hugging-Face-学习-1" class="headerlink" title="Hugging Face 学习(1)"></a>Hugging Face 学习(1)</h1><p>Hugging Face是一个非常流行的 NLP 库，Hugging Face 的 <a href="https://huggingface.co/">官网</a> 上也有很多开源的模型。</p>
+<p>官网上的有些模型已经提供了简单的使用方法。比如我最先接触到的这个 <code>dalle-mini</code> 模型，提供了一个生成的接口(虽然好像还是定向到了<a href="https://www.craiyon.com">其它网站</a>，据说是因为访问量太大了)，可以输入一段文本，生成一些图片。这里随便输入一个句子 A Rubic’s Cube swimming in the pool (水池里游泳的魔方)：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220720084135775.png" alt="image-20220720084135775"></p>
+<p>关于 <code>dalle</code> 这个模型，最近看到一篇文章比较有意思(<a href="https://blog.csdn.net/fengdu78/article/details/125109103">https://blog.csdn.net/fengdu78/article/details/125109103</a>)</p>
+<hr>
+<p>如果是在本地使用 Hugging Face 的一些 NLP 模型，可以安装他们提供的 <code>transformers</code> 的库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install transformers</span><br></pre></td></tr></table></figure>
+<p>这里使用一个 <a href="https://huggingface.co/t5-small">t5-small</a> 的模型测试一下。</p>
+<p>t5 (Text-To-Text Transfer Transformer) 是一个统一框架，将所有 NLP 任务都转化成 Text-to-Text （文本到文本）任务。</p>
+<p><img src="https://1.bp.blogspot.com/-o4oiOExxq1s/Xk26XPC3haI/AAAAAAAAFU8/NBlvOWB84L0PTYy9TzZBaLf6fwPGJTR0QCLcBGAsYHQ/s640/image3.gif" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModelWithLMHead</span><br><span class="line"></span><br><span class="line">tokenizer = AutoTokenizer.from_pretrained(<span class="string">&quot;t5-small&quot;</span>)</span><br><span class="line"></span><br><span class="line">model = AutoModelWithLMHead.from_pretrained(<span class="string">&quot;t5-small&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>只需要三行代码，就可以直接加载模型开始使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">input_ids = tokenizer(<span class="string">&quot;translate English to Germany: What a nice day.&quot;</span>, return_tensors=<span class="string">&quot;pt&quot;</span>).input_ids</span><br><span class="line"></span><br><span class="line">outputs = model.generate(input_ids)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tokenizer.decode(outputs[<span class="number">0</span>], skip_special_tokens=<span class="literal">True</span>))</span><br></pre></td></tr></table></figure>
+<p>得到输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Was für ein nettes Tag.</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -375,7 +238,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -443,7 +306,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

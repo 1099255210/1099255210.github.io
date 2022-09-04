@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/25/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/05/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%20(Knowledge%20Distillation)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/07/25/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">注意力机制</a>
+            <a href="/2022/08/05/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%20(Knowledge%20Distillation)/" class="post-title-link" itemprop="url">知识蒸馏 (Knowledge Distillation)</a>
         </h2>
 
         <div class="post-meta">
@@ -184,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-07-25 06:39:08" itemprop="dateCreated datePublished" datetime="2022-07-25T06:39:08+08:00">2022-07-25</time>
+              <time title="创建时间：2022-08-05 19:09:08" itemprop="dateCreated datePublished" datetime="2022-08-05T19:09:08+08:00">2022-08-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-02 06:05:49" itemprop="dateModified" datetime="2022-08-02T06:05:49+08:00">2022-08-02</time>
+                <time title="修改时间：2022-08-25 21:13:32" itemprop="dateModified" datetime="2022-08-25T21:13:32+08:00">2022-08-25</time>
               </span>
 
           
@@ -205,31 +205,38 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h1><h2 id="什么是注意力机制"><a href="#什么是注意力机制" class="headerlink" title="什么是注意力机制"></a>什么是注意力机制</h2><p>在深度学习领域，模型往往需要接收和处理大量的数据，然而在特定的某个时刻，往往只有少部分的某些数据是重要的</p>
-<p>心理学框架：人类根据<strong>随意线索</strong>和<strong>不随意线索</strong>选择注意点</p>
-<p>卷积、全连接、池化层都只考虑不随意线索（将本身容易抽取的特征抽取出来）</p>
-<p>注意力机制则考虑<strong>随意线索</strong></p>
+          <h1 id="知识蒸馏-Knowledge-Distillation"><a href="#知识蒸馏-Knowledge-Distillation" class="headerlink" title="知识蒸馏 (Knowledge Distillation)"></a>知识蒸馏 (Knowledge Distillation)</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>知识蒸馏（Knowledge Distillation, KD）旨在把一个大模型或者多个集成模型学到的知识迁移到另一个轻量级的简单模型上，在模型压缩的思想下实现知识迁移，并方便部署。</p>
+<p>虽然在一般情况下，我们不会去区分训练和部署使用的模型，但是训练和部署之间存在着一定的不一致性:   </p>
+<p>在训练过程中，我们需要使用复杂的模型，大量的计算资源，以便从非常大、高度冗余的数据集中提取出信息。在实验中，效果最好的模型往往规模很大，甚至由多个模型集成得到。而大模型不方便部署到服务中去，常见的瓶颈如下: </p>
 <ul>
-<li>随意线索对应查询（query）</li>
-<li>每个输入是值（value）和不随意线索（key）的对</li>
-<li>通过注意力池化层来有偏向性地选择某些输入</li>
+<li>推断速度慢        </li>
+<li>对部署资源要求高(内存，显存等)    </li>
 </ul>
-<h2 id="非参注意力池化层"><a href="#非参注意力池化层" class="headerlink" title="非参注意力池化层"></a>非参注意力池化层</h2><p>对于给定的数据$(x_i,y_i),i=1,…,n$）（key, value） </p>
-<p>最简单的方案：平均池化 $f(x)=\frac{1}{n}\sum\limits_{i}{y_i}$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> d2l <span class="keyword">import</span> torch <span class="keyword">as</span> d2l</span><br><span class="line"></span><br><span class="line">n_train = <span class="number">50</span></span><br><span class="line"><span class="comment"># torch.rand()产生一个服从均匀分布的张量，张量内的数据包含从区间[0,1)的随机数。</span></span><br><span class="line"><span class="comment"># 参数size是一个整数序列，用于定义张量大小</span></span><br><span class="line"><span class="comment"># torch.sort()返回两个值 第一个为排序后的张量，第二个为原来的索引</span></span><br><span class="line">x_train, _ = torch.sort(torch.rand(n_train) * <span class="number">5</span>)   <span class="comment"># *5表示将[0,1)扩展到[0,5)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">x</span>):   <span class="comment"># 真实的f(x)  需要被拟合</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span> * torch.cos(x) + x ** <span class="number">0.7</span></span><br><span class="line"></span><br><span class="line">y_train = f(x_train) + torch.normal(<span class="number">0</span>, <span class="number">0.5</span>, (n_train,))</span><br><span class="line"><span class="comment"># 测试集</span></span><br><span class="line">x_test = torch.arange(<span class="number">0</span>, <span class="number">5</span>, <span class="number">0.1</span>)</span><br><span class="line">y_truth = f(x_test)</span><br><span class="line">n_test = <span class="built_in">len</span>(x_test)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">plot_kernel_reg</span>(<span class="params">y_hat</span>):</span><br><span class="line">  d2l.plot(x_test, [y_truth, y_hat], <span class="string">&#x27;x&#x27;</span>, <span class="string">&#x27;y&#x27;</span>, legend=[<span class="string">&#x27;Truth&#x27;</span>, <span class="string">&#x27;pred&#x27;</span>], xlim=[<span class="number">0</span>, <span class="number">5</span>], ylim=[-<span class="number">1</span>, <span class="number">5</span>])</span><br><span class="line">  d2l.plt.plot(x_train, y_train, <span class="string">&#x27;o&#x27;</span>, alpha=<span class="number">0.5</span>)</span><br><span class="line">  plt.show()</span><br><span class="line"></span><br><span class="line">y_hat = torch.repeat_interleave(y_train.mean(), n_test)</span><br><span class="line">plot_kernel_reg(y_hat)</span><br></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220802055649966.png" alt="image-20220802055649966"></p>
-<p>更好的方案：Nadaraya-Watson 核回归：</p>
+<p>在部署时，我们对延迟以及计算资源都有着严格的限制。 因此，模型压缩（在保证性能的前提下减少模型的参数量） 成为了一个重要的问题，而”模型蒸馏“属于模型压缩的一种方法。</p>
+<p>一个模型的参数量基本决定了其所能捕获到的数据内蕴含的“知识”的量。 这样的想法是基本正确的，但是需要注意的是:     模型的参数量和其所能捕获的“知识“量之间并非稳定的线性关系，而是接近边际收益逐渐减少的一种增长曲线。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220807174932466.png" alt="image-20220807174932466"></p>
+<p>知识蒸馏分为：<strong>教师-学生迁移</strong>（离线学习）和<strong>学生互学习迁移</strong>（在线学习）。</p>
+<h2 id="知识蒸馏的方法"><a href="#知识蒸馏的方法" class="headerlink" title="知识蒸馏的方法"></a>知识蒸馏的方法</h2><h3 id="教师-学生迁移（T-S）"><a href="#教师-学生迁移（T-S）" class="headerlink" title="教师-学生迁移（T-S）"></a>教师-学生迁移（T-S）</h3><p>Teacher是“知识”的输出者，Student是“知识”的接受者</p>
+<p>分为两个阶段：</p>
+<ul>
+<li>原始模型训练: 训练”Teacher模型”, 简称为Net-T，它的特点是模型相对复杂，也可以由多个分别训练的模型集成而成。我们对”Teacher模型”不作任何关于模型架构、参数量、是否集成方面的限制，唯一的要求就是，对于输入X, 其都能输出Y，其中Y经过softmax的映射，输出值对应相应类别的概率值。</li>
+<li>精简模型训练: 训练”Student模型”, 简称为Net-S，它是参数量较小、模型结构相对简单的单模型。同样的，对于输入X，其都能输出Y，Y经过softmax映射后同样能输出对应相应类别的概率值。</li>
+</ul>
+<p>关键点：机器学习最根本的目的在于训练出在某个问题上泛化能力强的模型。模型 Net-T 本身泛化能力较强，在训练 Net-S 时可以直接让它学习 Net-T 的泛化能力，具体方法就是用 Net-T softmax层输出的各类别的概率作为 soft target，而不是只使用基于 ground truth 的 hard target。</p>
+<p>在 softmax 层的输出中除了正例之外，负标签也具有大量的信息，尤其当 soft target 的分布熵相对高时，蕴含的知识就更加丰富。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220807180402205.png" alt="image-20220807180402205"></p>
+<p>这里如果直接用原始的 softmax 输出作为 soft target，在概率分布熵较小（即负标签值都比较接近于0）的情况下对损失函数的贡献偏小，因此需要引入“温度”这个参数。</p>
+<p>原始的 softmax：</p>
 <script type="math/tex; mode=display">
-f(x)=\sum_{i=1}^{n}\frac{K(x-x_i)}{\sum_{j=1}^{n}K(x-x_j)}y_i</script><p>（找到离已知值最近的值，类似于KNN）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#X_repeat的形状为(n_test, n_train) 同一行的所有元素（测试输入，查询）都相同 每一行的结果为一个点</span></span><br><span class="line">X_repeat = x_test.repeat_interleave(n_train).reshape((-<span class="number">1</span>, n_train))  <span class="comment">#重复n_train次</span></span><br><span class="line"><span class="comment"># x_train包含着键。attention_weights的形状：(n_test,n_train)</span></span><br><span class="line"><span class="comment"># 每一行都包含着要在给定的每个查询的值（y_train）之间分配的注意力权重</span></span><br><span class="line">attention_weights = nn.functional.softmax(-(X_repeat - x_train) ** <span class="number">2</span> / <span class="number">2</span>, dim=<span class="number">1</span>)</span><br><span class="line"><span class="comment"># y_hat的每个元素都是值的加权平均值，其中的权重是注意力权重</span></span><br><span class="line"><span class="comment"># y_train = y_train.reshape(-1, 1)  #这一步可以不用做 matmul可以实现不同维度的矩阵成绩 但如果使用mm函数进行矩阵乘积必须转化为一列</span></span><br><span class="line">y_hat = torch.matmul(attention_weights, y_train)</span><br><span class="line">plot_kernel_reg(y_hat)</span><br></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220802055728239.png" alt="image-20220802055728239"></p>
-<h2 id="参数化注意力机制"><a href="#参数化注意力机制" class="headerlink" title="参数化注意力机制"></a>参数化注意力机制</h2><p>在此基础上引入可学习的参数w</p>
+q_i=\frac{exp(z_i)}{\sum_jexp(z_j)}</script><p>引入温度：</p>
 <script type="math/tex; mode=display">
-f(x)=\sum_{i=1}^{n}softmax(-\frac{1}{2}((x-x_i)w)^2)y_i</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">NWKernelRegression</span>(nn.Module):</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, **kwargs</span>):</span><br><span class="line">    <span class="built_in">super</span>(NWKernelRegression, self).__init__()</span><br><span class="line">    self.w = nn.Parameter(torch.rand((<span class="number">1</span>, ), requires_grad=<span class="literal">True</span>))</span><br><span class="line"></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, queries, keys, values</span>):</span><br><span class="line">    <span class="comment">#queries和attention_weights的形状为(查询个数, 键-值 对个数)</span></span><br><span class="line">    queries = queries.repeat_interleave(keys.shape[<span class="number">1</span>]).reshape((-<span class="number">1</span>, keys.shape[<span class="number">1</span>]))</span><br><span class="line">    self.attention_weights = nn.functional.softmax(</span><br><span class="line">      -((queries - keys) * self.w) ** <span class="number">2</span> / <span class="number">2</span>, dim=<span class="number">1</span>   <span class="comment">#dim=1表示按行计算</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> torch.bmm(</span><br><span class="line">      self.attention_weights.unsqueeze(<span class="number">1</span>),</span><br><span class="line">      values.unsqueeze(-<span class="number">1</span>)</span><br><span class="line">    ).reshape(-<span class="number">1</span>)  <span class="comment">#并将结果变成一维</span></span><br><span class="line"></span><br><span class="line">net = NWKernelRegression()</span><br><span class="line">loss = nn.MSELoss(reduction=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line">optimizer = torch.optim.SGD(net.parameters(), lr=<span class="number">0.5</span>)</span><br><span class="line">animator = d2l.Animator(xlabel=<span class="string">&#x27;epoch&#x27;</span>, ylabel=<span class="string">&#x27;loss&#x27;</span>, xlim=[<span class="number">1</span>, <span class="number">5</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">  <span class="comment"># keys的形状:(n_test，n_train)，每一行包含着相同的训练输入（例如，相同的键）</span></span><br><span class="line">  keys = x_train.repeat((n_test, <span class="number">1</span>))</span><br><span class="line">  <span class="comment"># value的形状:(n_test，n_train)</span></span><br><span class="line">  values = y_train.repeat((n_test, <span class="number">1</span>))</span><br><span class="line">  y_hat = net(x_test, keys, values).unsqueeze(<span class="number">1</span>).detach()</span><br><span class="line">  </span><br><span class="line">  optimizer.zero_grad()  <span class="comment">#梯度清零</span></span><br><span class="line">  l = loss(net(x_train, keys, values), y_train)  <span class="comment">#计算损失</span></span><br><span class="line">  l.<span class="built_in">sum</span>().backward()  <span class="comment">#将损失之和进行反向传播</span></span><br><span class="line">  optimizer.step()  <span class="comment">#更新</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">f&#x27;epoch <span class="subst">&#123;epoch + <span class="number">1</span>&#125;</span>, loss <span class="subst">&#123;<span class="built_in">float</span>(l.<span class="built_in">sum</span>()):<span class="number">.6</span>f&#125;</span>&#x27;</span>)</span><br><span class="line">  animator.add(epoch + <span class="number">1</span>, <span class="built_in">float</span>(l.<span class="built_in">sum</span>()))</span><br><span class="line"></span><br><span class="line">plt.show()</span><br><span class="line">plot_kernel_reg(y_hat)</span><br></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220802055910798.png" alt="image-20220802055910798"></p>
-<p>得到的曲线不如之前的平滑，但是更加接近真实值</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220802060021336.png" alt="image-20220802060021336"></p>
-
+q_i=\frac{exp(z_i/T)}{\sum_jexp(z_j/T)}</script><p>$T$的值越大，分布熵越大，负标签携带的信息会相对放大，模型训练将更加关注负标签。</p>
+<p>总体的Loss函数由 soft target 和 hard target 加权得到：</p>
+<script type="math/tex; mode=display">
+L={\alpha}L_{soft}+{\beta}L_{hard}</script><p>需要 hard target 的原因是，Net-T 也有一定的错误率，加入 ground truth 的判别可以有效降低错误被传播给 Net-S 的可能性。</p>
+<p>在温度的选取方面，如果 Net-S 的参数量较小，那么选取相对比较低的温度就可以了，因为参数量小的模型可能不能学习到所有的知识，可以适当忽略掉一些负标签的信息。</p>
+<p>（这部分的后续内容有待以后扩充）</p>
+<h3 id="学生互学习迁移"><a href="#学生互学习迁移" class="headerlink" title="学生互学习迁移"></a>学生互学习迁移</h3>
       
     </div>
 
@@ -247,7 +254,7 @@ f(x)=\sum_{i=1}^{n}softmax(-\frac{1}{2}((x-x_i)w)^2)y_i</script><figure class="h
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -315,7 +322,7 @@ f(x)=\sum_{i=1}^{n}softmax(-\frac{1}{2}((x-x_i)w)^2)y_i</script><figure class="h
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

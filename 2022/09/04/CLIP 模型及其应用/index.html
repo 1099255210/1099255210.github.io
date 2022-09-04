@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto Sans Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Clip 模型与其应用CLIP 模型的介绍CLIP 模型使用的方法：对比学习，预测 n*n 对图像与文本数据，将图片分类任务转换成图文匹配任务。这个过程实际上就是引入了 NLP 给出的监督信号。  图中左侧，得到文本特征与图片的特征后可以看到，对角线上的元素都是图文匹配的，共有 N 个正样本，其余的元素都是负样本，共有 N*N-N 个。其中，文本数据使用Transformer，图片数据用了两种模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clip 模型与其应用">
+<meta property="og:url" content="http://example.com/2022/09/04/CLIP%20%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="Hg&#39;s Blog">
+<meta property="og:description" content="Clip 模型与其应用CLIP 模型的介绍CLIP 模型使用的方法：对比学习，预测 n*n 对图像与文本数据，将图片分类任务转换成图文匹配任务。这个过程实际上就是引入了 NLP 给出的监督信号。  图中左侧，得到文本特征与图片的特征后可以看到，对角线上的元素都是图文匹配的，共有 N 个正样本，其余的元素都是负样本，共有 N*N-N 个。其中，文本数据使用Transformer，图片数据用了两种模型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904193225832.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904195212924.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904195756669.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200643952.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200822620.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200950871.png">
+<meta property="article:published_time" content="2022-09-04T12:09:08.000Z">
+<meta property="article:modified_time" content="2022-09-04T12:11:56.559Z">
+<meta property="article:author" content="Han Wang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904193225832.png">
+
+<link rel="canonical" href="http://example.com/2022/09/04/CLIP%20%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Clip 模型与其应用 | Hg's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hg's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习 分享 进步</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/home/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/1099255210" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/04/CLIP%20%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Hg-icon-10.png">
+      <meta itemprop="name" content="Han Wang">
+      <meta itemprop="description" content="是垃圾桶 也是我的聚宝盆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hg's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Clip 模型与其应用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-09-04 20:09:08 / 修改时间：20:11:56" itemprop="dateCreated datePublished" datetime="2022-09-04T20:09:08+08:00">2022-09-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Clip-模型与其应用"><a href="#Clip-模型与其应用" class="headerlink" title="Clip 模型与其应用"></a>Clip 模型与其应用</h1><h2 id="CLIP-模型的介绍"><a href="#CLIP-模型的介绍" class="headerlink" title="CLIP 模型的介绍"></a>CLIP 模型的介绍</h2><p>CLIP 模型使用的方法：对比学习，预测 n*n 对图像与文本数据，将图片分类任务转换成图文匹配任务。这个过程实际上就是引入了 NLP 给出的监督信号。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904193225832.png" alt="image-20220904193225832"></p>
+<p>图中左侧，得到文本特征与图片的特征后可以看到，对角线上的元素都是图文匹配的，共有 N 个正样本，其余的元素都是负样本，共有 N*N-N 个。其中，文本数据使用Transformer，图片数据用了两种模型，ResNet 和 Vision Transformer (ViT)。</p>
+<p>CLIP 模型训练所用的数据集较为庞大，包含从互联网上各种公开资源收集的4亿对图像、文本，CLIP是从头开始训练的，没有使用预训练的初始参数。</p>
+<h2 id="利用-CLIP-做简单的图片检索"><a href="#利用-CLIP-做简单的图片检索" class="headerlink" title="利用 CLIP 做简单的图片检索"></a>利用 CLIP 做简单的图片检索</h2><p>在 jupyter notebook 中做一个简单的问答系统：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> clip</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> display</span><br><span class="line"><span class="keyword">from</span> tqdm.notebook <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line">device = <span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span></span><br><span class="line">model, preprocess = clip.load(<span class="string">&quot;ViT-B/32&quot;</span>, device=device)</span><br><span class="line"></span><br><span class="line"><span class="comment"># load images</span></span><br><span class="line"></span><br><span class="line">data_location =  <span class="string">&quot;./imgs&quot;</span></span><br><span class="line">img_dict = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> inx, f <span class="keyword">in</span> <span class="built_in">enumerate</span>(os.listdir(data_location)):</span><br><span class="line">  img_dict[inx] = f</span><br><span class="line">img_nums = <span class="built_in">len</span>(img_dict)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;There are &#123;&#125; images.&quot;</span>.<span class="built_in">format</span>(img_nums))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> img_nums == <span class="number">0</span>:</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;no image in the folder.&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>这一段用来加载模型 以及 读取文件夹中所有的图片</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># get text input from user &amp;&amp; text encode</span></span><br><span class="line">instr = <span class="built_in">input</span>(<span class="string">&#x27;Pleaze input description:&#x27;</span>)</span><br><span class="line">text_input = clip.tokenize(instr).to(device)</span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">  text_f = model.encode_text(text_input)</span><br><span class="line"></span><br><span class="line">sim = &#123;&#125;</span><br><span class="line">pbar = tqdm(total=img_nums)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(img_nums):</span><br><span class="line">  </span><br><span class="line">  image_path = <span class="string">f&#x27;<span class="subst">&#123;data_location&#125;</span>/<span class="subst">&#123;img_dict[i]&#125;</span>&#x27;</span></span><br><span class="line">  img = Image.<span class="built_in">open</span>(image_path)</span><br><span class="line">  img_input = preprocess(img).unsqueeze(<span class="number">0</span>).to(device)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># image encode</span></span><br><span class="line">  <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    img_f = model.encode_image(img_input)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># calculate similarity</span></span><br><span class="line">  img_f /= img_f.norm(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">  text_f /= text_f.norm(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">  similarity = <span class="number">100</span> * img_f @ text_f.T</span><br><span class="line">  sim[i] = similarity</span><br><span class="line">  pbar.update(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># display top3 result</span></span><br><span class="line">res = <span class="built_in">sorted</span>(sim.items(), key=<span class="keyword">lambda</span> s:s[<span class="number">1</span>], reverse=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;query:<span class="subst">&#123;instr&#125;</span>&#x27;</span>)</span><br><span class="line">MAX_SIZE = (<span class="number">300</span>, <span class="number">300</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">  image_path = <span class="string">f&#x27;<span class="subst">&#123;data_location&#125;</span>/<span class="subst">&#123;img_dict[res[i][<span class="number">0</span>]]&#125;</span>&#x27;</span></span><br><span class="line">  img = Image.<span class="built_in">open</span>(image_path)</span><br><span class="line">  img.thumbnail(MAX_SIZE)</span><br><span class="line">  display(img)</span><br></pre></td></tr></table></figure>
+<p>这里先读入用户的输入，即搜索图片的关键词/句，然后将文本编码得到特征，然后分别对应所有图片的特征计算相似度，取相似度最高的三张图片输出。</p>
+<p>图片我没有找网上的一些数据集（因为大部分应该已经有人测试过了），我想看一看这个模型到底有多强大，于是我选取了26张我自己拍的一些生活照，进行了一下图像压缩，控制在500kb之内，作为本实验的数据集。</p>
+<p>经过我的一些尝试，发现准确度还是很高的，得到的结果令人满意。下面展示一些查询的结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904195212924.png" alt="image-20220904195212924"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904195756669.png" alt="image-20220904195756669"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200643952.png" alt="image-20220904200643952"></p>
+<p>值得一提的是，一开始我并没有预料到他能学习到图像中的文本特征，但是实验中我发现，如果图片中有文字的话，也能被它检索到，比如这个关键词：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200822620.png" alt="image-20220904200822620"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200950871.png" alt="image-20220904200950871"></p>
+<p>我这里是输入了这个midi键盘的名称（是刻在键盘上的文字），结果它也能给我识别出来，感觉非常的神奇。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/26/Windows%20%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E5%AE%89%E8%A3%85%20cuda%20%E4%B8%8E%20cudnn/" rel="prev" title="Windows 如何正确安装 cuda 与 cudnn">
+      <i class="fa fa-chevron-left"></i> Windows 如何正确安装 cuda 与 cudnn
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Clip-%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%85%B6%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">Clip 模型与其应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CLIP-%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">CLIP 模型的介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-CLIP-%E5%81%9A%E7%AE%80%E5%8D%95%E7%9A%84%E5%9B%BE%E7%89%87%E6%A3%80%E7%B4%A2"><span class="nav-number">1.2.</span> <span class="nav-text">利用 CLIP 做简单的图片检索</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Han Wang"
+      src="/images/Hg-icon-10.png">
+  <p class="site-author-name" itemprop="name">Han Wang</p>
+  <div class="site-description" itemprop="description">是垃圾桶 也是我的聚宝盆</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Han Wang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

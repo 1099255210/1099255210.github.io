@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/19/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E5%AD%A6%20project/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/10/%E8%87%AA%E5%8A%A8%E6%96%87%E6%9C%AC%E6%91%98%E8%A6%81(TF-ISF)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/19/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E5%AD%A6%20project/" class="post-title-link" itemprop="url">计算社会学课程 Project</a>
+            <a href="/2022/07/10/%E8%87%AA%E5%8A%A8%E6%96%87%E6%9C%AC%E6%91%98%E8%A6%81(TF-ISF)/" class="post-title-link" itemprop="url">自动文本摘要 (TF-ISF)</a>
         </h2>
 
         <div class="post-meta">
@@ -184,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-01-19 15:25:08" itemprop="dateCreated datePublished" datetime="2022-01-19T15:25:08+08:00">2022-01-19</time>
+              <time title="创建时间：2022-07-10 12:00:06" itemprop="dateCreated datePublished" datetime="2022-07-10T12:00:06+08:00">2022-07-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-27 11:27:39" itemprop="dateModified" datetime="2022-05-27T11:27:39+08:00">2022-05-27</time>
+                <time title="修改时间：2022-08-25 21:13:32" itemprop="dateModified" datetime="2022-08-25T21:13:32+08:00">2022-08-25</time>
               </span>
 
           
@@ -205,42 +205,62 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>课堂作业：对班里同学之间的社交关系进行分析</p>
-<h2 id="使用的软件"><a href="#使用的软件" class="headerlink" title="使用的软件"></a>使用的软件</h2><blockquote>
-<p>Gephi 是一款网络分析领域的数据可视化软件</p>
-<p>官方网站 - <a href="https://gephi.org/">Gephi</a></p>
+          <p><a href="https://github.com/1099255210/Auto-Text-Summarization-Based-on-TF-ISF">项目开源地址</a></p>
+<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>对于 <code>DUC2004</code> 数据集的 50 个 topic 生成文本摘要，并将生成的摘要与 baseline，共同和专家组的摘要做 Rouge 评分。</p>
+<p>数据集地址：(<a href="https://www-nlpir.nist.gov/projects/duc/data/2004_data.html">https://www-nlpir.nist.gov/projects/duc/data/2004_data.html</a>)</p>
+<h2 id="预处理数据"><a href="#预处理数据" class="headerlink" title="预处理数据"></a>预处理数据</h2><p>预处理数据分为以下几步：</p>
+<h3 id="句子切分"><a href="#句子切分" class="headerlink" title="句子切分"></a>句子切分</h3><p>句子切分一开始我使用的是用 <code>.</code> 即英文的句号进行分割，但是后来在检查结果的时候发现有些单词比如 <code>U. N.</code> 会被误认为是多个句子。于是我借用了 <code>nltk</code> 库的 <code>tokenize</code> 函数进行句子的分割，有效避免了这个问题，当然也同时避免了无法区分以非英文句号为结尾的句子的情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tokenizer = nltk.data.load(<span class="string">&#x27;tokenizers/punkt/english.pickle&#x27;</span>)</span><br><span class="line">filestat.sentenselist = tokenizer.tokenize(file.content)</span><br></pre></td></tr></table></figure>
+<h3 id="去除停用词"><a href="#去除停用词" class="headerlink" title="去除停用词"></a>去除停用词</h3><p>句子切分完之后，就可以以空格为分割符提取句子中的每个单词。提取的时候要注意的地方是：单词前后可能有特殊符号需要去除；单词可以直接统一转为小写；单词中的数字也要去除。这里用正则表达式对单词处理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">word = re.sub(<span class="string">&quot;[^A-Za-z]+&quot;</span>, <span class="string">&#x27; &#x27;</span>, <span class="built_in">str</span>(word)).lower().strip()</span><br></pre></td></tr></table></figure>
+<p>得到每一个单词之后，需要去除停用词，比如 <code>a, the</code> 等等。</p>
+<p>停用词去除的工作也是调用 <code>nltk</code> 库中的 <code>stopwords</code> ，只要检查单词是否在停用词中然后省略即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> nltk.corpus <span class="keyword">import</span> stopwords</span><br><span class="line"><span class="keyword">if</span> word <span class="keyword">in</span> stopwords.words(<span class="string">&#x27;english&#x27;</span>):</span><br><span class="line">    <span class="comment"># Get rid of this word.</span></span><br></pre></td></tr></table></figure>
+<h3 id="单词词干化（https-tartarus-org-martin-PorterStemmer-）"><a href="#单词词干化（https-tartarus-org-martin-PorterStemmer-）" class="headerlink" title="单词词干化（https://tartarus.org/martin/PorterStemmer/）"></a>单词词干化（<a href="https://tartarus.org/martin/PorterStemmer/）">https://tartarus.org/martin/PorterStemmer/）</a></h3><p> 这一步课件里给出了一个停用词去除的库 <code>PorterStemmer</code> 网站上直接可以下载到源码。保存至 <code>porterstemming.py</code> 之后实例化一个 <code>PorterStemmer</code> 对象，之后进行单词词干化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> porterstemming</span><br><span class="line">PS = porterstemming.PorterStemmer()</span><br><span class="line">word = PS.stem(word, <span class="number">0</span>, <span class="built_in">len</span>(word) - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>对每一个句子进行如上操作之后，将句子与句子中经过处理的单词序列存入一个数据结构中待使用；每篇文章里的所有句子也存入一个数据结构中，用于下一步分析单词与句子的统计特性。</p>
+<h2 id="DUC-文本数据转化为数值型数据"><a href="#DUC-文本数据转化为数值型数据" class="headerlink" title="DUC 文本数据转化为数值型数据"></a>DUC 文本数据转化为数值型数据</h2><p>这里课件里引入 <code>TF-IDF</code> 的概念：</p>
+<blockquote>
+<p>$词频(TF) = \frac{某个词在文章中的出现次数}{文章的总词数}$</p>
+<p>$逆文档频率(IDF)=log(\frac{语料库的文档总数}{包含该词的文档数+1})$</p>
+<p>$TF-IDF=词频(TF)×逆文档频率(IDF)$</p>
 </blockquote>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119091559013.png" alt="image-20220119091559013"></p>
-<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p><img src="./img/flow.drawio.svg" alt="img"></p>
-<h2 id="数据处理与导入"><a href="#数据处理与导入" class="headerlink" title="数据处理与导入"></a>数据处理与导入</h2><p><em>仅单纯导入了班级内各同学之间认识的关系，并没有将个人其他信息加入</em></p>
-<p>简单拉出关系表转换为<code>.csv</code></p>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119101906964.png" alt="image-20220119101906964"></p>
-<p>使用 <code>python</code> 建立<strong>节点表格</strong>与<strong>边表格</strong>，方便导入 <code>Gephi</code> 软件。</p>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119102109357.png" alt="image-20220119102109357"></p>
-<h2 id="报告"><a href="#报告" class="headerlink" title="报告"></a>报告</h2><h3 id="导入时初始网络图"><a href="#导入时初始网络图" class="headerlink" title="导入时初始网络图"></a>导入时初始网络图</h3><p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/Snipaste_2022-01-19_10-07-44.png" alt="Snipaste_2022-01-19_10-07-44"></p>
-<p><em>使用的布局方式：Force Atlas，斥力强度 200.0</em></p>
-<h3 id="依据节点的度对节点上色与改变大小"><a href="#依据节点的度对节点上色与改变大小" class="headerlink" title="依据节点的度对节点上色与改变大小"></a>依据节点的度对节点上色与改变大小</h3><p><img src="./degree.svg" alt=""></p>
-<p><em>使用的布局方式：Force Atlas，斥力强度 2000.0，部分距离较远节点经过手动调整位置。</em></p>
-<h3 id="聚合系数-Cluster-coefficient"><a href="#聚合系数-Cluster-coefficient" class="headerlink" title="聚合系数 Cluster coefficient"></a>聚合系数 Cluster coefficient</h3><p>聚合系数是网络的局部特征，反映了相邻两个人之间朋友圈子的重合度，即该节点的朋友之间也是朋友的程度。</p>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119094510712.png" alt="image-20220119094510712"></p>
-<p>使用<code>Gephi</code>计算该网络的<strong>平均聚合系数</strong>为 0.587</p>
-<h3 id="平均度数-Avg-degree"><a href="#平均度数-Avg-degree" class="headerlink" title="平均度数 Avg degree"></a>平均度数 Avg degree</h3><p>使用<code>Gephi</code>计算该网络的<strong>平均度数</strong>为 4.119</p>
-<p>度数分布图：</p>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/degree-distribution.png" alt="degree-distribution"></p>
-<h3 id="平均路径长度-特征路径长度-Avg-path-length"><a href="#平均路径长度-特征路径长度-Avg-path-length" class="headerlink" title="平均路径长度(特征路径长度) Avg path length"></a>平均路径长度(特征路径长度) Avg path length</h3><p>使用<code>Gephi</code>计算该网络的平均路径长度为 2.379</p>
-<p>网络直径：5</p>
-<p>体现<strong>小世界现象</strong></p>
-<h3 id="模块化-Modularity"><a href="#模块化-Modularity" class="headerlink" title="模块化 Modularity"></a>模块化 Modularity</h3><p>使用<code>Gephi</code>计算该网络的<strong>模块化程度</strong>为 0.414</p>
-<p>模块化程度：</p>
-<p><img src="./img/m.jpg" alt=""></p>
-<p>利用模块化的计算，可以进行社区发现 ( Community Detection )</p>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119103903270.png" alt="image-20220119103903270"></p>
-<p>社区发现可视化结果：</p>
-<p><img src="./module.svg" alt=""></p>
-<p>与其它同学发现的对比：</p>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119105008234.png" alt="image-20220119105008234"></p>
-<h2 id="附"><a href="#附" class="headerlink" title="附"></a>附</h2><p><code>python</code> 源代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line">header_namelist = [<span class="string">&#x27;Id&#x27;</span>, <span class="string">&#x27;Label&#x27;</span>]</span><br><span class="line">header_relation = [<span class="string">&#x27;Source&#x27;</span>, <span class="string">&#x27;Target&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># generate list</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;namelist.csv&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> nf:</span><br><span class="line">    nfer = csv.writer(nf)</span><br><span class="line">    nfer.writerow(header_namelist)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;res.csv&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f_csv = csv.reader(f)</span><br><span class="line">        <span class="built_in">next</span>(f_csv, <span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> f_csv:</span><br><span class="line">            nfer.writerow([row[<span class="number">0</span>], row[<span class="number">0</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># generate relation</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;relation.csv&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> nf:</span><br><span class="line">    nfer = csv.writer(nf)</span><br><span class="line">    nfer.writerow(header_relation)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;res.csv&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f_csv = csv.reader(f)</span><br><span class="line">        <span class="built_in">next</span>(f_csv, <span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> f_csv:</span><br><span class="line">            source = row[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">for</span> target <span class="keyword">in</span> row[<span class="number">1</span> : -<span class="number">1</span>]:</span><br><span class="line">                <span class="keyword">if</span> target:</span><br><span class="line">                    nfer.writerow([source, target])</span><br></pre></td></tr></table></figure>
+<p>但是要用这样的概念生成 句子-词语 矩阵，似乎不可行，因为这其中没有句子的概念。这里可以采用另一个概念 <code>TF-ISF</code> 来生成矩阵：</p>
+<blockquote>
+<p>$词频(TF) = \frac{某个词在句子中的出现次数}{句子的总词数}$</p>
+<p>$逆文档频率(ISF)=log(\frac{语料库的句子总数}{包含该词的句子数+1})$</p>
+<p>$TF-ISF=词频(TF)×逆文档频率(ISF)$</p>
+</blockquote>
+<p>通过这样的公式，对每一个 <code>topic</code> 中的句子与单词分别计算 句子-词语 矩阵。</p>
+<p>为了方便后期的处理，在矩阵的最后一列加入一行 同一个主题里所有句子拼接起来的一个长句子。</p>
+<h2 id="计算相似度"><a href="#计算相似度" class="headerlink" title="计算相似度"></a>计算相似度</h2><p>生成的矩阵现在可以用于计算句子与句子间的相似度。我们将所有的句子与最后的长句子（所有句子拼接而成的句子）进行余弦相似度的计算，公式如下：</p>
+<p>$\cos\theta=\frac{\sum_{i=1}^n(A_i×B_i)}{\sqrt{\sum_{i=1}^n(A_i)^2}×{\sqrt{\sum_{i=1}^n(B_i)^2}}} \\ = \frac{A\cdot{B}}{\mid{A}\mid×\mid{B}\mid}$</p>
+<p>定义函数 <code>calSimilarity(arr1:numpy.ndarray, arr2:numpy.ndarray)</code> 输入两个向量计算相似度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Similarity Calculation</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calSimilarity</span>(<span class="params">arr1:numpy.ndarray, arr2:numpy.ndarray</span>):</span><br><span class="line">  <span class="keyword">return</span> numpy.dot(arr1, arr2) / (numpy.linalg.norm(arr1) * numpy.linalg.norm(arr2))</span><br></pre></td></tr></table></figure>
+<p>得到每个句子对最后的长句子的相似度之后进行排序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">simvaluedict = <span class="built_in">sorted</span>(simvaluedict.items(), key=<span class="keyword">lambda</span> item: item[<span class="number">1</span>], reverse=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>最终得到一个按照相似度数值高低排序的矩阵，每行代表一个句子以及其相似度值。</p>
+<h2 id="冗余控制与摘要生成"><a href="#冗余控制与摘要生成" class="headerlink" title="冗余控制与摘要生成"></a>冗余控制与摘要生成</h2><p>上一步得到的矩阵中，我们选取相似度值最高的句子放入最终的摘要中，然后选取第二句，与第一句作相似度计算，如果高于某个阈值，则丢弃，直到文本的大小达到 665byte 为止。这里的阈值我经过试验之后设为了 0.4，实验中如果阈值过高很可能导致摘要长度还未达到规定大小就生成结束，最终导致摘要过短。</p>
+<p>至此，每个 <code>topic</code> 的摘要内容生成完毕。</p>
+<h2 id="摘要性能评测"><a href="#摘要性能评测" class="headerlink" title="摘要性能评测"></a>摘要性能评测</h2><p>对于生成的摘要，我将其与数据集中专家给出的几份摘要都作 ROUGE 的计算，得到的最高分计入最终结果。这里的 ROUGE 评分主要有三项：ROUGE-1, ROUGE-2, ROUGE-l，着重关注的是回归率 r。</p>
+<p>为了作对比，还需要提供一个 <code>Baseline</code> 结果，这里对于每一个 <code>topic</code> 里的每一篇文章选取第一句话拼接为一个摘要，长度同样为 665byte，再对比专家组结果作 ROUGE 评分。</p>
+<p>将两者进行对比，绘制直方图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-1.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-2.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-l.png" alt=""></p>
+<p>红色部分为算法生成的结果，蓝色部分为基线结果，可以看到在大部分 <code>topic</code> 中得到的效果要高于或等于基线效果(33/50)。</p>
+<h2 id="关于算法的改进"><a href="#关于算法的改进" class="headerlink" title="关于算法的改进"></a>关于算法的改进</h2><p>改进方法中我选择了改进方法2进行实验。</p>
+<p>调查了一下 <code>sentence2vec</code> 的方法，发现首先需要有个词向量的数据 (word2vec)。网络上找到的方法是使用 <code>gensim</code> 库对语料库进行训练，得到 <code>word2vec</code> 的数据之后再计算句向量，剩下的内容就和之前差不多了，也是计算相似度之后排序生成摘要。</p>
+<p>我尝试用原始的文档训练词向量，然后计算句向量，但是得到的结果有很大的问题。问题主要在于使用原始文档训练出来的词向量计算出的句向量，这些向量之间的相似度极高，基本都高达 99% 以上，对这样的相似度数据进行排序显然没有任何意义。</p>
+<p>于是我找到了一个预训练的数据集 <code>GloVe: Global Vectors for Word Representation</code>，选取了其中一个 50 维的词向量数据集作为参考。这里就注意不需要对每个词进行词干化了，否则在词向量数据中是找不到对应向量的，默认会置0，也就是没有意义的。</p>
+<p><code>sentence2vec</code> 句向量的计算参照以下公式：</p>
+<p>$v_s\leftarrow{\frac{1}{\mid s \mid}}\sum_{w\in s}{\frac{a}{a+p(w)}v_w}$</p>
+<p>算出句向量之后就可以像之前一样进行相似度计算排序然后生成了。</p>
+<p>但是令人意外的是这样生成的摘要得到的效果反而不如之前的算法生成的效果，结果如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/srouge-1.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/srouge-2.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/srouge-l.png" alt=""></p>
+<p>但是结果确实是如此，我检查代码也没有发现有什么明显的问题。可能这个词向量的数据集对于该任务来说并不适合吧。</p>
 
       
     </div>
@@ -259,7 +279,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -327,7 +347,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -414,6 +434,61 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/30/ubuntu%2020.04%20%E5%AE%89%E8%A3%85/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/12/%E9%94%AE%E7%9B%98%E7%AC%94%E8%AE%B0%E4%B8%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/30/ubuntu%2020.04%20%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">Ubuntu 20.04 与 win10 双系统安装笔记</a>
+            <a href="/2021/05/12/%E9%94%AE%E7%9B%98%E7%AC%94%E8%AE%B0%E4%B8%80/" class="post-title-link" itemprop="url">键盘笔记一</a>
         </h2>
 
         <div class="post-meta">
@@ -184,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-09-30 12:39:08" itemprop="dateCreated datePublished" datetime="2020-09-30T12:39:08+08:00">2020-09-30</time>
+              <time title="创建时间：2021-05-12 07:27:08" itemprop="dateCreated datePublished" datetime="2021-05-12T07:27:08+08:00">2021-05-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-27 11:09:08" itemprop="dateModified" datetime="2022-05-27T11:09:08+08:00">2022-05-27</time>
+                <time title="修改时间：2022-08-25 21:13:32" itemprop="dateModified" datetime="2022-08-25T21:13:32+08:00">2022-08-25</time>
               </span>
 
           
@@ -205,63 +205,143 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Ubuntu-20-04-与-win10-双系统安装笔记"><a href="#Ubuntu-20-04-与-win10-双系统安装笔记" class="headerlink" title="Ubuntu 20.04 与 win10 双系统安装笔记"></a>Ubuntu 20.04 与 win10 双系统安装笔记</h1><h2 id="安装前的认知准备"><a href="#安装前的认知准备" class="headerlink" title="安装前的认知准备"></a>安装前的认知准备</h2><p>在安装之前先了解一下基本的安装知识以及需求，以下为我认知中所需要作的准备：</p>
-<ul>
-<li>一个 8G 以上的u盘(作为启动盘)</li>
-<li>Ubuntu 20.04 系统镜像(从<a href="https://ubuntu.com/download/desktop">Ubuntu官网</a>下载)</li>
-<li>50G 及以上的磁盘空间</li>
-</ul>
-<p>本人电脑型号是 ThinkPad T460s，原操作系统为 win10 2004 x64，BIOS 模式为 UEFI 引导，电脑仅有一块 256G 固态硬盘，无独立显卡，因此应该不会出现N卡驱动缺失的情况。</p>
-<p>以上了解之后开始操作。</p>
-<h2 id="准备与安装全过程"><a href="#准备与安装全过程" class="headerlink" title="准备与安装全过程"></a>准备与安装全过程</h2><p>首先，为系统分出足够空间。右键 <strong>此电脑</strong>，找到 <strong>管理</strong>&gt;<strong>存储</strong>&gt;<strong>磁盘管理</strong> ，右键磁盘，点击压缩卷。在这里我分出了 100G 的空间，应该足够轻度的使用。</p>
-<p>然后开始制作启动盘。下载制作启动盘的软件 <a href="http://rufus.ie/">rufus</a> 并打开，插入u盘，在软件中选择正确的u盘与 ubuntu 镜像， 其余项目并不需要修改，直接开始，提示信息可忽略。耐心等待10-20分钟即可制作完成。</p>
-<p>接下来是 BIOS 的设置。重启电脑前，找到电脑电源设置，关闭快速启动；然后重启电脑，找到本电脑型号进入 BIOS 的快捷键，我的电脑是 DELETE；进入 BIOS 之后，将 Secure Boot 设置为 Disabled，再确认一下 Legacy Boot 为 UEFI，然后插入u盘，将u盘的BOOT优先级提到最高，保存设置并启动。这时候电脑启动时就会进入选择的界面，我们直接选择 ubuntu，这样就进入系统安装的界面了。</p>
-<p>系统安装过程中，没有什么要特别注意的。更新和其他软件那里我选择的是正常安装；安装类型里，网上有教程称需要选择其他选项，在这里我选择了与 Windows Boot Manager 共存，目前并未出现太大问题。等待一阵子，系统应当就准备就绪了。</p>
-<h2 id="对于系统的配置"><a href="#对于系统的配置" class="headerlink" title="对于系统的配置"></a>对于系统的配置</h2><h3 id="替换国内源"><a href="#替换国内源" class="headerlink" title="替换国内源"></a>替换国内源</h3><p>在 <strong>Software &amp; Updates</strong> 中选择国内的镜像，我选择的是阿里云(mirrors.aliyun.com)的镜像</p>
-<p>选择之后 Ctrl+Alt+T 打开终端，输入以下指令更新：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br></pre></td></tr></table></figure>
-<h3 id="中文输入法"><a href="#中文输入法" class="headerlink" title="中文输入法"></a>中文输入法</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ibus-libpinyin</span><br><span class="line">sudo apt install ibus-clutter</span><br></pre></td></tr></table></figure>
-<p>然后重启，找到输入法选项，在 Input Sources 中新增 Chinese(Intelligent Pinyin) 就可以了。</p>
-<h3 id="双系统时间不统一"><a href="#双系统时间不统一" class="headerlink" title="双系统时间不统一"></a>双系统时间不统一</h3><p>这个是系统看待硬件时间方式不一造成的，终端输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl set-local-rtc 1 --adjust-system-clock</span><br></pre></td></tr></table></figure>
-<p>禁用 Ubuntu 中的 UTC 即可。</p>
-<h3 id="取消-sudo-密码（有风险）"><a href="#取消-sudo-密码（有风险）" class="headerlink" title="取消 sudo 密码（有风险）"></a>取消 sudo 密码（有风险）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/sudoers</span><br><span class="line">sudo visudo</span><br></pre></td></tr></table></figure>
-<p>找到 <code>%sudo ALL=(ALL:ALL) ALL</code> 修改为 <code>%sudo ALL=(ALL:ALL) NOPASSWD:ALL</code> 然后 Ctrl+s, Ctrl+x, 重启即可。</p>
-<h3 id="安装与配置-CMake"><a href="#安装与配置-CMake" class="headerlink" title="安装与配置 CMake"></a>安装与配置 CMake</h3><p>在 CMake 官网下载源码，本次安装使用的版本是 3.18.3 的版本。下载完成后打开终端：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf cmake-3.18.3.tar.gz</span><br><span class="line">cd cmake-3.18.3 </span><br><span class="line">./bootstrap</span><br></pre></td></tr></table></figure>
-<p>出现报错：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cannot find a C++ compiler that supports both C++11 and the specified C++ flags.</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
-<p>通过指令更新 g++：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install g++</span><br></pre></td></tr></table></figure>
-<p>继续报错：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cannot find appropriate Makefile processor on this system.</span><br><span class="line">Please specify one using environment variable MAKE.</span><br></pre></td></tr></table></figure>
-<p> 输入指令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br></pre></td></tr></table></figure>
-<p><code>./bootstrap</code> 运行到最后再次出错：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Could not find OpenSSL. Install an OpenSSL development package or configure CMake with -DCMAIKE_USE_OPENSSL=OFF to build without OpenSSL.</span><br></pre></td></tr></table></figure>
-<p>安装 openssl 的编译依赖：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libssl-dev</span><br></pre></td></tr></table></figure>
-<p>成功运行，输入<code>make</code> ，耐心等待，这一步时间较长。完成后，输入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<p>完成，查看版本 <code>cmake --version</code> 看到 <code>cmake version 3.18.3</code> 安装成功</p>
-<h3 id="配置-boost"><a href="#配置-boost" class="headerlink" title="配置 boost"></a>配置 boost</h3><p>这里选用的版本是 boost 1.69.0 (其实我也不知道该装哪一个版本)</p>
-<p>首先官网下载，解包，进入文件夹：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap.sh</span><br></pre></td></tr></table></figure>
-<p>没有问题，下一步</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./b2</span><br></pre></td></tr></table></figure>
-<p>这一步也比较长，完成之后：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./b2 install</span><br></pre></td></tr></table></figure>
-<p>配置完成。</p>
-<h3 id="配置-OpenCV"><a href="#配置-OpenCV" class="headerlink" title="配置 OpenCV"></a>配置 OpenCV</h3><p>到现在再配置 OpenCV 是考虑到 OpenCV 需要使用 CMake 以及个人感觉配置可能需要一些库的安装。</p>
-<p>同样首先到官网下载源码，<code>unzip</code> 解压，进入目录：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
-<p>如果没有问题，下一步：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-<p>配置完成</p>
-<h3 id="配置-git"><a href="#配置-git" class="headerlink" title="配置 git"></a>配置 git</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br><span class="line">git --version</span><br></pre></td></tr></table></figure>
-<p>控制台输出 <code>git version 2.25.1</code> 安装完成</p>
-<h2 id="使用过程中的其他经验在之后进行补充"><a href="#使用过程中的其他经验在之后进行补充" class="headerlink" title="使用过程中的其他经验在之后进行补充"></a>使用过程中的其他经验在之后进行补充</h2><p>总体来说，由于很早之前有安装的经验，这次的安装并没有碰到太大的问题，还算顺利。</p>
-<p>CSDN链接：<a href="https://blog.csdn.net/wwh010802/article/details/108857863">https://blog.csdn.net/wwh010802/article/details/108857863</a></p>
+          <h1 id="键盘组装笔记-202105"><a href="#键盘组装笔记-202105" class="headerlink" title="键盘组装笔记 202105"></a>键盘组装笔记 202105</h1><p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1030789.JPG" alt="P1030789"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这把键盘是我入坑客制化键盘的第二把键盘。第一把键盘我并未想要做过多总结，主要原因在于当时的我对于客制化的了解并不多，虽然上手就采用了比较硬核的焊接方式，中间也有一些有意思的组装过程，但终究没有太多客制化的意味在里面，仅仅算是尝了个鲜；而这回则是一次从内到外的客制化流程体验，让我更多地感受到了客制化的魅力所在，也算是第一次知道键盘的优秀手感能有多让人上瘾。这次的键盘我从 2021 四月初开始筹划，到五月份彻底完成，前前后后是经过很多的调整与修改的，下面我就慢慢讲述整个键盘组装的过程。</p>
+<h2 id="时间线"><a href="#时间线" class="headerlink" title="时间线"></a>时间线</h2><h3 id="第一批购物"><a href="#第一批购物" class="headerlink" title="第一批购物"></a>第一批购物</h3><p>最初购买了 aws84键三模白光版本 的套件，包含 外壳、定位板、PCB、卫星轴、热插拔轴座，同时购买了多款我比较好奇的 TTC轴体，回来装在套件上体验之后我决定使用月白轴作为主要键位使用的轴体、赤瞳ACE轴作为其他键位使用的轴体。接着我购买了 ToxicLab 的 84布局消音棉，Kelowna 的 润轴笔、22058润滑脂、拔轴器、铁氟龙胶带，KBDfans 的佳达隆白色钢板卫星轴。</p>
+<p>我做的第一件事是换卫星轴，原套件中是包含卫星轴的，但是那款卫星轴是白色略透，而定位板是白色铁板，颜色有些不符合。换成 佳达隆变色钢板卫星轴，颜色匹配多了。卫星轴需要剪脚，并拆开，使用 22058润滑脂 进行重新润滑，润滑脂加的可能有一些多，不过最终的效果我还是比较满意的。佳达隆的卫星轴卡在这个定位板上比较紧，卡上去就不是很好拆下来了。卫星轴在PCB上对应的位置我贴上了铁氟龙胶带，效果更佳稳健，噪声更小。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040135.JPG" alt="P1040135"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040133.JPG" alt="P1040133"></p>
+<p>接着是消音棉的处理。这一步其实出现了一点问题：我购买的84布局消音棉（毛毡）实际上和我的套件在螺丝孔位上不是很匹配，炸虾粒 店里应该有为我这个套件定制的消音棉。但是既然都已经买了，就不想再退回去了，反正差不多，我直接对着PCB与定位板之间的孔位在毛毡上开孔，剪开了一些不需要的部分，最后比较顺利地把消音棉夹在了两者之间。唯一的问题是空格键下方的消音棉直接被我抛弃了，也许会产生一些额外的空腔音，不过总体是填满了。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/IMG_20210411_180650.jpg" alt="IMG_20210411_180650"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/IMG_20210411_181243.jpg" alt="IMG_20210411_181243"></p>
+<p>下一步就是装上轴体，没什么好说的。字母区与数字区全部采用 TTC月白轴 ，其余键位均使用线性轴，比如 TTC赤瞳轴，金红轴，凯华奶油轴。线材购买了 酷品世家 的 灰色加粗螺旋线Type-C接口，键帽选的是 KBDfans 的 pbt原厂深灰+浅灰蓝日文键帽，这套键帽算是我买过最贵的键帽了，但是实际效果很让我满意。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040139.JPG" alt="P1040139"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/MVIMG_20210414_182904.jpg" alt="MVIMG_20210414_182904"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/IMG_20210414_125210.jpg" alt="IMG_20210414_125210"></p>
+<p>至此，整部键盘第一次完整地出现在我眼前了。键盘的整体上手的时候还是很让我惊艳的，月白轴的手感在当时的我看来十分新鲜，回弹的手感非常带感。键帽的选择不仅带来手感上的舒适，也很养眼。键盘外框可以简易拆卸，制造悬浮键的视觉效果。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1030796.JPG" alt="P1030796"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/IMG_20210414_190403.jpg" alt="IMG_20210414_190403"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040124.JPG" alt="P1040124"></p>
+<h3 id="第二批购物"><a href="#第二批购物" class="headerlink" title="第二批购物"></a>第二批购物</h3><p>没过几天，我又在b站上看到了几个润轴的视频，于是重新打开淘宝，又进行了一轮的购物。这一次为了键盘的“完整性”，购买了 KBDfans 的 KBD75键盘包，然后是 FBB视物所 的 头文字D 贴纸，贴在键盘外框上，为键盘注入了一波灵魂。最后是让我这次客制化感到极具体验的润滑套装：105与205调配润滑脂、轴体开盖器 与 润轴板。</p>
+<p>键盘包质量很不错，除了出厂有些许异味，内部绒毛材质很不错，做工精良，基本完全包裹键盘外壳，好评。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040141.JPG" alt="P1040141"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040143.JPG" alt="P1040143"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040144.JPG" alt="P1040144"></p>
+<p>贴纸比想象中质量要好（毕竟也是要二十的），贴纸并不是一整块印刷，而是实体切割的，每个笔画都有凸起的质感，贴完立马有内味了是不是？</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040147.JPG" alt="P1040147"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040146.JPG" alt="P1040146"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040118.JPG" alt="P1040118"></p>
+<p>关于润滑套装，润轴板我直接一步到位上了个顶配：毕竟顶配也就三十几的亚克力，槽位多多益善嘛。润滑脂现在总共是有三种：从左至右分别是 22058、105 &amp; 205 MIX和105，分别对应卫星轴、轴体与弹簧的润滑（其中105因为我懒的原因还没有使用，轴体和弹簧我都是用中间的 “万金油” 润滑的）。开轴器是可乐蛙的什么CNC工艺制作的，可开不同类型的轴体，很有分量和设计感，两部分有磁吸设计，合体后能作为试轴器一枚，个人很喜欢。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040127.JPG" alt="P1040127"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040126.JPG" alt="P1040126"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040128.JPG" alt="P1040128"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040131.JPG" alt="P1040131"></p>
+<p>这次的快递到的时候，快递盒里有一些泡泡纸，我想着这键盘 PCB 与 底壳中间还有一段空间，不如把泡泡纸塞在里面。塞完后装回去，仿佛有了那么一丢丢的声音提升（</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040136.JPG" alt="P1040136"></p>
+<p>接下来就是：开始很新鲜，后来有些枯燥的润轴过程了。也不知道自己怎么有耐心的，就能坐着一个一个拆开，然后一片一片刷上润滑脂。彼时天气已经开始转热，寝室开起了空调，我听着音乐，悠然自得地润着轴，心情又变得很愉快起来。</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20210512055059071.png" alt="image-20210512055059071"></p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040105.JPG" alt="P1040105"></p>
+<p>经历了漫长的润滑过程，所有轴体被我装回了键盘，扣回键帽，上手体验一番。到这时候我终于才体会到客制化键盘带来的结果上的愉悦：润滑之后的键盘不单单是敲击手感上有了质的飞跃，键盘音也有了十分可观的改善，可以称得上是悦耳了。具体的打字音如何，后面会拍一个视频，自行体会吧。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="满意之处"><a href="#满意之处" class="headerlink" title="满意之处"></a>满意之处</h3><p>执行力还是不错的，当时想要完成的内容基本都完成了，没有因为偷懒省去某个步骤，最终成品的完成度令我十分满意。</p>
+<p>热插拔轴座使得我不断体验、调整和更换轴体的过程变得轻松惬意。</p>
+<p>所有购入的物品在我看来基本都算是物有所值，没有让我比较失望的购买内容。</p>
+<h3 id="不足之处"><a href="#不足之处" class="headerlink" title="不足之处"></a>不足之处</h3><p>这个套件已经是能看的程度了，虽然有些地方还是想吐槽，比如这个套件的底部，廉价感还是很足：</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040145.JPG" alt="P1040145"></p>
+<p>这个套件也没有脚撑（当然很多高端套件也没有），只有两个磁吸增高垫 ，不过200块钱，要什么自行车嘛!</p>
+<p>然后就是本轻微强迫症患者比较头疼的部分：这个键帽也有一些问题，部分键的高度放在键盘上很奇怪，于是我只能使用其它键代替，于是就有了右侧这个神秘的区域：</p>
+<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/P1040125.JPG" alt="P1040125"></p>
+<p>真的不是我故意要这么做的，而是原装的键帽放在上面高低不平实在过于违和。这里下面的 <code>PgUp</code> 与 <code>PgDn</code> 实际上是 <code>Home</code> 和 <code>End</code> 键，而右上角的 <code>ScrollLock</code> 键实际上应该是 <code>Delete</code> 键。日常使用当然没有什么问题，这个键盘的布局算是比较常规的，因此没有给我带来太大的困扰，于是就这么凑合了。</p>
+<h2 id="购物清单（仅包含实装在此键盘上的项目）"><a href="#购物清单（仅包含实装在此键盘上的项目）" class="headerlink" title="购物清单（仅包含实装在此键盘上的项目）"></a>购物清单（仅包含实装在此键盘上的项目）</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>物品</th>
+<th>店家</th>
+<th>数量</th>
+<th>价格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aws84键三模白光套件</td>
+<td>爱外设旗舰店</td>
+<td>1</td>
+<td>209</td>
+</tr>
+<tr>
+<td>84布局消音棉</td>
+<td>致命毒物ToxicLab</td>
+<td>1</td>
+<td>16.9</td>
+</tr>
+<tr>
+<td>佳达隆白色钢板卫星轴</td>
+<td>怡科外设KBDfans</td>
+<td>1</td>
+<td>48</td>
+</tr>
+<tr>
+<td>pbt原厂日文键帽</td>
+<td>怡科外设KBDfans</td>
+<td>1</td>
+<td>202.43</td>
+</tr>
+<tr>
+<td>KBD75键盘包</td>
+<td>怡科外设KBDfans</td>
+<td>1</td>
+<td>104</td>
+</tr>
+<tr>
+<td>TTC月白轴</td>
+<td>兴伟达电子</td>
+<td>60</td>
+<td>177.6</td>
+</tr>
+<tr>
+<td>TTC赤瞳轴</td>
+<td>兴伟达电子</td>
+<td>10</td>
+<td>36</td>
+</tr>
+<tr>
+<td>凯华奶油轴</td>
+<td>兴伟达电子</td>
+<td>4</td>
+<td>18.2</td>
+</tr>
+<tr>
+<td>TTC快银轴</td>
+<td>ttc旗舰店</td>
+<td>10</td>
+<td>45</td>
+</tr>
+<tr>
+<td>电话线螺旋机械键盘数据线</td>
+<td>酷品世家</td>
+<td>1</td>
+<td>49</td>
+</tr>
+<tr>
+<td>头文字D 贴纸</td>
+<td>FBB视物所</td>
+<td>1</td>
+<td>20</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>总计：</td>
+<td>926.13</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>真不愧是 <strong>“氪”制化键盘</strong> 啊!</p>
+<h2 id="附"><a href="#附" class="headerlink" title="附"></a>附</h2><p><em>本文章中图片均由本人使用 小米9 与 松下GX85(由czw赞助) 拍摄，没有经过任何修图。</em></p>
+<p><em>购物清单中的价格仅供参考，实际购买可能会有价格浮动</em></p>
+<p><em>Blog : <a href="https://1099255210.github.io/">https://1099255210.github.io/</a></em></p>
+<p><em>Bilibili : <a href="https://space.bilibili.com/7405917">不是吴昊的wh</a></em></p>
 
       
     </div>
@@ -280,7 +360,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -348,7 +428,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

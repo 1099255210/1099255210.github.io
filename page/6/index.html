@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/17/Transformer%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/26/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/07/17/Transformer%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Transformer 学习笔记</a>
+            <a href="/2022/07/26/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">神经网络模型</a>
         </h2>
 
         <div class="post-meta">
@@ -184,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-07-17 12:39:08" itemprop="dateCreated datePublished" datetime="2022-07-17T12:39:08+08:00">2022-07-17</time>
+              <time title="创建时间：2022-07-26 20:09:08" itemprop="dateCreated datePublished" datetime="2022-07-26T20:09:08+08:00">2022-07-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-04 10:54:02" itemprop="dateModified" datetime="2022-08-04T10:54:02+08:00">2022-08-04</time>
+                <time title="修改时间：2022-08-25 21:13:32" itemprop="dateModified" datetime="2022-08-25T21:13:32+08:00">2022-08-25</time>
               </span>
 
           
@@ -205,53 +205,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Transformer-笔记"><a href="#Transformer-笔记" class="headerlink" title="Transformer 笔记"></a>Transformer 笔记</h1><blockquote>
-<p>输入 -&gt; 编码 -&gt; 解码 -&gt; 输出</p>
-</blockquote>
-<h2 id="Transformer-结构"><a href="#Transformer-结构" class="headerlink" title="Transformer 结构"></a>Transformer 结构</h2><p>注意点：</p>
-<p>每个小 Encoder 结构都是一样的，但是参数都不同，分别训练</p>
-<p>每个小 Decoder 结构都是一样的，但是参数都不同，分别训练</p>
-<p>Encoder 和 Decoder 是不一样的</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220804104944103.png" alt="image-20220804104944103"></p>
-<p>这里的N在文章中为6</p>
-<h2 id="Encoder-和-Decoder"><a href="#Encoder-和-Decoder" class="headerlink" title="Encoder 和 Decoder"></a>Encoder 和 Decoder</h2><h3 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h3><p>结构 : 输入、注意力机制、前馈神经网络</p>
-<p>六个大的模块之间是串行的</p>
-<p>每一个模块注意力层和前馈神经层自身可以并行计算，不同单词之间没有依赖关系；注意力层和前馈神经层又是串行关系。</p>
-<h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><p>包括：</p>
+          <h1 id="神经网络模型"><a href="#神经网络模型" class="headerlink" title="神经网络模型"></a>神经网络模型</h1><h2 id="Lenet"><a href="#Lenet" class="headerlink" title="Lenet"></a>Lenet</h2><p>最初应用为识别手写数字</p>
+<p>早期成功的神经网络</p>
+<p>先使用卷积层学习图片的空间信息，池化层(平均)降低图片敏感度，然后使用全连接层来转换到类别空间</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220725190350958.png" alt="image-20220725190350958"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LeNet</span>(nn.Module):</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="built_in">super</span>(LeNet, self).__init__()</span><br><span class="line">    self.relu = nn.ReLU()</span><br><span class="line">    self.pool = nn.AvgPool2d((<span class="number">2</span>,<span class="number">2</span>), (<span class="number">2</span>,<span class="number">2</span>))</span><br><span class="line">    self.conv1 = nn.Conv2d(<span class="number">1</span>, <span class="number">6</span>, (<span class="number">5</span>,<span class="number">5</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">0</span>,<span class="number">0</span>))</span><br><span class="line">    self.conv2 = nn.Conv2d(<span class="number">6</span>, <span class="number">16</span>, (<span class="number">5</span>,<span class="number">5</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">0</span>,<span class="number">0</span>))</span><br><span class="line">    self.conv3 = nn.Conv2d(<span class="number">16</span>, <span class="number">120</span>, (<span class="number">5</span>,<span class="number">5</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">0</span>,<span class="number">0</span>))</span><br><span class="line">    self.linear1 = nn.Linear(<span class="number">120</span>, <span class="number">84</span>)</span><br><span class="line">    self.linear2 = nn.Linear(<span class="number">84</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    x = self.relu(self.conv1(x))</span><br><span class="line">    x = self.pool(x)</span><br><span class="line">    x = self.relu(self.conv2(x))</span><br><span class="line">    x = self.pool(x)</span><br><span class="line">    x = self.relu(self.conv3(x))</span><br><span class="line">    x = x.reshape(x.shape[<span class="number">0</span>], -<span class="number">1</span>)</span><br><span class="line">    x = self.relu(self.linear1(x))</span><br><span class="line">    x = self.linear2(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+<h2 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h2><p>won 2012 ImageNet</p>
+<p>本质上是更深更大的 LeNet</p>
+<p>改进了：</p>
 <ul>
-<li><p>Embedding</p>
-</li>
-<li><p>位置编码</p>
-</li>
+<li>丢弃法</li>
+<li>ReLu</li>
+<li>MaxPooling</li>
+<li>Overlapping Pooling (stride=2, kernel_size=3)</li>
 </ul>
-<p>位置编码记录了词序信息。</p>
-<p>关于位置编码，对于所有的 timeline 上的位置共享一套参数</p>
-<p>RNN 网络输入有天然的时序关系；Transformer 的 multihead 机制是同时处理所有输入的，忽略了时序关系，因此需要位置编码。</p>
-<p>位置编码的公式：</p>
-<p>$PE_{(pos,2i)}=\sin(pos/10000^{2i/d_{model}})$</p>
-<p>$PE_{(pos,2i+1)}=\cos(pos/10000^{2i/d_{model}})$</p>
-<p>其中 $i$ 是位置编码维度（如 0-511）</p>
-<p>位置编码（512d）+Embedding（512d）得到 transformer 的输入</p>
-<p>位置嵌入有效的原因：在绝对位置信息中包含相对位置信息，$pos+k$ 位置的位置向量中的某一维 $2i$ 或 $2i+1$ 能够被 $pos$ 位置和 $k$ 位置的位置向量中的 $2i$ 和 $2i+1$ 维线性组合。但这种相对位置信息会在注意力机制那里消失。</p>
-<p>推理公式：</p>
-<p>$PE_{(pos+k,2i)}=PE_{(pos,2i)}\times PE_{(k,2i+1)}+PE_{(pos,2i+1)}\times PE_{(k,2i)}$</p>
-<p>$PE_{(pos+k,2i+1)}=PE_{(pos,2i+1)}\times PE_{(k,2i+1)}-PE_{(pos,2i)}\times PE_{(k,2i)}$</p>
-<h2 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h2><p>$Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V$</p>
-<p>$Q$ 是输入，点乘 $K$（表示区域），得到相似度向量，softmax 归一化后乘 $V$ 得到 Attention Value</p>
-<p>在只有单词向量的情况下，将单词向量与 $QKV$ 矩阵相乘得到 $QKV$ 向量。 </p>
-<p>作归一化的原因：随着$d_k$的增大，$QK^T$的结果也随之增大，而如果点乘后的值过大，会导致softmax函数趋近于边缘，梯度较小。为了抵消影响，需要将点积缩放。</p>
-<h2 id="Normalization"><a href="#Normalization" class="headerlink" title="Normalization"></a>Normalization</h2><p><img src="https://raw.githubusercontent.com/1099255210/blogimgrepo/main/img/diff_norms.webp" alt="diif_norm"></p>
-<p><strong>CV 使用 Batch Norm</strong></p>
-<p>BN 是对于每一个特征在 batch_size 上作特征缩放。</p>
-<p>BN的：</p>
+<p>架构：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220727185015997.png" alt="image-20220727185015997"></p>
+<p>写代码的时候出现了一个问题：AlexNet 的输入图像的宽高到底是224还是227？因为这影响到卷积层参数的计算。</p>
+<p><a href="https://datascience.stackexchange.com/questions/29245/what-is-the-input-size-of-alex-net">网络上的相关讨论</a></p>
+<p>这里我写代码的时候暂且按照 227 <em> 227 </em> 3 的输入作处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">AlexNet</span>(nn.Module):</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="built_in">super</span>(AlexNet,self).__init__()</span><br><span class="line">    self.relu = nn.ReLU()</span><br><span class="line">    self.pool = nn.MaxPool2d((<span class="number">3</span>,<span class="number">3</span>), (<span class="number">2</span>,<span class="number">2</span>))</span><br><span class="line">    self.dropout = nn.Dropout(<span class="number">0.5</span>)</span><br><span class="line">    self.flatten = nn.Flatten()</span><br><span class="line">    self.conv1 = nn.Conv2d(<span class="number">3</span>, <span class="number">48</span>, (<span class="number">11</span>,<span class="number">11</span>), (<span class="number">4</span>,<span class="number">4</span>), (<span class="number">0</span>,<span class="number">0</span>))</span><br><span class="line">    self.conv2 = nn.Conv2d(<span class="number">48</span>, <span class="number">128</span>, (<span class="number">5</span>,<span class="number">5</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">2</span>,<span class="number">2</span>))</span><br><span class="line">    self.conv3 = nn.Conv2d(<span class="number">128</span>, <span class="number">192</span>, (<span class="number">3</span>,<span class="number">3</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">    self.conv4 = nn.Conv2d(<span class="number">192</span>, <span class="number">192</span>, (<span class="number">3</span>,<span class="number">3</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">    self.conv5 = nn.Conv2d(<span class="number">192</span>, <span class="number">128</span>, (<span class="number">3</span>,<span class="number">3</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">    self.linear1 = nn.Linear(<span class="number">6</span>*<span class="number">6</span>*<span class="number">128</span>, <span class="number">2048</span>)</span><br><span class="line">    self.linear2 = nn.Linear(<span class="number">2048</span>, <span class="number">2048</span>)</span><br><span class="line">    self.linear3 = nn.Linear(<span class="number">2048</span>, <span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    x = self.relu(self.conv1(x))</span><br><span class="line">    x = self.pool(x)</span><br><span class="line">    x = self.relu(self.conv2(x))</span><br><span class="line">    x = self.pool(x)</span><br><span class="line">    x = self.relu(self.conv3(x))</span><br><span class="line">    x = self.relu(self.conv4(x))</span><br><span class="line">    x = self.relu(self.conv5(x))</span><br><span class="line">    x = self.pool(x)</span><br><span class="line"></span><br><span class="line">    x = self.flatten(x)</span><br><span class="line">    x = self.relu(self.linear1(x))</span><br><span class="line">    x = self.dropout(x)</span><br><span class="line">    x = self.relu(self.linear2(x))</span><br><span class="line">    x = self.dropout(x)</span><br><span class="line">    x = self.linear3(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+<h2 id="VGG"><a href="#VGG" class="headerlink" title="VGG"></a>VGG</h2><p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220731073437523.png" alt="image-20220731073437523"></p>
+<p>特点：</p>
 <ul>
-<li>优点：可以解决内部协变量偏移；缓解了梯度饱和问题，加快收敛</li>
-<li>缺点：batch_size 较小的时候效果差；在 RNN 中效果比较差，因为输入是动态的，不能有效地得到整个batch_size 中的均值和方差。</li>
+<li>小卷积核、多卷积子层</li>
+<li>小池化核</li>
+<li>通道数多</li>
 </ul>
-<p><strong>NLP 使用 Layer Norm</strong></p>
-<p>LN是针对每一个样本进行特征缩放。</p>
-<p><strong>为什么 CV 任务用 BN 而 NLP 任务使用 LN ?</strong></p>
-<p>词向量是学习出来的用来表示语义的参数，不是真实存在的；而图像的像素是真实存在，包含图像特征的信息。</p>
+<p>vgg代码(这里简单实现了一个VGG16)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VGG16</span>(nn.Module):</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="built_in">super</span>(VGG16,self).__init__()</span><br><span class="line">    self.relu = nn.ReLU()</span><br><span class="line">    self.pool = nn.MaxPool2d((<span class="number">2</span>,<span class="number">2</span>), (<span class="number">2</span>,<span class="number">2</span>))</span><br><span class="line">    self.dropout = nn.Dropout(<span class="number">0.5</span>)</span><br><span class="line">    self.flatten = nn.Flatten()</span><br><span class="line">    self.conv1_1 = nn.Conv2d(<span class="number">3</span>, <span class="number">64</span>, (<span class="number">3</span>,<span class="number">3</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">    self.conv1_2 = nn.Conv2d(<span class="number">64</span>, <span class="number">64</span>, (<span class="number">3</span>,<span class="number">3</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">    self.conv2_1 = nn.Conv2d(<span class="number">64</span>, <span class="number">128</span>, (<span class="number">3</span>,<span class="number">3</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">    self.conv2_2 = nn.Conv2d(<span class="number">128</span>, <span class="number">128</span>, (<span class="number">3</span>,<span class="number">3</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">    self.conv3_1 = nn.Conv2d(<span class="number">128</span>, <span class="number">256</span>, (<span class="number">3</span>,<span class="number">3</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">    self.conv3_2 = nn.Conv2d(<span class="number">256</span>, <span class="number">256</span>, (<span class="number">3</span>,<span class="number">3</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">    self.conv4_1 = nn.Conv2d(<span class="number">256</span>, <span class="number">512</span>, (<span class="number">3</span>,<span class="number">3</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">    self.conv4_2 = nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, (<span class="number">3</span>,<span class="number">3</span>), (<span class="number">1</span>,<span class="number">1</span>), (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">    self.linear1 = nn.Linear(<span class="number">7</span>*<span class="number">7</span>*<span class="number">512</span>, <span class="number">4096</span>)</span><br><span class="line">    self.linear2 = nn.Linear(<span class="number">4096</span>, <span class="number">4096</span>)</span><br><span class="line">    self.linear3 = nn.Linear(<span class="number">4096</span>, <span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    x = self.relu(self.conv1_1(x))</span><br><span class="line">    x = self.relu(self.conv1_2(x))</span><br><span class="line">    x = self.pool(x)</span><br><span class="line">    x = self.relu(self.conv2_1(x))</span><br><span class="line">    x = self.relu(self.conv2_2(x))</span><br><span class="line">    x = self.pool(x)</span><br><span class="line">    x = self.relu(self.conv3_1(x))</span><br><span class="line">    x = self.relu(self.conv3_2(x))</span><br><span class="line">    x = self.relu(self.conv3_2(x))</span><br><span class="line">    x = self.pool(x)</span><br><span class="line">    x = self.relu(self.conv4_1(x))</span><br><span class="line">    x = self.relu(self.conv4_2(x))</span><br><span class="line">    x = self.relu(self.conv4_2(x))</span><br><span class="line">    x = self.pool(x)</span><br><span class="line">    x = self.relu(self.conv4_2(x))</span><br><span class="line">    x = self.relu(self.conv4_2(x))</span><br><span class="line">    x = self.relu(self.conv4_2(x))</span><br><span class="line">    x = self.pool(x)</span><br><span class="line"></span><br><span class="line">    x = self.flatten(x)</span><br><span class="line">    x = self.relu(self.linear1(x))</span><br><span class="line">    x = self.dropout(x)</span><br><span class="line">    x = self.relu(self.linear2(x))</span><br><span class="line">    x = self.dropout(x)</span><br><span class="line">    x = self.relu(self.linear3(x))</span><br><span class="line">    <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+<p>to be continued…</p>
 
       
     </div>
@@ -270,7 +253,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -338,7 +321,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
