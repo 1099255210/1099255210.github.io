@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/19/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E5%AD%A6%20project/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/Hugging%20Face%20%E5%AD%A6%E4%B9%A0(1)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/19/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E5%AD%A6%20project/" class="post-title-link" itemprop="url">计算社会学课程 Project</a>
+            <a href="/2022/07/12/Hugging%20Face%20%E5%AD%A6%E4%B9%A0(1)/" class="post-title-link" itemprop="url">Hugging Face 学习(1)</a>
         </h2>
 
         <div class="post-meta">
@@ -184,7 +184,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-01-19 15:25:08" itemprop="dateCreated datePublished" datetime="2022-01-19T15:25:08+08:00">2022-01-19</time>
+              <time title="创建时间：2022-07-12 12:00:06" itemprop="dateCreated datePublished" datetime="2022-07-12T12:00:06+08:00">2022-07-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -205,42 +205,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>课堂作业：对班里同学之间的社交关系进行分析</p>
-<h2 id="使用的软件"><a href="#使用的软件" class="headerlink" title="使用的软件"></a>使用的软件</h2><blockquote>
-<p>Gephi 是一款网络分析领域的数据可视化软件</p>
-<p>官方网站 - <a href="https://gephi.org/">Gephi</a></p>
-</blockquote>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119091559013.png" alt="image-20220119091559013"></p>
-<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p><img src="./img/flow.drawio.svg" alt="img"></p>
-<h2 id="数据处理与导入"><a href="#数据处理与导入" class="headerlink" title="数据处理与导入"></a>数据处理与导入</h2><p><em>仅单纯导入了班级内各同学之间认识的关系，并没有将个人其他信息加入</em></p>
-<p>简单拉出关系表转换为<code>.csv</code></p>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119101906964.png" alt="image-20220119101906964"></p>
-<p>使用 <code>python</code> 建立<strong>节点表格</strong>与<strong>边表格</strong>，方便导入 <code>Gephi</code> 软件。</p>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119102109357.png" alt="image-20220119102109357"></p>
-<h2 id="报告"><a href="#报告" class="headerlink" title="报告"></a>报告</h2><h3 id="导入时初始网络图"><a href="#导入时初始网络图" class="headerlink" title="导入时初始网络图"></a>导入时初始网络图</h3><p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/Snipaste_2022-01-19_10-07-44.png" alt="Snipaste_2022-01-19_10-07-44"></p>
-<p><em>使用的布局方式：Force Atlas，斥力强度 200.0</em></p>
-<h3 id="依据节点的度对节点上色与改变大小"><a href="#依据节点的度对节点上色与改变大小" class="headerlink" title="依据节点的度对节点上色与改变大小"></a>依据节点的度对节点上色与改变大小</h3><p><img src="./degree.svg" alt=""></p>
-<p><em>使用的布局方式：Force Atlas，斥力强度 2000.0，部分距离较远节点经过手动调整位置。</em></p>
-<h3 id="聚合系数-Cluster-coefficient"><a href="#聚合系数-Cluster-coefficient" class="headerlink" title="聚合系数 Cluster coefficient"></a>聚合系数 Cluster coefficient</h3><p>聚合系数是网络的局部特征，反映了相邻两个人之间朋友圈子的重合度，即该节点的朋友之间也是朋友的程度。</p>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119094510712.png" alt="image-20220119094510712"></p>
-<p>使用<code>Gephi</code>计算该网络的<strong>平均聚合系数</strong>为 0.587</p>
-<h3 id="平均度数-Avg-degree"><a href="#平均度数-Avg-degree" class="headerlink" title="平均度数 Avg degree"></a>平均度数 Avg degree</h3><p>使用<code>Gephi</code>计算该网络的<strong>平均度数</strong>为 4.119</p>
-<p>度数分布图：</p>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/degree-distribution.png" alt="degree-distribution"></p>
-<h3 id="平均路径长度-特征路径长度-Avg-path-length"><a href="#平均路径长度-特征路径长度-Avg-path-length" class="headerlink" title="平均路径长度(特征路径长度) Avg path length"></a>平均路径长度(特征路径长度) Avg path length</h3><p>使用<code>Gephi</code>计算该网络的平均路径长度为 2.379</p>
-<p>网络直径：5</p>
-<p>体现<strong>小世界现象</strong></p>
-<h3 id="模块化-Modularity"><a href="#模块化-Modularity" class="headerlink" title="模块化 Modularity"></a>模块化 Modularity</h3><p>使用<code>Gephi</code>计算该网络的<strong>模块化程度</strong>为 0.414</p>
-<p>模块化程度：</p>
-<p><img src="./img/m.jpg" alt=""></p>
-<p>利用模块化的计算，可以进行社区发现 ( Community Detection )</p>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119103903270.png" alt="image-20220119103903270"></p>
-<p>社区发现可视化结果：</p>
-<p><img src="./module.svg" alt=""></p>
-<p>与其它同学发现的对比：</p>
-<p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220119105008234.png" alt="image-20220119105008234"></p>
-<h2 id="附"><a href="#附" class="headerlink" title="附"></a>附</h2><p><code>python</code> 源代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line">header_namelist = [<span class="string">&#x27;Id&#x27;</span>, <span class="string">&#x27;Label&#x27;</span>]</span><br><span class="line">header_relation = [<span class="string">&#x27;Source&#x27;</span>, <span class="string">&#x27;Target&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># generate list</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;namelist.csv&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> nf:</span><br><span class="line">    nfer = csv.writer(nf)</span><br><span class="line">    nfer.writerow(header_namelist)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;res.csv&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f_csv = csv.reader(f)</span><br><span class="line">        <span class="built_in">next</span>(f_csv, <span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> f_csv:</span><br><span class="line">            nfer.writerow([row[<span class="number">0</span>], row[<span class="number">0</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># generate relation</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;relation.csv&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> nf:</span><br><span class="line">    nfer = csv.writer(nf)</span><br><span class="line">    nfer.writerow(header_relation)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;res.csv&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f_csv = csv.reader(f)</span><br><span class="line">        <span class="built_in">next</span>(f_csv, <span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> f_csv:</span><br><span class="line">            source = row[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">for</span> target <span class="keyword">in</span> row[<span class="number">1</span> : -<span class="number">1</span>]:</span><br><span class="line">                <span class="keyword">if</span> target:</span><br><span class="line">                    nfer.writerow([source, target])</span><br></pre></td></tr></table></figure>
+          <h1 id="Hugging-Face-学习-1"><a href="#Hugging-Face-学习-1" class="headerlink" title="Hugging Face 学习(1)"></a>Hugging Face 学习(1)</h1><p>Hugging Face是一个非常流行的 NLP 库，Hugging Face 的 <a href="https://huggingface.co/">官网</a> 上也有很多开源的模型。</p>
+<p>官网上的有些模型已经提供了简单的使用方法。比如我最先接触到的这个 <code>dalle-mini</code> 模型，提供了一个生成的接口(虽然好像还是定向到了<a href="https://www.craiyon.com">其它网站</a>，据说是因为访问量太大了)，可以输入一段文本，生成一些图片。这里随便输入一个句子 A Rubic’s Cube swimming in the pool (水池里游泳的魔方)：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220720084135775.png" alt="image-20220720084135775"></p>
+<p>关于 <code>dalle</code> 这个模型，最近看到一篇文章比较有意思(<a href="https://blog.csdn.net/fengdu78/article/details/125109103">https://blog.csdn.net/fengdu78/article/details/125109103</a>)</p>
+<hr>
+<p>如果是在本地使用 Hugging Face 的一些 NLP 模型，可以安装他们提供的 <code>transformers</code> 的库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install transformers</span><br></pre></td></tr></table></figure>
+<p>这里使用一个 <a href="https://huggingface.co/t5-small">t5-small</a> 的模型测试一下。</p>
+<p>t5 (Text-To-Text Transfer Transformer) 是一个统一框架，将所有 NLP 任务都转化成 Text-to-Text （文本到文本）任务。</p>
+<p><img src="https://1.bp.blogspot.com/-o4oiOExxq1s/Xk26XPC3haI/AAAAAAAAFU8/NBlvOWB84L0PTYy9TzZBaLf6fwPGJTR0QCLcBGAsYHQ/s640/image3.gif" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModelWithLMHead</span><br><span class="line"></span><br><span class="line">tokenizer = AutoTokenizer.from_pretrained(<span class="string">&quot;t5-small&quot;</span>)</span><br><span class="line"></span><br><span class="line">model = AutoModelWithLMHead.from_pretrained(<span class="string">&quot;t5-small&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>只需要三行代码，就可以直接加载模型开始使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">input_ids = tokenizer(<span class="string">&quot;translate English to Germany: What a nice day.&quot;</span>, return_tensors=<span class="string">&quot;pt&quot;</span>).input_ids</span><br><span class="line"></span><br><span class="line">outputs = model.generate(input_ids)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tokenizer.decode(outputs[<span class="number">0</span>], skip_special_tokens=<span class="literal">True</span>))</span><br></pre></td></tr></table></figure>
+<p>得到输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Was für ein nettes Tag.</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -259,7 +238,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -327,7 +306,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -23,14 +23,14 @@
   <meta name="description" content="是垃圾桶 也是我的聚宝盆">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hg&#39;s Blog">
-<meta property="og:url" content="http://example.com/page/11/index.html">
+<meta property="og:url" content="http://example.com/page/21/index.html">
 <meta property="og:site_name" content="Hg&#39;s Blog">
 <meta property="og:description" content="是垃圾桶 也是我的聚宝盆">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Han Wang">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/page/11/">
+<link rel="canonical" href="http://example.com/page/21/">
 
 
 <script id="page-configurations">
@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/17/Transformer%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8Fwebp%E4%BC%98%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/07/17/Transformer%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Transformer 学习笔记</a>
+            <a href="/2020/08/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8Fwebp%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">如何利用 webp 进行小程序图片加载速度的优化</a>
         </h2>
 
         <div class="post-meta">
@@ -184,7 +184,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-07-17 12:39:08" itemprop="dateCreated datePublished" datetime="2022-07-17T12:39:08+08:00">2022-07-17</time>
+              <time title="创建时间：2020-08-18 06:56:08" itemprop="dateCreated datePublished" datetime="2020-08-18T06:56:08+08:00">2020-08-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -205,53 +205,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Transformer-笔记"><a href="#Transformer-笔记" class="headerlink" title="Transformer 笔记"></a>Transformer 笔记</h1><blockquote>
-<p>输入 -&gt; 编码 -&gt; 解码 -&gt; 输出</p>
+          <h1 id="如何利用-webp-进行小程序图片加载速度的优化"><a href="#如何利用-webp-进行小程序图片加载速度的优化" class="headerlink" title="如何利用 webp 进行小程序图片加载速度的优化"></a>如何利用 webp 进行小程序图片加载速度的优化</h1><h2 id="导语"><a href="#导语" class="headerlink" title="导语"></a>导语</h2><p>最近很长一段时间没有更新博客，一方面是自己最近参与了小程序的开发，另一方面也是自己略有些怠惰，给自己记个过~那么现在既然回到学校那么还是要分享一些知识的。</p>
+<p>前一阵子参与微信小程序开发时遇到了一个小问题，就是图片的加载速度不理想。即使我们对于图像的大小一缩再缩，但后台服务器中200-300KB的图片在小程序里往往需要等待数十秒才能加载完毕（仅在安卓机上测试过，苹果应该优化得好一些），这个图片加载的速度导致我们的小程序体验比较糟糕。我经过搜索发现webp这种图片格式可能可以为我们提供一个可行的替代方案。</p>
+<h2 id="知识补充"><a href="#知识补充" class="headerlink" title="知识补充"></a>知识补充</h2><blockquote>
+<p>WebP（发音：weppy）是一种同时提供了有损压缩与无损压缩（可逆压缩）的图片文件格式，派生自影像编码格式VP8，被认为是WebM多媒体格式的姊妹项目，是由Google在购买On2 Technologies后发展出来，以BSD授权条款发布。<br>WebP最初在2010年发布，目标是减少文件大小，但达到和JPEG格式相同的图片质量，希望能够减少图片档在网络上的发送时间。根据Google较早的测试，WebP的无损压缩比网络上找到的PNG档少了45％的文件大小，即使这些PNG档在使用pngcrush和PNGOUT处理过，WebP还是可以减少28％的文件大小。</p>
+<p align="right">维基百科</p>
+
 </blockquote>
-<h2 id="Transformer-结构"><a href="#Transformer-结构" class="headerlink" title="Transformer 结构"></a>Transformer 结构</h2><p>注意点：</p>
-<p>每个小 Encoder 结构都是一样的，但是参数都不同，分别训练</p>
-<p>每个小 Decoder 结构都是一样的，但是参数都不同，分别训练</p>
-<p>Encoder 和 Decoder 是不一样的</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220804104944103.png" alt="image-20220804104944103"></p>
-<p>这里的N在文章中为6</p>
-<h2 id="Encoder-和-Decoder"><a href="#Encoder-和-Decoder" class="headerlink" title="Encoder 和 Decoder"></a>Encoder 和 Decoder</h2><h3 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h3><p>结构 : 输入、注意力机制、前馈神经网络</p>
-<p>六个大的模块之间是串行的</p>
-<p>每一个模块注意力层和前馈神经层自身可以并行计算，不同单词之间没有依赖关系；注意力层和前馈神经层又是串行关系。</p>
-<h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><p>包括：</p>
-<ul>
-<li><p>Embedding</p>
-</li>
-<li><p>位置编码</p>
-</li>
+<p>说人话？好。webp就是谷歌发布的一款可以在保证图片质量较为完整的情况下压缩率较高的网络图片格式。</p>
+<p>这么一看，webp岂不是无敌？实际上对于我们的项目它目前还是有局限性的：iOS端的微信小程序是不支持webp的。</p>
+<p>但是方法总是有的，既然iOS有它自己的优化方法，那么我就不让它搭上webp这班车了，我们可以判断设备的类型，然后针对安卓的手机进行优化。</p>
+<h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><h3 id="作案工具"><a href="#作案工具" class="headerlink" title="作案工具"></a>作案工具</h3><ul>
+<li>vscode</li>
+<li>微信小程序开发工具</li>
 </ul>
-<p>位置编码记录了词序信息。</p>
-<p>关于位置编码，对于所有的 timeline 上的位置共享一套参数</p>
-<p>RNN 网络输入有天然的时序关系；Transformer 的 multihead 机制是同时处理所有输入的，忽略了时序关系，因此需要位置编码。</p>
-<p>位置编码的公式：</p>
-<p>$PE_{(pos,2i)}=\sin(pos/10000^{2i/d_{model}})$</p>
-<p>$PE_{(pos,2i+1)}=\cos(pos/10000^{2i/d_{model}})$</p>
-<p>其中 $i$ 是位置编码维度（如 0-511）</p>
-<p>位置编码（512d）+Embedding（512d）得到 transformer 的输入</p>
-<p>位置嵌入有效的原因：在绝对位置信息中包含相对位置信息，$pos+k$ 位置的位置向量中的某一维 $2i$ 或 $2i+1$ 能够被 $pos$ 位置和 $k$ 位置的位置向量中的 $2i$ 和 $2i+1$ 维线性组合。但这种相对位置信息会在注意力机制那里消失。</p>
-<p>推理公式：</p>
-<p>$PE_{(pos+k,2i)}=PE_{(pos,2i)}\times PE_{(k,2i+1)}+PE_{(pos,2i+1)}\times PE_{(k,2i)}$</p>
-<p>$PE_{(pos+k,2i+1)}=PE_{(pos,2i+1)}\times PE_{(k,2i+1)}-PE_{(pos,2i)}\times PE_{(k,2i)}$</p>
-<h2 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h2><p>$Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V$</p>
-<p>$Q$ 是输入，点乘 $K$（表示区域），得到相似度向量，softmax 归一化后乘 $V$ 得到 Attention Value</p>
-<p>在只有单词向量的情况下，将单词向量与 $QKV$ 矩阵相乘得到 $QKV$ 向量。 </p>
-<p>作归一化的原因：随着$d_k$的增大，$QK^T$的结果也随之增大，而如果点乘后的值过大，会导致softmax函数趋近于边缘，梯度较小。为了抵消影响，需要将点积缩放。</p>
-<h2 id="Normalization"><a href="#Normalization" class="headerlink" title="Normalization"></a>Normalization</h2><p><img src="https://raw.githubusercontent.com/1099255210/blogimgrepo/main/img/diff_norms.webp" alt="diif_norm"></p>
-<p><strong>CV 使用 Batch Norm</strong></p>
-<p>BN 是对于每一个特征在 batch_size 上作特征缩放。</p>
-<p>BN的：</p>
-<ul>
-<li>优点：可以解决内部协变量偏移；缓解了梯度饱和问题，加快收敛</li>
-<li>缺点：batch_size 较小的时候效果差；在 RNN 中效果比较差，因为输入是动态的，不能有效地得到整个batch_size 中的均值和方差。</li>
-</ul>
-<p><strong>NLP 使用 Layer Norm</strong></p>
-<p>LN是针对每一个样本进行特征缩放。</p>
-<p><strong>为什么 CV 任务用 BN 而 NLP 任务使用 LN ?</strong></p>
-<p>词向量是学习出来的用来表示语义的参数，不是真实存在的；而图像的像素是真实存在，包含图像特征的信息。</p>
+<h3 id="手段"><a href="#手段" class="headerlink" title="手段"></a>手段</h3><p>首先我们需要定义一个全局变量作为判断是否为苹果设备的依据。所有的全局变量均在app.js里定义，在app.js中加入全局变量iOS，并用wx.getSystemInfo获取设备信息进行判断：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">App</span>(&#123;</span><br><span class="line">  <span class="attr">onLaunch</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> that = <span class="variable language_">this</span>;</span><br><span class="line">    wx.<span class="title function_">getSystemInfo</span>(&#123;</span><br><span class="line">      <span class="attr">success</span>: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(res);                           <span class="comment">//res是一个对象，包含设备信息。其中res.system的内容则是设备系统的版本</span></span><br><span class="line">        <span class="keyword">if</span> (res.<span class="property">system</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;iOS&quot;</span>) != -<span class="number">1</span>) &#123;      <span class="comment">//如果系统版本中有iOS三个字母，则判定为苹果设备</span></span><br><span class="line">          that.<span class="property">globalData</span>.<span class="property">iOS</span> = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">  <span class="attr">globalData</span>: &#123;</span><br><span class="line">    <span class="attr">iOS</span>: <span class="literal">false</span>,                                     <span class="comment">//默认iOS的值为false</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>到这里我们做好了设备类型的判断，接下来我们就要在独立的页面中进行链接替换。打个比方，如果这台设备是苹果，那么图片链接就使用 ../a.png ；如果是安卓，那么链接就换成 ../a.webp 。</p>
+<p>给出一个示例页面：</p>
+<p>html:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--简单的页面，一个view标签，一张图，图片链接用js传入数据--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span> = <span class="string">&#x27;&#123;&#123;img1&#125;&#125;&#x27;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>javascript:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Page</span>(&#123;                                              <span class="comment">//传入页面的数据</span></span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">img1</span>:<span class="string">&quot;../a.png&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这时我们在js中加入链接替换的内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> app = <span class="title function_">getApp</span>();                               <span class="comment">//这行代码很重要，用来从app.js中获取全局变量</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Page</span>(&#123;</span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">img1</span>:<span class="string">&quot;../a.png&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//事件处理函数，onLoad指在页面加载中的操作</span></span><br><span class="line">  <span class="attr">onLoad</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!app.<span class="property">globalData</span>.<span class="property">iOS</span>) &#123;                      <span class="comment">//app.globalData.iOS即为上面定义的全局变量，如果iOS为假，则替换链接</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setData</span>(&#123;</span><br><span class="line">        <span class="attr">img1</span>:<span class="string">&quot;../a.webp&quot;</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这样就完成了webp的替换，还是挺容易的，没有想象中的那么复杂。唯一的问题是页面多了以后替换起来会比较麻烦，不过如果都把图片的数据写在js里的话，替换起来会快很多。</p>
 
       
     </div>
@@ -270,7 +248,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span>
   </nav>
 
 
@@ -425,61 +403,6 @@
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-          load: ['[tex]/mhchem'],
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-          packages: {'[+]': ['mhchem']},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 

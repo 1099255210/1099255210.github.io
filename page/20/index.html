@@ -20,32 +20,30 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="导语本人写文章的时候，CS:GO游戏时长已经来到了1800小时。这个游戏不仅仅是竞技的快感让我无法自拔，游戏系统与生俱来的“程序员”风格也是让我无法割舍的（毕竟是v社的游戏）。在遇到CS:GO前，我无法想象一个游戏的控制台系统能够强大到让我痴迷。离开了控制台，也就离开了这个游戏的特色。那么谈到控制台，就不得不谈谈cfg。本文希望能用较为简单易懂的语言来谈谈CS:GO中的cfg系统，希望能给大家一些">
-<meta property="og:type" content="article">
-<meta property="og:title" content="CS:GO中的cfg系统">
-<meta property="og:url" content="http://example.com/2020/09/28/CSGO%20%E4%B8%AD%E7%9A%84%20cfg%20%E7%B3%BB%E7%BB%9F/index.html">
+  <meta name="description" content="是垃圾桶 也是我的聚宝盆">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hg&#39;s Blog">
+<meta property="og:url" content="http://example.com/page/20/index.html">
 <meta property="og:site_name" content="Hg&#39;s Blog">
-<meta property="og:description" content="导语本人写文章的时候，CS:GO游戏时长已经来到了1800小时。这个游戏不仅仅是竞技的快感让我无法自拔，游戏系统与生俱来的“程序员”风格也是让我无法割舍的（毕竟是v社的游戏）。在遇到CS:GO前，我无法想象一个游戏的控制台系统能够强大到让我痴迷。离开了控制台，也就离开了这个游戏的特色。那么谈到控制台，就不得不谈谈cfg。本文希望能用较为简单易懂的语言来谈谈CS:GO中的cfg系统，希望能给大家一些">
+<meta property="og:description" content="是垃圾桶 也是我的聚宝盆">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-09-28T09:02:08.000Z">
-<meta property="article:modified_time" content="2022-08-25T13:13:32.983Z">
 <meta property="article:author" content="Han Wang">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2020/09/28/CSGO%20%E4%B8%AD%E7%9A%84%20cfg%20%E7%B3%BB%E7%BB%9F/">
+<link rel="canonical" href="http://example.com/page/20/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : false,
-    isPost : true,
+    isHome : true,
+    isPost : false,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>CS:GO中的cfg系统 | Hg's Blog</title>
+  <title>Hg's Blog</title>
   
 
 
@@ -156,10 +154,9 @@
         <div class="content-wrap">
           
 
-          <div class="content post posts-expand">
+          <div class="content index posts-expand">
             
-
-    
+      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -175,9 +172,10 @@
       <meta itemprop="name" content="Hg's Blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          CS:GO中的cfg系统
-        </h1>
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/28/CSGO%20%E4%B8%AD%E7%9A%84%20cfg%20%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">CS:GO中的cfg系统</a>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -207,7 +205,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="导语"><a href="#导语" class="headerlink" title="导语"></a>导语</h2><p>本人写文章的时候，<strong>CS:GO</strong>游戏时长已经来到了1800小时。这个游戏不仅仅是竞技的快感让我无法自拔，游戏系统与生俱来的“程序员”风格也是让我无法割舍的（毕竟是v社的游戏）。在遇到CS:GO前，我无法想象一个游戏的<strong>控制台系统</strong>能够强大到让我痴迷。离开了控制台，也就离开了这个游戏的特色。那么谈到控制台，就不得不谈谈<strong>cfg</strong>。本文希望能用较为简单易懂的语言来谈谈CS:GO中的cfg系统，希望能给大家一些帮助。</p>
+          <h2 id="导语"><a href="#导语" class="headerlink" title="导语"></a>导语</h2><p>本人写文章的时候，<strong>CS:GO</strong>游戏时长已经来到了1800小时。这个游戏不仅仅是竞技的快感让我无法自拔，游戏系统与生俱来的“程序员”风格也是让我无法割舍的（毕竟是v社的游戏）。在遇到CS:GO前，我无法想象一个游戏的<strong>控制台系统</strong>能够强大到让我痴迷。离开了控制台，也就离开了这个游戏的特色。那么谈到控制台，就不得不谈谈<strong>cfg</strong>。本文希望能用较为简单易懂的语言来谈谈CS:GO中的cfg系统，希望能给大家一些帮助。</p>
 <h2 id="知识补充"><a href="#知识补充" class="headerlink" title="知识补充"></a>知识补充</h2><h3 id="简单设置"><a href="#简单设置" class="headerlink" title="简单设置"></a>简单设置</h3><p><strong>cfg</strong>其实就是设置(config)的缩写。.cfg也是文件的后缀名，我们在游戏根目录里能找到许多这样的文件。这些文件的作用就是储存我们在游戏里的设置参数。打个比方，我的游戏音量是1.0，那么我就能在.cfg的文件里找到这么一行：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volume &quot;1.0&quot;</span><br></pre></td></tr></table></figure>
 <p>前面的volume指的是音量，后面的”1.0”是数值，代表音量的值为1.0。这个例子反映了大部分设置的基本格式，基本都是一个<strong>设置项目名</strong>，后面跟着一个<strong>具体的数值</strong>。一对一的关系还是很易懂的。由此，我们了解了调整设置的基本语法为：</p>
@@ -310,34 +308,25 @@
 </ul>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>显然这不是CS:GO中独有的，但是CS:GO把cfg文件开放给玩家，让玩家可以任意调整任何设置的值，甚至可以在设置里写函数，可以说是把cfg的运用发挥到了极致。这也是我关于这款游戏最喜欢的内容。</p>
 
+      
     </div>
 
     
     
     
-
       <footer class="post-footer">
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2020/08/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8Fwebp%E4%BC%98%E5%8C%96/" rel="prev" title="如何利用 webp 进行小程序图片加载速度的优化">
-      <i class="fa fa-chevron-left"></i> 如何利用 webp 进行小程序图片加载速度的优化
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/09/30/ubuntu%2020.04%20%E5%AE%89%E8%A3%85/" rel="next" title="Ubuntu 20.04 与 win10 双系统安装笔记">
-      Ubuntu 20.04 与 win10 双系统安装笔记 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
+        <div class="post-eof"></div>
       </footer>
-    
   </article>
   
   
   
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -389,7 +378,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">导语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85"><span class="nav-number">2.</span> <span class="nav-text">知识补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">简单设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cfg%E4%B8%AD%E6%8C%87%E4%BB%A4%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">cfg中指令的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bind%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.3.</span> <span class="nav-text">bind的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toggle%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.4.</span> <span class="nav-text">toggle的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E4%B9%A01"><span class="nav-number">3.</span> <span class="nav-text">练习1:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E4%B8%8E%E5%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">3.1.</span> <span class="nav-text">加与减的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alias%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">alias的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E4%B9%A02"><span class="nav-number">4.</span> <span class="nav-text">练习2:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.1.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/04/CLIP%20%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/22/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Squoosh%20%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E5%9B%BE%E7%89%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/04/CLIP%20%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">Clip 模型与其应用</a>
+            <a href="/2022/09/22/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Squoosh%20%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E5%9B%BE%E7%89%87/" class="post-title-link" itemprop="url">如何使用 Squoosh 命令行批量压缩图片</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-09-04 20:09:08 / 修改时间：20:11:56" itemprop="dateCreated datePublished" datetime="2022-09-04T20:09:08+08:00">2022-09-04</time>
+              <time title="创建时间：2022-09-22 23:09:08 / 修改时间：01:24:10" itemprop="dateCreated datePublished" datetime="2022-09-22T23:09:08+08:00">2022-09-22</time>
             </span>
 
           
@@ -199,24 +199,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Clip-模型与其应用"><a href="#Clip-模型与其应用" class="headerlink" title="Clip 模型与其应用"></a>Clip 模型与其应用</h1><h2 id="CLIP-模型的介绍"><a href="#CLIP-模型的介绍" class="headerlink" title="CLIP 模型的介绍"></a>CLIP 模型的介绍</h2><p>CLIP 模型使用的方法：对比学习，预测 n*n 对图像与文本数据，将图片分类任务转换成图文匹配任务。这个过程实际上就是引入了 NLP 给出的监督信号。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904193225832.png" alt="image-20220904193225832"></p>
-<p>图中左侧，得到文本特征与图片的特征后可以看到，对角线上的元素都是图文匹配的，共有 N 个正样本，其余的元素都是负样本，共有 N*N-N 个。其中，文本数据使用Transformer，图片数据用了两种模型，ResNet 和 Vision Transformer (ViT)。</p>
-<p>CLIP 模型训练所用的数据集较为庞大，包含从互联网上各种公开资源收集的4亿对图像、文本，CLIP是从头开始训练的，没有使用预训练的初始参数。</p>
-<h2 id="利用-CLIP-做简单的图片检索"><a href="#利用-CLIP-做简单的图片检索" class="headerlink" title="利用 CLIP 做简单的图片检索"></a>利用 CLIP 做简单的图片检索</h2><p>在 jupyter notebook 中做一个简单的问答系统：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> clip</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> display</span><br><span class="line"><span class="keyword">from</span> tqdm.notebook <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line">device = <span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span></span><br><span class="line">model, preprocess = clip.load(<span class="string">&quot;ViT-B/32&quot;</span>, device=device)</span><br><span class="line"></span><br><span class="line"><span class="comment"># load images</span></span><br><span class="line"></span><br><span class="line">data_location =  <span class="string">&quot;./imgs&quot;</span></span><br><span class="line">img_dict = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> inx, f <span class="keyword">in</span> <span class="built_in">enumerate</span>(os.listdir(data_location)):</span><br><span class="line">  img_dict[inx] = f</span><br><span class="line">img_nums = <span class="built_in">len</span>(img_dict)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;There are &#123;&#125; images.&quot;</span>.<span class="built_in">format</span>(img_nums))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> img_nums == <span class="number">0</span>:</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;no image in the folder.&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>这一段用来加载模型 以及 读取文件夹中所有的图片</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># get text input from user &amp;&amp; text encode</span></span><br><span class="line">instr = <span class="built_in">input</span>(<span class="string">&#x27;Pleaze input description:&#x27;</span>)</span><br><span class="line">text_input = clip.tokenize(instr).to(device)</span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">  text_f = model.encode_text(text_input)</span><br><span class="line"></span><br><span class="line">sim = &#123;&#125;</span><br><span class="line">pbar = tqdm(total=img_nums)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(img_nums):</span><br><span class="line">  </span><br><span class="line">  image_path = <span class="string">f&#x27;<span class="subst">&#123;data_location&#125;</span>/<span class="subst">&#123;img_dict[i]&#125;</span>&#x27;</span></span><br><span class="line">  img = Image.<span class="built_in">open</span>(image_path)</span><br><span class="line">  img_input = preprocess(img).unsqueeze(<span class="number">0</span>).to(device)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># image encode</span></span><br><span class="line">  <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    img_f = model.encode_image(img_input)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># calculate similarity</span></span><br><span class="line">  img_f /= img_f.norm(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">  text_f /= text_f.norm(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">  similarity = <span class="number">100</span> * img_f @ text_f.T</span><br><span class="line">  sim[i] = similarity</span><br><span class="line">  pbar.update(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># display top3 result</span></span><br><span class="line">res = <span class="built_in">sorted</span>(sim.items(), key=<span class="keyword">lambda</span> s:s[<span class="number">1</span>], reverse=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;query:<span class="subst">&#123;instr&#125;</span>&#x27;</span>)</span><br><span class="line">MAX_SIZE = (<span class="number">300</span>, <span class="number">300</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">  image_path = <span class="string">f&#x27;<span class="subst">&#123;data_location&#125;</span>/<span class="subst">&#123;img_dict[res[i][<span class="number">0</span>]]&#125;</span>&#x27;</span></span><br><span class="line">  img = Image.<span class="built_in">open</span>(image_path)</span><br><span class="line">  img.thumbnail(MAX_SIZE)</span><br><span class="line">  display(img)</span><br></pre></td></tr></table></figure>
-<p>这里先读入用户的输入，即搜索图片的关键词/句，然后将文本编码得到特征，然后分别对应所有图片的特征计算相似度，取相似度最高的三张图片输出。</p>
-<p>图片我没有找网上的一些数据集（因为大部分应该已经有人测试过了），我想看一看这个模型到底有多强大，于是我选取了26张我自己拍的一些生活照，进行了一下图像压缩，控制在500kb之内，作为本实验的数据集。</p>
-<p>经过我的一些尝试，发现准确度还是很高的，得到的结果令人满意。下面展示一些查询的结果：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904195212924.png" alt="image-20220904195212924"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904195756669.png" alt="image-20220904195756669"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200643952.png" alt="image-20220904200643952"></p>
-<p>值得一提的是，一开始我并没有预料到他能学习到图像中的文本特征，但是实验中我发现，如果图片中有文字的话，也能被它检索到，比如这个关键词：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200822620.png" alt="image-20220904200822620"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200950871.png" alt="image-20220904200950871"></p>
-<p>我这里是输入了这个midi键盘的名称（是刻在键盘上的文字），结果它也能给我识别出来，感觉非常的神奇。</p>
+          <p>先说明：windows 上无法批量压缩，原因：</p>
+<p><a href="https://github.com/GoogleChromeLabs/squoosh/issues/973">https://github.com/GoogleChromeLabs/squoosh/issues/973</a></p>
+<p>因为 squoosh-cli 暂不支持 windows 上的通配符。这么一个小问题，给我整崩溃了。</p>
+<p>完整过程如下</p>
+<p>先在 (<a href="https://squoosh.app">https://squoosh.app</a>) 上测试一下图片压缩的设置：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220922011515991.png" alt="image-20220922011515991"></p>
+<p>一切就绪后，点击右侧菜单 <code>Edit</code> 右边的控制台小图标，将命令复制下来，应该类似于这样：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx @squoosh/cli --resize &#x27;&#123;&quot;enabled&quot;:true,&quot;width&quot;:970,&quot;height&quot;:970,&quot;method&quot;:&quot;lanczos3&quot;,&quot;fitMethod&quot;:&quot;stretch&quot;,&quot;premultiply&quot;:true,&quot;linearRGB&quot;:true&#125;&#x27; --mozjpeg &#x27;&#123;&quot;quality&quot;:75,&quot;baseline&quot;:false,&quot;arithmetic&quot;:false,&quot;progressive&quot;:true,&quot;optimize_coding&quot;:true,&quot;smoothing&quot;:0,&quot;color_space&quot;:3,&quot;quant_table&quot;:3,&quot;trellis_multipass&quot;:false,&quot;trellis_opt_zero&quot;:false,&quot;trellis_opt_table&quot;:false,&quot;trellis_loops&quot;:1,&quot;auto_subsample&quot;:true,&quot;chroma_subsample&quot;:2,&quot;separate_chroma_quality&quot;:false,&quot;chroma_quality&quot;:75&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>如果想要先安装再使用，可以先用以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g @squoosh/cli</span><br></pre></td></tr></table></figure>
+<p>然后就可以用 <code>squoosh-cli</code> 命令了，将上面的命令改写一下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squoosh-cli --resize &#x27;&#123;&quot;enabled&quot;:true,&quot;width&quot;:970,&quot;height&quot;:970,&quot;method&quot;:&quot;lanczos3&quot;,&quot;fitMethod&quot;:&quot;stretch&quot;,&quot;premultiply&quot;:true,&quot;linearRGB&quot;:true&#125;&#x27; --mozjpeg &#x27;&#123;&quot;quality&quot;:75,&quot;baseline&quot;:false,&quot;arithmetic&quot;:false,&quot;progressive&quot;:true,&quot;optimize_coding&quot;:true,&quot;smoothing&quot;:0,&quot;color_space&quot;:3,&quot;quant_table&quot;:3,&quot;trellis_multipass&quot;:false,&quot;trellis_opt_zero&quot;:false,&quot;trellis_opt_table&quot;:false,&quot;trellis_loops&quot;:1,&quot;auto_subsample&quot;:true,&quot;chroma_subsample&quot;:2,&quot;separate_chroma_quality&quot;:false,&quot;chroma_quality&quot;:75&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>还有需要改动的地方就是：目标文件夹，目标文件，长宽</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squoosh-cli --resize &#x27;&#123;&quot;enabled&quot;:true,&quot;width&quot;:970,&quot;height&quot;:970,&quot;method&quot;:&quot;lanczos3&quot;,&quot;fitMethod&quot;:&quot;stretch&quot;,&quot;premultiply&quot;:true,&quot;linearRGB&quot;:true&#125;&#x27; --mozjpeg &#x27;&#123;&quot;quality&quot;:75,&quot;baseline&quot;:false,&quot;arithmetic&quot;:false,&quot;progressive&quot;:true,&quot;optimize_coding&quot;:true,&quot;smoothing&quot;:0,&quot;color_space&quot;:3,&quot;quant_table&quot;:3,&quot;trellis_multipass&quot;:false,&quot;trellis_opt_zero&quot;:false,&quot;trellis_opt_table&quot;:false,&quot;trellis_loops&quot;:1,&quot;auto_subsample&quot;:true,&quot;chroma_subsample&quot;:2,&quot;separate_chroma_quality&quot;:false,&quot;chroma_quality&quot;:75&#125;&#x27; -d &quot;[destinationfolder]&quot; &quot;*.png&quot;</span><br></pre></td></tr></table></figure>
+<p>在 <code>-d</code> 参数后写上输出的文件夹，后面再跟需要压缩的图片，可以使用通配符（windows不行！），然后前面 <code>--resize</code> 的参数里长宽可以只保留一个参数，就不会压缩图片长宽比了：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squoosh-cli --resize &#x27;&#123;&quot;enabled&quot;:true,&quot;width&quot;:500,&quot;method&quot;:&quot;lanczos3&quot;,&quot;fitMethod&quot;:&quot;stretch&quot;,&quot;premultiply&quot;:true,&quot;linearRGB&quot;:true&#125;&#x27; --mozjpeg &#x27;&#123;&quot;quality&quot;:75,&quot;baseline&quot;:false,&quot;arithmetic&quot;:false,&quot;progressive&quot;:true,&quot;optimize_coding&quot;:true,&quot;smoothing&quot;:0,&quot;color_space&quot;:3,&quot;quant_table&quot;:3,&quot;trellis_multipass&quot;:false,&quot;trellis_opt_zero&quot;:false,&quot;trellis_opt_table&quot;:false,&quot;trellis_loops&quot;:1,&quot;auto_subsample&quot;:true,&quot;chroma_subsample&quot;:2,&quot;separate_chroma_quality&quot;:false,&quot;chroma_quality&quot;:75&#125;&#x27; -d &quot;[destinationfolder]&quot; &quot;*.png&quot;</span><br></pre></td></tr></table></figure>
+<p>然后就可以舒适地观看转换过程：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220922012116526.png" alt="image-20220922012116526"></p>
 
       
     </div>
@@ -235,7 +235,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -303,7 +303,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/01/%E6%90%AD%E5%BB%BA%20CSGO%20%E6%9C%8D%E5%8A%A1%E5%99%A8(on%20windows)/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/08/GSoC%202022%20Proposal%20%E7%94%B3%E8%AF%B7%E4%B9%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/01/01/%E6%90%AD%E5%BB%BA%20CSGO%20%E6%9C%8D%E5%8A%A1%E5%99%A8(on%20windows)/" class="post-title-link" itemprop="url">搭建 CS:GO 服务器 (On Windows)</a>
+            <a href="/2022/04/08/GSoC%202022%20Proposal%20%E7%94%B3%E8%AF%B7%E4%B9%A6/" class="post-title-link" itemprop="url">GSoC 2022 Proposal 申请书</a>
         </h2>
 
         <div class="post-meta">
@@ -184,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-01-01 21:17:08" itemprop="dateCreated datePublished" datetime="2021-01-01T21:17:08+08:00">2021-01-01</time>
+              <time title="创建时间：2022-04-08 21:17:08" itemprop="dateCreated datePublished" datetime="2022-04-08T21:17:08+08:00">2022-04-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-25 21:25:15" itemprop="dateModified" datetime="2022-08-25T21:25:15+08:00">2022-08-25</time>
+                <time title="修改时间：2022-08-25 21:13:32" itemprop="dateModified" datetime="2022-08-25T21:13:32+08:00">2022-08-25</time>
               </span>
 
           
@@ -205,93 +205,158 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p><a href="https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip">SteamCMD</a></p>
-<p>下载<code>SteamCMD</code>，<strong>打开</strong><code>steamcmd.exe</code>，启动命令行。</p>
-<p>第一次启动需要等待更新。</p>
-<p>等到可以输入时，<strong>输入</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">login anonymous</span><br><span class="line">app_update 740 validate</span><br></pre></td></tr></table></figure>
-<p>（复制代码后，在命令窗口右键可以直接粘贴）</p>
-<p><img src="https://i.imgur.com/J6pjONd.png" alt="命令行_1"></p>
-<p>等待服务器下载（约29G）</p>
-<hr>
-<p>等待过程中先去做一些准备工作</p>
-<p><strong>下载</strong>两个mod：</p>
-<p><a href="https://mms.alliedmods.net/mmsdrop/1.11/mmsource-1.11.0-git1145-windows.zip">Metamod</a></p>
-<p><a href="https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6528-windows.zip">SourceMod</a></p>
-<p>分别<strong>解压</strong>待用</p>
-<hr>
-<p>顺便<strong>检查</strong>一下电脑里是否有命令行工具（建议使用 Windows Terminal）</p>
-<p><a href="https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701?activetab=pivot:overviewtab">Windows Terminal</a></p>
-<p>安装好命令行工具后，在<code>Windows徽标</code>右键，可以看到<code>Windows终端(管理员)</code></p>
-<p><strong>输入如下代码</strong>（用来打开电脑的端口）：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">netsh advfirewall firewall add rule name=&quot;CSGO 27015 TCP&quot; dir=in action=allow protocol=TCP localport=27015</span><br><span class="line">netsh advfirewall firewall add rule name=&quot;CSGO 27015 UDP&quot; dir=in action=allow protocol=UDP localport=27015</span><br><span class="line">netsh advfirewall firewall add rule name=&quot;CSGO 27020 UDP&quot; dir=in action=allow protocol=UDP localport=27020</span><br><span class="line">netsh advfirewall firewall add rule name=&quot;CSGO 27015 TCP-o&quot; dir=out action=allow protocol=TCP localport=27015</span><br><span class="line">netsh advfirewall firewall add rule name=&quot;CSGO 27015 UDP-o&quot; dir=out action=allow protocol=UDP localport=27015</span><br><span class="line">netsh advfirewall firewall add rule name=&quot;CSGO 27020 UDP-o&quot; dir=out action=allow protocol=UDP localport=27020</span><br></pre></td></tr></table></figure>
-<hr>
-<p>尝试启动游戏</p>
-<p>在 <code>SteamCMD</code> 的目录下，右键<strong>打开命令行工具</strong>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd &#x27;.\steamapps\common\Counter-Strike Global Offensive Beta - Dedicated Server\&#x27;</span><br><span class="line"></span><br><span class="line">.\srcds.exe -game csgo -console +map de_dust2</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/xsnDsVz.png" alt="命令行_2"></p>
-<p>初步启动完成，可以暂时关闭窗口</p>
-<hr>
-<p>在 <code>csgo/cfg</code> 文件夹里<strong>创建</strong> <code>server.cfg</code>，文件内容复制粘贴如下链接里的内容即可：</p>
-<p><a href="https://hackmd.io/@1099255210/rk7UMX5Vq">server.cfg</a></p>
-<hr>
-<p>接下来<strong>安装</strong><code>Metamod</code>和<code>Sourcemod</code></p>
-<p>将 <code>mmsource-1.11.0-git1145-windows</code> 里的文件夹 <code>addons</code> 拖到<code>csgo</code> 文件夹中</p>
-<p><img src="https://i.imgur.com/5JdYipL.png" alt=""></p>
-<p>将 <code>sourcemod-1.10.0-git6528-windows</code> 里的文件夹 <code>addons</code> 和 <code>cfg</code> 拖到 <code>csgo</code> 文件夹中</p>
-<p><img src="https://i.imgur.com/gXHPlEr.png" alt=""></p>
-<p>安装完成</p>
-<hr>
-<p>接下来<strong>配置服务器管理员</strong></p>
-<p>打开 <code>\csgo\addons\sourcemod\configs\admins_simple.ini</code></p>
-<p><a href="https://steamid.io/">获取SteamID</a></p>
-<p>搜索到自己，第一个 steamID 就是我们需要的</p>
-<p>在文件末尾<strong>加一行</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;STEAM_0:0:......&quot; &quot;99:z&quot;</span><br></pre></td></tr></table></figure>
-<p>前面替换成你的 steamID</p>
-<hr>
-<p>启动测试，还是来到 <code>\Counter-Strike Global Offensive Beta - Dedicated Server\</code> 文件夹，<strong>打开命令行</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\srcds -game csgo -console -usercon +game_type 1 +game_mode 2 +mapgroup mg_allclassic +map de_dust</span><br></pre></td></tr></table></figure>
-<p>这时候服务器应该已经正常启动了</p>
-<p>我们<strong>重新打开一个命令行</strong>，输入 <code>ipconfig</code>，在结果里找到：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 这是我自己电脑的信息</span><br><span class="line">无线局域网适配器 WLAN:</span><br><span class="line"></span><br><span class="line">   连接特定的 DNS 后缀 . . . . . . . :</span><br><span class="line">   本地链接 IPv6 地址. . . . . . . . : fe80::7d80:a5ec:6d19:69a7%18</span><br><span class="line">   IPv4 地址 . . . . . . . . . . . . : 192.168.31.196</span><br><span class="line">   子网掩码  . . . . . . . . . . . . : 255.255.255.0</span><br><span class="line">   默认网关. . . . . . . . . . . . . : 192.168.31.1</span><br></pre></td></tr></table></figure>
-<p>记住其中的 <code>IPv4地址</code></p>
-<p>游玩游戏的电脑需要和服务器连在同一个wifi内</p>
-<p>在游戏端<strong>输入</strong> <code>connect [IPv4地址:27015]</code> 应该能正常进入服务器</p>
-<p>在聊天框内<strong>输入</strong> <code>!admin</code> 如果左边弹出选项，说明管理员认证成功</p>
-<hr>
-<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p><strong>安装</strong>mysql</p>
-<p><a href="https://dev.mysql.com/get/Downloads/MySQLInstaller/mysql-installer-community-8.0.28.0.msi">mysql</a></p>
-<p><img src="https://i.imgur.com/3jjhOrh.png" alt=""></p>
-<p>这个页面选择下面一个</p>
-<p>其他按照默认选项安装即可，有错误直接跳过</p>
-<p>密码设置自己记得住的，后面要使用</p>
-<p><strong>添加</strong>系统环境变量</p>
-<p>设置 &gt; 系统 &gt; 设备规格 &gt; 高级系统设置 &gt; 环境变量 &gt; 用户变量 &gt; Path &gt; 编辑 &gt; 新建</p>
-<p>粘贴 <code>C:\Program Files\MySQL\MySQL Server 8.0\bin</code></p>
-<p>确定即可</p>
-<p>重新打开终端，<strong>输入</strong> <code>mysql -uroot -p</code> 以及密码，测试是否设置成功。</p>
-<p>若可以正常使用 <code>mysql</code> 命令行，<strong>执行</strong>如下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE `sticker`;</span><br></pre></td></tr></table></figure>
-<hr>
-<p><strong>打开</strong> <code>\csgo\addons\sourcemod\configs\databases.cfg</code></p>
-<p>在 <code>Databases</code> 下一级<strong>添加</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;csgo_weaponstickers&quot;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;driver&quot;    &quot;mysql&quot;</span><br><span class="line">    &quot;host&quot;      &quot;localhost&quot;</span><br><span class="line">    &quot;database&quot;  &quot;sticker&quot;</span><br><span class="line">    &quot;user&quot;      &quot;root&quot;</span><br><span class="line">    &quot;pass&quot;      &quot;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/hC4FIhC.png" alt=""></p>
-<h2 id="附加内容"><a href="#附加内容" class="headerlink" title="附加内容"></a>附加内容</h2><h3 id="开放到公网"><a href="#开放到公网" class="headerlink" title="开放到公网"></a>开放到公网</h3><p>首先到 <a href="https://steamcommunity.com/dev/managegameservers">Steam服务器管理页面</a> <strong>申请一个令牌</strong>：</p>
-<p><img src="https://i.imgur.com/uPAi8Om.png" alt="令牌_1"></p>
-<p>App ID 必须填写730，备忘录无所谓</p>
-<p><img src="https://i.imgur.com/1XOFGKW.png" alt="令牌_2"></p>
-<p>申请得到的登录令牌复制<strong>保存</strong>好，不要泄露</p>
-<p>在 <code>server.cfg</code> 中<strong>加入一行</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sv_setsteamaccount &quot;你的令牌&quot;</span><br></pre></td></tr></table></figure>
-<p><strong>修改</strong>文件中的 <code>sv_lan 1</code> 改为 <code>sv_lan 0</code></p>
-<p>重启服务器即可</p>
-<hr>
-<h3 id="启用远程控制台"><a href="#启用远程控制台" class="headerlink" title="启用远程控制台"></a>启用远程控制台</h3><p>在 <code>server.cfg</code> 中找到 <code>rcon_password &quot;&quot;</code> 添加你的密码</p>
-<p>然后在游戏中连接到服务器，在控制台输入 <code>rcon_password &quot;你的密码&quot;</code></p>
-<p>之后你就可以在你需要使用的指令前加 <code>rcon</code> 来执行</p>
-<hr>
+          <p>今年终于鼓起勇气参加了 GSoC (Google Summer of Code)，加入的组织是去年我就看上的 GNU Octave。</p>
+<p>今年的 GSoC 我还是做了一些准备工作，写下了一些官方相关文档的解释，感兴趣的可以查看：</p>
+<p><a href="https://hackmd.io/@1099255210/S117Bf6Qq">Time management for contributors 开发时间安排</a></p>
+<p><a href="https://hackmd.io/@1099255210/S1SUtEKQc">GSoC 2022 Timeline 时间线</a></p>
+<p>以下是我的 GSoC 2022 Proposal 申请书。</p>
+<p>（2022/5/21 注：这篇申请书最终没有通过，我的 GSoC 2022 计划最终只能搁浅。具体原因可能有很多吧，不过我还是挺希望自己之后能最终独立完成这个项目。）</p>
+<h1 id="YAML-Support-for-GNU-Octave"><a href="#YAML-Support-for-GNU-Octave" class="headerlink" title="YAML Support for GNU-Octave"></a>YAML Support for GNU-Octave</h1><blockquote>
+<p>Name: Han Wang</p>
+<p>Email: jmfymxx@gmail.com</p>
+<p>Github: <a href="https://github.com/1099255210">https://github.com/1099255210</a></p>
+<p>Accout on <a href="https://octave.discourse.group/">Octave Discourse</a>: wh-1099255210</p>
+</blockquote>
+<h2 id="Project-Description"><a href="#Project-Description" class="headerlink" title="Project Description"></a>Project Description</h2><p>YAML, as well as JSON, is a very common data format. GNU Octave has built-in support of JSON, but still lacks of YAML support. The goal of the project is to implementing YAML support into Octave with <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a> (a fast C++ library). During the project, an Octave package containing <code>yamldecode()</code> &amp; <code>yamlencode()</code> functions with proper documentation and unit tests will be created, and the package will be considered to be merged into core Octave. </p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><p>In GSoC 2020, JSON format has been successfully implemented. The package <a href="https://github.com/gnu-octave/pkg-json">pkg-json</a> is a good example on how to encode and decode this kind of data format. The pkg-json used <a href="https://github.com/Tencent/rapidjson">rapidjson</a> (a JSON parser and generator for C++), while in my project I decide to use <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a>, which is a C++ library to parse and emit YAML.</p>
+<h2 id="My-Project-Plan"><a href="#My-Project-Plan" class="headerlink" title="My Project Plan"></a>My Project Plan</h2><p>First, I have to get familiar with YAML data format in case to know the proper conversion between YAML data types and Octave data types. I have made a table on this:</p>
+<p>From YAML to Octave data (will be used in <code>yamldecode()</code>)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>YAML Data Type</th>
+<th>Octave Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Number</td>
+<td>scalar double</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>scalar logical</td>
+</tr>
+<tr>
+<td>String</td>
+<td>character vector</td>
+</tr>
+<tr>
+<td>Dictionary</td>
+<td>scalar struct</td>
+</tr>
+<tr>
+<td>List, of Numbers</td>
+<td>double array</td>
+</tr>
+<tr>
+<td>List, of Booleans</td>
+<td>logical array</td>
+</tr>
+<tr>
+<td>List, of Strings</td>
+<td>string array</td>
+</tr>
+<tr>
+<td>List, of Dictionary - Same field names</td>
+<td>struct array</td>
+</tr>
+<tr>
+<td>List, of Dictionary - Different field names</td>
+<td>cell array of scalar struct</td>
+</tr>
+<tr>
+<td>null, in numeric lists</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td>null, in nonnumeric lists</td>
+<td>Empty double array</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>From Octave data to YAML (will be used in <code>yamlencode()</code>)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Octave Data Type</th>
+<th>YAML Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scalar logical</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>logical vector</td>
+<td>List, of Booleans, reshaped to row vector</td>
+</tr>
+<tr>
+<td>logical array</td>
+<td>List, of Booleans, nested</td>
+</tr>
+<tr>
+<td>scalar numeric</td>
+<td>Number</td>
+</tr>
+<tr>
+<td>numeric vector</td>
+<td>List, of Numbers, reshaped to row vector</td>
+</tr>
+<tr>
+<td>numeric array</td>
+<td>List, of Numbers, nested</td>
+</tr>
+<tr>
+<td>NaN, NA, Inf, -Inf</td>
+<td>null (1) \  “NaN”, “NaN”, “Infinity”, “-Infinity” (2)</td>
+</tr>
+<tr>
+<td>character vector</td>
+<td>String</td>
+</tr>
+<tr>
+<td>character array</td>
+<td>List, of Strings</td>
+</tr>
+<tr>
+<td>scalar cell</td>
+<td>List</td>
+</tr>
+<tr>
+<td>cell vector</td>
+<td>List, reshaped to row vector</td>
+</tr>
+<tr>
+<td>cell array</td>
+<td>List, flattened to row vector</td>
+</tr>
+<tr>
+<td>scalar struct</td>
+<td>Dictionary</td>
+</tr>
+<tr>
+<td>struct vector</td>
+<td>List, of Dictionaries, reshaped to row vector</td>
+</tr>
+<tr>
+<td>struct array</td>
+<td>List, of Dictionaries, nested</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>(1) <code>ConvertInfAndNan = true</code></p>
+<p>(2) <code>ConvertInfAndNan = false</code></p>
+<p>With tables above, it will be much easier to convert data from one side to the other side. I just need to recursively decompose data, convert them respectively to what they should be, then put them together as an output.</p>
+<h2 id="My-Timeline"><a href="#My-Timeline" class="headerlink" title="My Timeline"></a>My Timeline</h2><p><img src="https://hgserver-1301261080.cos.ap-seoul.myqcloud.com/snipaste/image-20220408144000601.png" alt="image-20220408144000601"></p>
+<h2 id="About-Me"><a href="#About-Me" class="headerlink" title="About Me"></a>About Me</h2><p>I’m currently a junior CS student. I’m good at C/C++ programming, and work with JSON/YAML very often, so I’m familiar with them. I’m used to putting my codes on github and using git to manage them, but I’ve never really been a contributor in open source projects. So this is my first time to be a part of the open source community, and I’m really excited about it.</p>
+<p>During the past few weeks, I have joined the <strong>GNU Octave Developer Community,</strong> and have been a member in <strong>Octave discourse</strong>. Under the guidance of the mentor, I have created the <a href="https://github.com/gnu-octave/pkg-yaml">pkg-yaml</a> repository on github, committed my code to it. The package can now be installed, and has the function to parse simple YAML data to Octave data. I also sent a pull request to <a href="https://github.com/biojppm/rapidyaml">Rapid YAML</a> to help fix their amalgamate script to generate header files, and it <a href="https://github.com/biojppm/rapidyaml/commit/a04663f55fa1d5a58c873017e24849309a29c226">successfully got merged into master branch</a>.</p>
+<p>I believe with my enthusiasm and patience, I will be up to this job.</p>
 
       
     </div>
@@ -310,7 +375,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -378,7 +443,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

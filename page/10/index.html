@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/10/%E8%87%AA%E5%8A%A8%E6%96%87%E6%9C%AC%E6%91%98%E8%A6%81(TF-ISF)/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/25/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/07/10/%E8%87%AA%E5%8A%A8%E6%96%87%E6%9C%AC%E6%91%98%E8%A6%81(TF-ISF)/" class="post-title-link" itemprop="url">自动文本摘要 (TF-ISF)</a>
+            <a href="/2022/07/25/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">注意力机制</a>
         </h2>
 
         <div class="post-meta">
@@ -184,7 +184,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-07-10 12:00:06" itemprop="dateCreated datePublished" datetime="2022-07-10T12:00:06+08:00">2022-07-10</time>
+              <time title="创建时间：2022-07-25 06:39:08" itemprop="dateCreated datePublished" datetime="2022-07-25T06:39:08+08:00">2022-07-25</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -205,62 +205,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a href="https://github.com/1099255210/Auto-Text-Summarization-Based-on-TF-ISF">项目开源地址</a></p>
-<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>对于 <code>DUC2004</code> 数据集的 50 个 topic 生成文本摘要，并将生成的摘要与 baseline，共同和专家组的摘要做 Rouge 评分。</p>
-<p>数据集地址：(<a href="https://www-nlpir.nist.gov/projects/duc/data/2004_data.html">https://www-nlpir.nist.gov/projects/duc/data/2004_data.html</a>)</p>
-<h2 id="预处理数据"><a href="#预处理数据" class="headerlink" title="预处理数据"></a>预处理数据</h2><p>预处理数据分为以下几步：</p>
-<h3 id="句子切分"><a href="#句子切分" class="headerlink" title="句子切分"></a>句子切分</h3><p>句子切分一开始我使用的是用 <code>.</code> 即英文的句号进行分割，但是后来在检查结果的时候发现有些单词比如 <code>U. N.</code> 会被误认为是多个句子。于是我借用了 <code>nltk</code> 库的 <code>tokenize</code> 函数进行句子的分割，有效避免了这个问题，当然也同时避免了无法区分以非英文句号为结尾的句子的情况。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tokenizer = nltk.data.load(<span class="string">&#x27;tokenizers/punkt/english.pickle&#x27;</span>)</span><br><span class="line">filestat.sentenselist = tokenizer.tokenize(file.content)</span><br></pre></td></tr></table></figure>
-<h3 id="去除停用词"><a href="#去除停用词" class="headerlink" title="去除停用词"></a>去除停用词</h3><p>句子切分完之后，就可以以空格为分割符提取句子中的每个单词。提取的时候要注意的地方是：单词前后可能有特殊符号需要去除；单词可以直接统一转为小写；单词中的数字也要去除。这里用正则表达式对单词处理。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">word = re.sub(<span class="string">&quot;[^A-Za-z]+&quot;</span>, <span class="string">&#x27; &#x27;</span>, <span class="built_in">str</span>(word)).lower().strip()</span><br></pre></td></tr></table></figure>
-<p>得到每一个单词之后，需要去除停用词，比如 <code>a, the</code> 等等。</p>
-<p>停用词去除的工作也是调用 <code>nltk</code> 库中的 <code>stopwords</code> ，只要检查单词是否在停用词中然后省略即可。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> nltk.corpus <span class="keyword">import</span> stopwords</span><br><span class="line"><span class="keyword">if</span> word <span class="keyword">in</span> stopwords.words(<span class="string">&#x27;english&#x27;</span>):</span><br><span class="line">    <span class="comment"># Get rid of this word.</span></span><br></pre></td></tr></table></figure>
-<h3 id="单词词干化（https-tartarus-org-martin-PorterStemmer-）"><a href="#单词词干化（https-tartarus-org-martin-PorterStemmer-）" class="headerlink" title="单词词干化（https://tartarus.org/martin/PorterStemmer/）"></a>单词词干化（<a href="https://tartarus.org/martin/PorterStemmer/）">https://tartarus.org/martin/PorterStemmer/）</a></h3><p> 这一步课件里给出了一个停用词去除的库 <code>PorterStemmer</code> 网站上直接可以下载到源码。保存至 <code>porterstemming.py</code> 之后实例化一个 <code>PorterStemmer</code> 对象，之后进行单词词干化。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> porterstemming</span><br><span class="line">PS = porterstemming.PorterStemmer()</span><br><span class="line">word = PS.stem(word, <span class="number">0</span>, <span class="built_in">len</span>(word) - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<p>对每一个句子进行如上操作之后，将句子与句子中经过处理的单词序列存入一个数据结构中待使用；每篇文章里的所有句子也存入一个数据结构中，用于下一步分析单词与句子的统计特性。</p>
-<h2 id="DUC-文本数据转化为数值型数据"><a href="#DUC-文本数据转化为数值型数据" class="headerlink" title="DUC 文本数据转化为数值型数据"></a>DUC 文本数据转化为数值型数据</h2><p>这里课件里引入 <code>TF-IDF</code> 的概念：</p>
-<blockquote>
-<p>$词频(TF) = \frac{某个词在文章中的出现次数}{文章的总词数}$</p>
-<p>$逆文档频率(IDF)=log(\frac{语料库的文档总数}{包含该词的文档数+1})$</p>
-<p>$TF-IDF=词频(TF)×逆文档频率(IDF)$</p>
-</blockquote>
-<p>但是要用这样的概念生成 句子-词语 矩阵，似乎不可行，因为这其中没有句子的概念。这里可以采用另一个概念 <code>TF-ISF</code> 来生成矩阵：</p>
-<blockquote>
-<p>$词频(TF) = \frac{某个词在句子中的出现次数}{句子的总词数}$</p>
-<p>$逆文档频率(ISF)=log(\frac{语料库的句子总数}{包含该词的句子数+1})$</p>
-<p>$TF-ISF=词频(TF)×逆文档频率(ISF)$</p>
-</blockquote>
-<p>通过这样的公式，对每一个 <code>topic</code> 中的句子与单词分别计算 句子-词语 矩阵。</p>
-<p>为了方便后期的处理，在矩阵的最后一列加入一行 同一个主题里所有句子拼接起来的一个长句子。</p>
-<h2 id="计算相似度"><a href="#计算相似度" class="headerlink" title="计算相似度"></a>计算相似度</h2><p>生成的矩阵现在可以用于计算句子与句子间的相似度。我们将所有的句子与最后的长句子（所有句子拼接而成的句子）进行余弦相似度的计算，公式如下：</p>
-<p>$\cos\theta=\frac{\sum_{i=1}^n(A_i×B_i)}{\sqrt{\sum_{i=1}^n(A_i)^2}×{\sqrt{\sum_{i=1}^n(B_i)^2}}} \\ = \frac{A\cdot{B}}{\mid{A}\mid×\mid{B}\mid}$</p>
-<p>定义函数 <code>calSimilarity(arr1:numpy.ndarray, arr2:numpy.ndarray)</code> 输入两个向量计算相似度。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Similarity Calculation</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calSimilarity</span>(<span class="params">arr1:numpy.ndarray, arr2:numpy.ndarray</span>):</span><br><span class="line">  <span class="keyword">return</span> numpy.dot(arr1, arr2) / (numpy.linalg.norm(arr1) * numpy.linalg.norm(arr2))</span><br></pre></td></tr></table></figure>
-<p>得到每个句子对最后的长句子的相似度之后进行排序。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">simvaluedict = <span class="built_in">sorted</span>(simvaluedict.items(), key=<span class="keyword">lambda</span> item: item[<span class="number">1</span>], reverse=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-<p>最终得到一个按照相似度数值高低排序的矩阵，每行代表一个句子以及其相似度值。</p>
-<h2 id="冗余控制与摘要生成"><a href="#冗余控制与摘要生成" class="headerlink" title="冗余控制与摘要生成"></a>冗余控制与摘要生成</h2><p>上一步得到的矩阵中，我们选取相似度值最高的句子放入最终的摘要中，然后选取第二句，与第一句作相似度计算，如果高于某个阈值，则丢弃，直到文本的大小达到 665byte 为止。这里的阈值我经过试验之后设为了 0.4，实验中如果阈值过高很可能导致摘要长度还未达到规定大小就生成结束，最终导致摘要过短。</p>
-<p>至此，每个 <code>topic</code> 的摘要内容生成完毕。</p>
-<h2 id="摘要性能评测"><a href="#摘要性能评测" class="headerlink" title="摘要性能评测"></a>摘要性能评测</h2><p>对于生成的摘要，我将其与数据集中专家给出的几份摘要都作 ROUGE 的计算，得到的最高分计入最终结果。这里的 ROUGE 评分主要有三项：ROUGE-1, ROUGE-2, ROUGE-l，着重关注的是回归率 r。</p>
-<p>为了作对比，还需要提供一个 <code>Baseline</code> 结果，这里对于每一个 <code>topic</code> 里的每一篇文章选取第一句话拼接为一个摘要，长度同样为 665byte，再对比专家组结果作 ROUGE 评分。</p>
-<p>将两者进行对比，绘制直方图：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-1.png" alt=""></p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-2.png" alt=""></p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/rouge-l.png" alt=""></p>
-<p>红色部分为算法生成的结果，蓝色部分为基线结果，可以看到在大部分 <code>topic</code> 中得到的效果要高于或等于基线效果(33/50)。</p>
-<h2 id="关于算法的改进"><a href="#关于算法的改进" class="headerlink" title="关于算法的改进"></a>关于算法的改进</h2><p>改进方法中我选择了改进方法2进行实验。</p>
-<p>调查了一下 <code>sentence2vec</code> 的方法，发现首先需要有个词向量的数据 (word2vec)。网络上找到的方法是使用 <code>gensim</code> 库对语料库进行训练，得到 <code>word2vec</code> 的数据之后再计算句向量，剩下的内容就和之前差不多了，也是计算相似度之后排序生成摘要。</p>
-<p>我尝试用原始的文档训练词向量，然后计算句向量，但是得到的结果有很大的问题。问题主要在于使用原始文档训练出来的词向量计算出的句向量，这些向量之间的相似度极高，基本都高达 99% 以上，对这样的相似度数据进行排序显然没有任何意义。</p>
-<p>于是我找到了一个预训练的数据集 <code>GloVe: Global Vectors for Word Representation</code>，选取了其中一个 50 维的词向量数据集作为参考。这里就注意不需要对每个词进行词干化了，否则在词向量数据中是找不到对应向量的，默认会置0，也就是没有意义的。</p>
-<p><code>sentence2vec</code> 句向量的计算参照以下公式：</p>
-<p>$v_s\leftarrow{\frac{1}{\mid s \mid}}\sum_{w\in s}{\frac{a}{a+p(w)}v_w}$</p>
-<p>算出句向量之后就可以像之前一样进行相似度计算排序然后生成了。</p>
-<p>但是令人意外的是这样生成的摘要得到的效果反而不如之前的算法生成的效果，结果如下：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/srouge-1.png" alt=""></p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/srouge-2.png" alt=""></p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/srouge-l.png" alt=""></p>
-<p>但是结果确实是如此，我检查代码也没有发现有什么明显的问题。可能这个词向量的数据集对于该任务来说并不适合吧。</p>
+          <h1 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h1><h2 id="什么是注意力机制"><a href="#什么是注意力机制" class="headerlink" title="什么是注意力机制"></a>什么是注意力机制</h2><p>在深度学习领域，模型往往需要接收和处理大量的数据，然而在特定的某个时刻，往往只有少部分的某些数据是重要的</p>
+<p>心理学框架：人类根据<strong>随意线索</strong>和<strong>不随意线索</strong>选择注意点</p>
+<p>卷积、全连接、池化层都只考虑不随意线索（将本身容易抽取的特征抽取出来）</p>
+<p>注意力机制则考虑<strong>随意线索</strong></p>
+<ul>
+<li>随意线索对应查询（query）</li>
+<li>每个输入是值（value）和不随意线索（key）的对</li>
+<li>通过注意力池化层来有偏向性地选择某些输入</li>
+</ul>
+<h2 id="非参注意力池化层"><a href="#非参注意力池化层" class="headerlink" title="非参注意力池化层"></a>非参注意力池化层</h2><p>对于给定的数据$(x_i,y_i),i=1,…,n$）（key, value） </p>
+<p>最简单的方案：平均池化 $f(x)=\frac{1}{n}\sum\limits_{i}{y_i}$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> d2l <span class="keyword">import</span> torch <span class="keyword">as</span> d2l</span><br><span class="line"></span><br><span class="line">n_train = <span class="number">50</span></span><br><span class="line"><span class="comment"># torch.rand()产生一个服从均匀分布的张量，张量内的数据包含从区间[0,1)的随机数。</span></span><br><span class="line"><span class="comment"># 参数size是一个整数序列，用于定义张量大小</span></span><br><span class="line"><span class="comment"># torch.sort()返回两个值 第一个为排序后的张量，第二个为原来的索引</span></span><br><span class="line">x_train, _ = torch.sort(torch.rand(n_train) * <span class="number">5</span>)   <span class="comment"># *5表示将[0,1)扩展到[0,5)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">x</span>):   <span class="comment"># 真实的f(x)  需要被拟合</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span> * torch.cos(x) + x ** <span class="number">0.7</span></span><br><span class="line"></span><br><span class="line">y_train = f(x_train) + torch.normal(<span class="number">0</span>, <span class="number">0.5</span>, (n_train,))</span><br><span class="line"><span class="comment"># 测试集</span></span><br><span class="line">x_test = torch.arange(<span class="number">0</span>, <span class="number">5</span>, <span class="number">0.1</span>)</span><br><span class="line">y_truth = f(x_test)</span><br><span class="line">n_test = <span class="built_in">len</span>(x_test)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">plot_kernel_reg</span>(<span class="params">y_hat</span>):</span><br><span class="line">  d2l.plot(x_test, [y_truth, y_hat], <span class="string">&#x27;x&#x27;</span>, <span class="string">&#x27;y&#x27;</span>, legend=[<span class="string">&#x27;Truth&#x27;</span>, <span class="string">&#x27;pred&#x27;</span>], xlim=[<span class="number">0</span>, <span class="number">5</span>], ylim=[-<span class="number">1</span>, <span class="number">5</span>])</span><br><span class="line">  d2l.plt.plot(x_train, y_train, <span class="string">&#x27;o&#x27;</span>, alpha=<span class="number">0.5</span>)</span><br><span class="line">  plt.show()</span><br><span class="line"></span><br><span class="line">y_hat = torch.repeat_interleave(y_train.mean(), n_test)</span><br><span class="line">plot_kernel_reg(y_hat)</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220802055649966.png" alt="image-20220802055649966"></p>
+<p>更好的方案：Nadaraya-Watson 核回归：</p>
+<script type="math/tex; mode=display">
+f(x)=\sum_{i=1}^{n}\frac{K(x-x_i)}{\sum_{j=1}^{n}K(x-x_j)}y_i</script><p>（找到离已知值最近的值，类似于KNN）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#X_repeat的形状为(n_test, n_train) 同一行的所有元素（测试输入，查询）都相同 每一行的结果为一个点</span></span><br><span class="line">X_repeat = x_test.repeat_interleave(n_train).reshape((-<span class="number">1</span>, n_train))  <span class="comment">#重复n_train次</span></span><br><span class="line"><span class="comment"># x_train包含着键。attention_weights的形状：(n_test,n_train)</span></span><br><span class="line"><span class="comment"># 每一行都包含着要在给定的每个查询的值（y_train）之间分配的注意力权重</span></span><br><span class="line">attention_weights = nn.functional.softmax(-(X_repeat - x_train) ** <span class="number">2</span> / <span class="number">2</span>, dim=<span class="number">1</span>)</span><br><span class="line"><span class="comment"># y_hat的每个元素都是值的加权平均值，其中的权重是注意力权重</span></span><br><span class="line"><span class="comment"># y_train = y_train.reshape(-1, 1)  #这一步可以不用做 matmul可以实现不同维度的矩阵成绩 但如果使用mm函数进行矩阵乘积必须转化为一列</span></span><br><span class="line">y_hat = torch.matmul(attention_weights, y_train)</span><br><span class="line">plot_kernel_reg(y_hat)</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220802055728239.png" alt="image-20220802055728239"></p>
+<h2 id="参数化注意力机制"><a href="#参数化注意力机制" class="headerlink" title="参数化注意力机制"></a>参数化注意力机制</h2><p>在此基础上引入可学习的参数w</p>
+<script type="math/tex; mode=display">
+f(x)=\sum_{i=1}^{n}softmax(-\frac{1}{2}((x-x_i)w)^2)y_i</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">NWKernelRegression</span>(nn.Module):</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, **kwargs</span>):</span><br><span class="line">    <span class="built_in">super</span>(NWKernelRegression, self).__init__()</span><br><span class="line">    self.w = nn.Parameter(torch.rand((<span class="number">1</span>, ), requires_grad=<span class="literal">True</span>))</span><br><span class="line"></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, queries, keys, values</span>):</span><br><span class="line">    <span class="comment">#queries和attention_weights的形状为(查询个数, 键-值 对个数)</span></span><br><span class="line">    queries = queries.repeat_interleave(keys.shape[<span class="number">1</span>]).reshape((-<span class="number">1</span>, keys.shape[<span class="number">1</span>]))</span><br><span class="line">    self.attention_weights = nn.functional.softmax(</span><br><span class="line">      -((queries - keys) * self.w) ** <span class="number">2</span> / <span class="number">2</span>, dim=<span class="number">1</span>   <span class="comment">#dim=1表示按行计算</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> torch.bmm(</span><br><span class="line">      self.attention_weights.unsqueeze(<span class="number">1</span>),</span><br><span class="line">      values.unsqueeze(-<span class="number">1</span>)</span><br><span class="line">    ).reshape(-<span class="number">1</span>)  <span class="comment">#并将结果变成一维</span></span><br><span class="line"></span><br><span class="line">net = NWKernelRegression()</span><br><span class="line">loss = nn.MSELoss(reduction=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line">optimizer = torch.optim.SGD(net.parameters(), lr=<span class="number">0.5</span>)</span><br><span class="line">animator = d2l.Animator(xlabel=<span class="string">&#x27;epoch&#x27;</span>, ylabel=<span class="string">&#x27;loss&#x27;</span>, xlim=[<span class="number">1</span>, <span class="number">5</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">  <span class="comment"># keys的形状:(n_test，n_train)，每一行包含着相同的训练输入（例如，相同的键）</span></span><br><span class="line">  keys = x_train.repeat((n_test, <span class="number">1</span>))</span><br><span class="line">  <span class="comment"># value的形状:(n_test，n_train)</span></span><br><span class="line">  values = y_train.repeat((n_test, <span class="number">1</span>))</span><br><span class="line">  y_hat = net(x_test, keys, values).unsqueeze(<span class="number">1</span>).detach()</span><br><span class="line">  </span><br><span class="line">  optimizer.zero_grad()  <span class="comment">#梯度清零</span></span><br><span class="line">  l = loss(net(x_train, keys, values), y_train)  <span class="comment">#计算损失</span></span><br><span class="line">  l.<span class="built_in">sum</span>().backward()  <span class="comment">#将损失之和进行反向传播</span></span><br><span class="line">  optimizer.step()  <span class="comment">#更新</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">f&#x27;epoch <span class="subst">&#123;epoch + <span class="number">1</span>&#125;</span>, loss <span class="subst">&#123;<span class="built_in">float</span>(l.<span class="built_in">sum</span>()):<span class="number">.6</span>f&#125;</span>&#x27;</span>)</span><br><span class="line">  animator.add(epoch + <span class="number">1</span>, <span class="built_in">float</span>(l.<span class="built_in">sum</span>()))</span><br><span class="line"></span><br><span class="line">plt.show()</span><br><span class="line">plot_kernel_reg(y_hat)</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220802055910798.png" alt="image-20220802055910798"></p>
+<p>得到的曲线不如之前的平滑，但是更加接近真实值</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220802060021336.png" alt="image-20220802060021336"></p>
 
       
     </div>
@@ -279,7 +247,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -347,7 +315,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
