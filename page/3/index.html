@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/06/gradio%20%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E9%A1%B5%E9%9D%A2%E7%A9%BA%E7%99%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/22/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Squoosh%20%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E5%9B%BE%E7%89%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/06/gradio%20%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E9%A1%B5%E9%9D%A2%E7%A9%BA%E7%99%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">gradio 本地部署页面空白的解决方案</a>
+            <a href="/2022/09/22/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Squoosh%20%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E5%9B%BE%E7%89%87/" class="post-title-link" itemprop="url">如何使用 Squoosh 命令行批量压缩图片</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-09-06 14:53:08 / 修改时间：15:11:23" itemprop="dateCreated datePublished" datetime="2022-09-06T14:53:08+08:00">2022-09-06</time>
+              <time title="创建时间：2022-09-22 23:09:08 / 修改时间：01:24:10" itemprop="dateCreated datePublished" datetime="2022-09-22T23:09:08+08:00">2022-09-22</time>
             </span>
 
           
@@ -199,18 +199,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近在学习如何用简单的 python 代码部署应用，于是接触到了 gradio 这个神器，看着就很好用，而且 huggingface 上的很多模型都在用它作为展示的 demo。</p>
-<p>但是在我想在本地部署它的时候，出现了问题：运行之后控制台输出了本地部署的链接，点开之后竟然是一个空白的页面。我的代码并不复杂，内容只有官方文档中的 quick start 的 helloworld 部分：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gradio <span class="keyword">as</span> gr</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">greet</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Hello &quot;</span> + name + <span class="string">&quot;!&quot;</span></span><br><span class="line"></span><br><span class="line">demo = gr.Interface(fn=greet, inputs=<span class="string">&quot;text&quot;</span>, outputs=<span class="string">&quot;text&quot;</span>)</span><br><span class="line">demo.launch()</span><br></pre></td></tr></table></figure>
-<p>（我的本地环境是 windows11，python 3.13，gradio 3.2）</p>
-<p>出了这个问题之后我看了一下浏览器控制台的报错信息，显示了一个 js 的引入错误：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to load module script: Expected a JavaScript module script but the server responded with a MIME type of &quot;text/plain&quot;. Strict MIME type checking is enforced for module scripts per HTML spec.</span><br></pre></td></tr></table></figure>
-<p>应该就是这个错误导致了无法正确地显示页面，遂以报错信息搜索，找到了一个 <a href="https://github.com/gradio-app/gradio/issues/1203">issue</a></p>
-<p>这里最终提出了解决的方案：</p>
-<p>在 <code>routes.py</code> 文件开头加入下面几行代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mimetypes</span><br><span class="line">mimetypes.init()</span><br><span class="line"></span><br><span class="line">mimetypes.add_type(<span class="string">&#x27;application/javascript&#x27;</span>, <span class="string">&#x27;.js&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220906150703488.png" alt="image-20220906150703488"></p>
-<p>同时也了解到这个问题似乎在 windows 上发生得比较多，而且会在未来的版本里修复（如果没有副作用的话，但是这个问题是7.11解决的，现在已经9月了依然没有能在大版本修复），总之还是记录一下吧。</p>
+          <p>先说明：windows 上无法批量压缩，原因：</p>
+<p><a href="https://github.com/GoogleChromeLabs/squoosh/issues/973">https://github.com/GoogleChromeLabs/squoosh/issues/973</a></p>
+<p>因为 squoosh-cli 暂不支持 windows 上的通配符。这么一个小问题，给我整崩溃了。</p>
+<p>完整过程如下</p>
+<p>先在 (<a href="https://squoosh.app">https://squoosh.app</a>) 上测试一下图片压缩的设置：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220922011515991.png" alt="image-20220922011515991"></p>
+<p>一切就绪后，点击右侧菜单 <code>Edit</code> 右边的控制台小图标，将命令复制下来，应该类似于这样：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx @squoosh/cli --resize &#x27;&#123;&quot;enabled&quot;:true,&quot;width&quot;:970,&quot;height&quot;:970,&quot;method&quot;:&quot;lanczos3&quot;,&quot;fitMethod&quot;:&quot;stretch&quot;,&quot;premultiply&quot;:true,&quot;linearRGB&quot;:true&#125;&#x27; --mozjpeg &#x27;&#123;&quot;quality&quot;:75,&quot;baseline&quot;:false,&quot;arithmetic&quot;:false,&quot;progressive&quot;:true,&quot;optimize_coding&quot;:true,&quot;smoothing&quot;:0,&quot;color_space&quot;:3,&quot;quant_table&quot;:3,&quot;trellis_multipass&quot;:false,&quot;trellis_opt_zero&quot;:false,&quot;trellis_opt_table&quot;:false,&quot;trellis_loops&quot;:1,&quot;auto_subsample&quot;:true,&quot;chroma_subsample&quot;:2,&quot;separate_chroma_quality&quot;:false,&quot;chroma_quality&quot;:75&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>如果想要先安装再使用，可以先用以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g @squoosh/cli</span><br></pre></td></tr></table></figure>
+<p>然后就可以用 <code>squoosh-cli</code> 命令了，将上面的命令改写一下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squoosh-cli --resize &#x27;&#123;&quot;enabled&quot;:true,&quot;width&quot;:970,&quot;height&quot;:970,&quot;method&quot;:&quot;lanczos3&quot;,&quot;fitMethod&quot;:&quot;stretch&quot;,&quot;premultiply&quot;:true,&quot;linearRGB&quot;:true&#125;&#x27; --mozjpeg &#x27;&#123;&quot;quality&quot;:75,&quot;baseline&quot;:false,&quot;arithmetic&quot;:false,&quot;progressive&quot;:true,&quot;optimize_coding&quot;:true,&quot;smoothing&quot;:0,&quot;color_space&quot;:3,&quot;quant_table&quot;:3,&quot;trellis_multipass&quot;:false,&quot;trellis_opt_zero&quot;:false,&quot;trellis_opt_table&quot;:false,&quot;trellis_loops&quot;:1,&quot;auto_subsample&quot;:true,&quot;chroma_subsample&quot;:2,&quot;separate_chroma_quality&quot;:false,&quot;chroma_quality&quot;:75&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>还有需要改动的地方就是：目标文件夹，目标文件，长宽</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squoosh-cli --resize &#x27;&#123;&quot;enabled&quot;:true,&quot;width&quot;:970,&quot;height&quot;:970,&quot;method&quot;:&quot;lanczos3&quot;,&quot;fitMethod&quot;:&quot;stretch&quot;,&quot;premultiply&quot;:true,&quot;linearRGB&quot;:true&#125;&#x27; --mozjpeg &#x27;&#123;&quot;quality&quot;:75,&quot;baseline&quot;:false,&quot;arithmetic&quot;:false,&quot;progressive&quot;:true,&quot;optimize_coding&quot;:true,&quot;smoothing&quot;:0,&quot;color_space&quot;:3,&quot;quant_table&quot;:3,&quot;trellis_multipass&quot;:false,&quot;trellis_opt_zero&quot;:false,&quot;trellis_opt_table&quot;:false,&quot;trellis_loops&quot;:1,&quot;auto_subsample&quot;:true,&quot;chroma_subsample&quot;:2,&quot;separate_chroma_quality&quot;:false,&quot;chroma_quality&quot;:75&#125;&#x27; -d &quot;[destinationfolder]&quot; &quot;*.png&quot;</span><br></pre></td></tr></table></figure>
+<p>在 <code>-d</code> 参数后写上输出的文件夹，后面再跟需要压缩的图片，可以使用通配符（windows不行！），然后前面 <code>--resize</code> 的参数里长宽可以只保留一个参数，就不会压缩图片长宽比了：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squoosh-cli --resize &#x27;&#123;&quot;enabled&quot;:true,&quot;width&quot;:500,&quot;method&quot;:&quot;lanczos3&quot;,&quot;fitMethod&quot;:&quot;stretch&quot;,&quot;premultiply&quot;:true,&quot;linearRGB&quot;:true&#125;&#x27; --mozjpeg &#x27;&#123;&quot;quality&quot;:75,&quot;baseline&quot;:false,&quot;arithmetic&quot;:false,&quot;progressive&quot;:true,&quot;optimize_coding&quot;:true,&quot;smoothing&quot;:0,&quot;color_space&quot;:3,&quot;quant_table&quot;:3,&quot;trellis_multipass&quot;:false,&quot;trellis_opt_zero&quot;:false,&quot;trellis_opt_table&quot;:false,&quot;trellis_loops&quot;:1,&quot;auto_subsample&quot;:true,&quot;chroma_subsample&quot;:2,&quot;separate_chroma_quality&quot;:false,&quot;chroma_quality&quot;:75&#125;&#x27; -d &quot;[destinationfolder]&quot; &quot;*.png&quot;</span><br></pre></td></tr></table></figure>
+<p>然后就可以舒适地观看转换过程：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220922012116526.png" alt="image-20220922012116526"></p>
 
       
     </div>
@@ -229,7 +235,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -297,7 +303,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -325,7 +331,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

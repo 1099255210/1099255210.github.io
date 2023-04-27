@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/Hugging%20Face%20%E5%AD%A6%E4%B9%A0(1)/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/25/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/07/12/Hugging%20Face%20%E5%AD%A6%E4%B9%A0(1)/" class="post-title-link" itemprop="url">Hugging Face 学习(1)</a>
+            <a href="/2022/07/25/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">注意力机制</a>
         </h2>
 
         <div class="post-meta">
@@ -184,7 +184,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-07-12 12:00:06" itemprop="dateCreated datePublished" datetime="2022-07-12T12:00:06+08:00">2022-07-12</time>
+              <time title="创建时间：2022-07-25 06:39:08" itemprop="dateCreated datePublished" datetime="2022-07-25T06:39:08+08:00">2022-07-25</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -205,21 +205,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Hugging-Face-学习-1"><a href="#Hugging-Face-学习-1" class="headerlink" title="Hugging Face 学习(1)"></a>Hugging Face 学习(1)</h1><p>Hugging Face是一个非常流行的 NLP 库，Hugging Face 的 <a href="https://huggingface.co/">官网</a> 上也有很多开源的模型。</p>
-<p>官网上的有些模型已经提供了简单的使用方法。比如我最先接触到的这个 <code>dalle-mini</code> 模型，提供了一个生成的接口(虽然好像还是定向到了<a href="https://www.craiyon.com">其它网站</a>，据说是因为访问量太大了)，可以输入一段文本，生成一些图片。这里随便输入一个句子 A Rubic’s Cube swimming in the pool (水池里游泳的魔方)：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220720084135775.png" alt="image-20220720084135775"></p>
-<p>关于 <code>dalle</code> 这个模型，最近看到一篇文章比较有意思(<a href="https://blog.csdn.net/fengdu78/article/details/125109103">https://blog.csdn.net/fengdu78/article/details/125109103</a>)</p>
-<hr>
-<p>如果是在本地使用 Hugging Face 的一些 NLP 模型，可以安装他们提供的 <code>transformers</code> 的库。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install transformers</span><br></pre></td></tr></table></figure>
-<p>这里使用一个 <a href="https://huggingface.co/t5-small">t5-small</a> 的模型测试一下。</p>
-<p>t5 (Text-To-Text Transfer Transformer) 是一个统一框架，将所有 NLP 任务都转化成 Text-to-Text （文本到文本）任务。</p>
-<p><img src="https://1.bp.blogspot.com/-o4oiOExxq1s/Xk26XPC3haI/AAAAAAAAFU8/NBlvOWB84L0PTYy9TzZBaLf6fwPGJTR0QCLcBGAsYHQ/s640/image3.gif" alt=""></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModelWithLMHead</span><br><span class="line"></span><br><span class="line">tokenizer = AutoTokenizer.from_pretrained(<span class="string">&quot;t5-small&quot;</span>)</span><br><span class="line"></span><br><span class="line">model = AutoModelWithLMHead.from_pretrained(<span class="string">&quot;t5-small&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>只需要三行代码，就可以直接加载模型开始使用：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">input_ids = tokenizer(<span class="string">&quot;translate English to Germany: What a nice day.&quot;</span>, return_tensors=<span class="string">&quot;pt&quot;</span>).input_ids</span><br><span class="line"></span><br><span class="line">outputs = model.generate(input_ids)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tokenizer.decode(outputs[<span class="number">0</span>], skip_special_tokens=<span class="literal">True</span>))</span><br></pre></td></tr></table></figure>
-<p>得到输出：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Was für ein nettes Tag.</span><br></pre></td></tr></table></figure>
+          <h1 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h1><h2 id="什么是注意力机制"><a href="#什么是注意力机制" class="headerlink" title="什么是注意力机制"></a>什么是注意力机制</h2><p>在深度学习领域，模型往往需要接收和处理大量的数据，然而在特定的某个时刻，往往只有少部分的某些数据是重要的</p>
+<p>心理学框架：人类根据<strong>随意线索</strong>和<strong>不随意线索</strong>选择注意点</p>
+<p>卷积、全连接、池化层都只考虑不随意线索（将本身容易抽取的特征抽取出来）</p>
+<p>注意力机制则考虑<strong>随意线索</strong></p>
+<ul>
+<li>随意线索对应查询（query）</li>
+<li>每个输入是值（value）和不随意线索（key）的对</li>
+<li>通过注意力池化层来有偏向性地选择某些输入</li>
+</ul>
+<h2 id="非参注意力池化层"><a href="#非参注意力池化层" class="headerlink" title="非参注意力池化层"></a>非参注意力池化层</h2><p>对于给定的数据$(x_i,y_i),i=1,…,n$）（key, value） </p>
+<p>最简单的方案：平均池化 $f(x)=\frac{1}{n}\sum\limits_{i}{y_i}$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> d2l <span class="keyword">import</span> torch <span class="keyword">as</span> d2l</span><br><span class="line"></span><br><span class="line">n_train = <span class="number">50</span></span><br><span class="line"><span class="comment"># torch.rand()产生一个服从均匀分布的张量，张量内的数据包含从区间[0,1)的随机数。</span></span><br><span class="line"><span class="comment"># 参数size是一个整数序列，用于定义张量大小</span></span><br><span class="line"><span class="comment"># torch.sort()返回两个值 第一个为排序后的张量，第二个为原来的索引</span></span><br><span class="line">x_train, _ = torch.sort(torch.rand(n_train) * <span class="number">5</span>)   <span class="comment"># *5表示将[0,1)扩展到[0,5)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">x</span>):   <span class="comment"># 真实的f(x)  需要被拟合</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span> * torch.cos(x) + x ** <span class="number">0.7</span></span><br><span class="line"></span><br><span class="line">y_train = f(x_train) + torch.normal(<span class="number">0</span>, <span class="number">0.5</span>, (n_train,))</span><br><span class="line"><span class="comment"># 测试集</span></span><br><span class="line">x_test = torch.arange(<span class="number">0</span>, <span class="number">5</span>, <span class="number">0.1</span>)</span><br><span class="line">y_truth = f(x_test)</span><br><span class="line">n_test = <span class="built_in">len</span>(x_test)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">plot_kernel_reg</span>(<span class="params">y_hat</span>):</span><br><span class="line">  d2l.plot(x_test, [y_truth, y_hat], <span class="string">&#x27;x&#x27;</span>, <span class="string">&#x27;y&#x27;</span>, legend=[<span class="string">&#x27;Truth&#x27;</span>, <span class="string">&#x27;pred&#x27;</span>], xlim=[<span class="number">0</span>, <span class="number">5</span>], ylim=[-<span class="number">1</span>, <span class="number">5</span>])</span><br><span class="line">  d2l.plt.plot(x_train, y_train, <span class="string">&#x27;o&#x27;</span>, alpha=<span class="number">0.5</span>)</span><br><span class="line">  plt.show()</span><br><span class="line"></span><br><span class="line">y_hat = torch.repeat_interleave(y_train.mean(), n_test)</span><br><span class="line">plot_kernel_reg(y_hat)</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220802055649966.png" alt="image-20220802055649966"></p>
+<p>更好的方案：Nadaraya-Watson 核回归：</p>
+<script type="math/tex; mode=display">
+f(x)=\sum_{i=1}^{n}\frac{K(x-x_i)}{\sum_{j=1}^{n}K(x-x_j)}y_i</script><p>（找到离已知值最近的值，类似于KNN）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#X_repeat的形状为(n_test, n_train) 同一行的所有元素（测试输入，查询）都相同 每一行的结果为一个点</span></span><br><span class="line">X_repeat = x_test.repeat_interleave(n_train).reshape((-<span class="number">1</span>, n_train))  <span class="comment">#重复n_train次</span></span><br><span class="line"><span class="comment"># x_train包含着键。attention_weights的形状：(n_test,n_train)</span></span><br><span class="line"><span class="comment"># 每一行都包含着要在给定的每个查询的值（y_train）之间分配的注意力权重</span></span><br><span class="line">attention_weights = nn.functional.softmax(-(X_repeat - x_train) ** <span class="number">2</span> / <span class="number">2</span>, dim=<span class="number">1</span>)</span><br><span class="line"><span class="comment"># y_hat的每个元素都是值的加权平均值，其中的权重是注意力权重</span></span><br><span class="line"><span class="comment"># y_train = y_train.reshape(-1, 1)  #这一步可以不用做 matmul可以实现不同维度的矩阵成绩 但如果使用mm函数进行矩阵乘积必须转化为一列</span></span><br><span class="line">y_hat = torch.matmul(attention_weights, y_train)</span><br><span class="line">plot_kernel_reg(y_hat)</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220802055728239.png" alt="image-20220802055728239"></p>
+<h2 id="参数化注意力机制"><a href="#参数化注意力机制" class="headerlink" title="参数化注意力机制"></a>参数化注意力机制</h2><p>在此基础上引入可学习的参数w</p>
+<script type="math/tex; mode=display">
+f(x)=\sum_{i=1}^{n}softmax(-\frac{1}{2}((x-x_i)w)^2)y_i</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">NWKernelRegression</span>(nn.Module):</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, **kwargs</span>):</span><br><span class="line">    <span class="built_in">super</span>(NWKernelRegression, self).__init__()</span><br><span class="line">    self.w = nn.Parameter(torch.rand((<span class="number">1</span>, ), requires_grad=<span class="literal">True</span>))</span><br><span class="line"></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, queries, keys, values</span>):</span><br><span class="line">    <span class="comment">#queries和attention_weights的形状为(查询个数, 键-值 对个数)</span></span><br><span class="line">    queries = queries.repeat_interleave(keys.shape[<span class="number">1</span>]).reshape((-<span class="number">1</span>, keys.shape[<span class="number">1</span>]))</span><br><span class="line">    self.attention_weights = nn.functional.softmax(</span><br><span class="line">      -((queries - keys) * self.w) ** <span class="number">2</span> / <span class="number">2</span>, dim=<span class="number">1</span>   <span class="comment">#dim=1表示按行计算</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> torch.bmm(</span><br><span class="line">      self.attention_weights.unsqueeze(<span class="number">1</span>),</span><br><span class="line">      values.unsqueeze(-<span class="number">1</span>)</span><br><span class="line">    ).reshape(-<span class="number">1</span>)  <span class="comment">#并将结果变成一维</span></span><br><span class="line"></span><br><span class="line">net = NWKernelRegression()</span><br><span class="line">loss = nn.MSELoss(reduction=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line">optimizer = torch.optim.SGD(net.parameters(), lr=<span class="number">0.5</span>)</span><br><span class="line">animator = d2l.Animator(xlabel=<span class="string">&#x27;epoch&#x27;</span>, ylabel=<span class="string">&#x27;loss&#x27;</span>, xlim=[<span class="number">1</span>, <span class="number">5</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">  <span class="comment"># keys的形状:(n_test，n_train)，每一行包含着相同的训练输入（例如，相同的键）</span></span><br><span class="line">  keys = x_train.repeat((n_test, <span class="number">1</span>))</span><br><span class="line">  <span class="comment"># value的形状:(n_test，n_train)</span></span><br><span class="line">  values = y_train.repeat((n_test, <span class="number">1</span>))</span><br><span class="line">  y_hat = net(x_test, keys, values).unsqueeze(<span class="number">1</span>).detach()</span><br><span class="line">  </span><br><span class="line">  optimizer.zero_grad()  <span class="comment">#梯度清零</span></span><br><span class="line">  l = loss(net(x_train, keys, values), y_train)  <span class="comment">#计算损失</span></span><br><span class="line">  l.<span class="built_in">sum</span>().backward()  <span class="comment">#将损失之和进行反向传播</span></span><br><span class="line">  optimizer.step()  <span class="comment">#更新</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">f&#x27;epoch <span class="subst">&#123;epoch + <span class="number">1</span>&#125;</span>, loss <span class="subst">&#123;<span class="built_in">float</span>(l.<span class="built_in">sum</span>()):<span class="number">.6</span>f&#125;</span>&#x27;</span>)</span><br><span class="line">  animator.add(epoch + <span class="number">1</span>, <span class="built_in">float</span>(l.<span class="built_in">sum</span>()))</span><br><span class="line"></span><br><span class="line">plt.show()</span><br><span class="line">plot_kernel_reg(y_hat)</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220802055910798.png" alt="image-20220802055910798"></p>
+<p>得到的曲线不如之前的平滑，但是更加接近真实值</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220802060021336.png" alt="image-20220802060021336"></p>
 
       
     </div>
@@ -238,7 +247,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -306,7 +315,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -334,7 +343,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -393,6 +402,61 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

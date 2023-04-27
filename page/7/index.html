@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/08/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/26/Windows%20%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E5%AE%89%E8%A3%85%20cuda%20%E4%B8%8E%20cudnn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/08/08/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">强化学习</a>
+            <a href="/2022/08/26/Windows%20%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E5%AE%89%E8%A3%85%20cuda%20%E4%B8%8E%20cudnn/" class="post-title-link" itemprop="url">Windows 如何正确安装 cuda 与 cudnn</a>
         </h2>
 
         <div class="post-meta">
@@ -184,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-08-08 19:09:08" itemprop="dateCreated datePublished" datetime="2022-08-08T19:09:08+08:00">2022-08-08</time>
+              <time title="创建时间：2022-08-26 17:02:08" itemprop="dateCreated datePublished" datetime="2022-08-26T17:02:08+08:00">2022-08-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-27 00:37:03" itemprop="dateModified" datetime="2022-08-27T00:37:03+08:00">2022-08-27</time>
+                <time title="修改时间：2022-08-27 20:44:02" itemprop="dateModified" datetime="2022-08-27T20:44:02+08:00">2022-08-27</time>
               </span>
 
           
@@ -205,8 +205,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>强化学习主要由智能体（Agent）、环境（Environment）、状态（State）、动作（Action）、奖励（Reward）组成。智能体执行了某个动作后，环境将会转换到一个新的状态，对于该新的状态环境会给出奖励信号（正奖励或者负奖励）。随后，智能体根据新的状态和环境反馈的奖励，按照一定的策略执行新的动作。上述过程为智能体和环境通过状态、动作、奖励进行交互的方式。</p>
-<p>智能体通过强化学习，可以知道自己在什么状态下，应该采取什么样的动作使得自身获得最大奖励。由于智能体与环境的交互方式与人类与环境的交互方式类似，可以认为强化学习是一套通用的学习框架，可用来解决通用人工智能的问题。因此强化学习也被称为通用人工智能的机器学习方法。</p>
+          <h1 id="Windows-如何正确安装-cuda-与-cudnn"><a href="#Windows-如何正确安装-cuda-与-cudnn" class="headerlink" title="Windows 如何正确安装 cuda 与 cudnn"></a>Windows 如何正确安装 cuda 与 cudnn</h1><p>首先要了解到的信息是，你的 Nvidia 显卡到底支持多高版本的 CUDA? 在系统状态栏中找到 <code>NVIDIA 控制面板</code>，查看 <code>[帮助]-[系统信息]-[组件]-[NVCUDA64.DLL]</code> 查看后面的版本，你需要安装的 CUDA 不得高于此版本。 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220826191251461.png" alt="image-20220826191251461"></p>
+<p>但是这里要注意的是，并不是你的显卡型号决定了你支持的 CUDA 版本，而是你的显卡和显卡驱动共同决定的。想要更新你的显卡驱动，可以尝试使用 NVIDIA GeForce Experience 进行更新，之后再在 <code>NVIDIA 控制面板</code> 查看支持的 CUDA 版本。</p>
+<p>确定要下载的版本后，在此网站 <a href="https://developer.nvidia.cn/cuda-toolkit-archive">CUDA Toolkit Archive</a> 找到你需要的版本，我这里选择了 CUDA 11.1.1 的版本，并且按照下图选择了对应我系统的安装包：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220826192316090.png" alt="image-20220826192316090"></p>
+<p>打开安装包，安装过程中选择自定义安装，然后查看下图中的项目，如果当前版本大于新版本则将此项取消勾选，反之则可以勾选。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220826192856077.png" alt="image-20220826192856077"></p>
+<p>安装完成后打开 Powershell 输入 <code>nvcc -V</code> 查看是否成功安装：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220826210836346.png" alt="image-20220826210836346"></p>
+<p>然后是 cuDNN(针对于神经网络应用加速的库)，进入网站 <a href="https://developer.nvidia.cn/rdp/cudnn-download">cudnn-download</a> ，这里需要先注册一个 NVIDIA 账号，然后选择对应的版本进行下载。</p>
+<p>将下载的压缩包解压，将里面三个文件夹直接放入之前安装的 CUDA 目录中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220826211547617.png" alt="image-20220826211547617"></p>
+<p>验证一下是否安装成功，打开 Powershell 输入 <code>nvidia-smi</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220826211925113.png" alt="image-20220826211925113"></p>
+<p>可以看到安装是成功的</p>
 
       
     </div>
@@ -225,7 +238,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -293,7 +306,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -321,7 +334,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -380,61 +393,6 @@
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-          load: ['[tex]/mhchem'],
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-          packages: {'[+]': ['mhchem']},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 

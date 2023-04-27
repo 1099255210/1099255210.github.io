@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/30/ubuntu%2020.04%20%E5%AE%89%E8%A3%85/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/01/%E6%90%AD%E5%BB%BA%20CSGO%20%E6%9C%8D%E5%8A%A1%E5%99%A8(on%20windows)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/30/ubuntu%2020.04%20%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">Ubuntu 20.04 与 win10 双系统安装笔记</a>
+            <a href="/2021/01/01/%E6%90%AD%E5%BB%BA%20CSGO%20%E6%9C%8D%E5%8A%A1%E5%99%A8(on%20windows)/" class="post-title-link" itemprop="url">搭建 CS:GO 服务器 (On Windows)</a>
         </h2>
 
         <div class="post-meta">
@@ -184,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-09-30 12:39:08" itemprop="dateCreated datePublished" datetime="2020-09-30T12:39:08+08:00">2020-09-30</time>
+              <time title="创建时间：2021-01-01 21:17:08" itemprop="dateCreated datePublished" datetime="2021-01-01T21:17:08+08:00">2021-01-01</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-25 21:13:32" itemprop="dateModified" datetime="2022-08-25T21:13:32+08:00">2022-08-25</time>
+                <time title="修改时间：2022-08-25 21:25:15" itemprop="dateModified" datetime="2022-08-25T21:25:15+08:00">2022-08-25</time>
               </span>
 
           
@@ -205,63 +205,93 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Ubuntu-20-04-与-win10-双系统安装笔记"><a href="#Ubuntu-20-04-与-win10-双系统安装笔记" class="headerlink" title="Ubuntu 20.04 与 win10 双系统安装笔记"></a>Ubuntu 20.04 与 win10 双系统安装笔记</h1><h2 id="安装前的认知准备"><a href="#安装前的认知准备" class="headerlink" title="安装前的认知准备"></a>安装前的认知准备</h2><p>在安装之前先了解一下基本的安装知识以及需求，以下为我认知中所需要作的准备：</p>
-<ul>
-<li>一个 8G 以上的u盘(作为启动盘)</li>
-<li>Ubuntu 20.04 系统镜像(从<a href="https://ubuntu.com/download/desktop">Ubuntu官网</a>下载)</li>
-<li>50G 及以上的磁盘空间</li>
-</ul>
-<p>本人电脑型号是 ThinkPad T460s，原操作系统为 win10 2004 x64，BIOS 模式为 UEFI 引导，电脑仅有一块 256G 固态硬盘，无独立显卡，因此应该不会出现N卡驱动缺失的情况。</p>
-<p>以上了解之后开始操作。</p>
-<h2 id="准备与安装全过程"><a href="#准备与安装全过程" class="headerlink" title="准备与安装全过程"></a>准备与安装全过程</h2><p>首先，为系统分出足够空间。右键 <strong>此电脑</strong>，找到 <strong>管理</strong>&gt;<strong>存储</strong>&gt;<strong>磁盘管理</strong> ，右键磁盘，点击压缩卷。在这里我分出了 100G 的空间，应该足够轻度的使用。</p>
-<p>然后开始制作启动盘。下载制作启动盘的软件 <a href="http://rufus.ie/">rufus</a> 并打开，插入u盘，在软件中选择正确的u盘与 ubuntu 镜像， 其余项目并不需要修改，直接开始，提示信息可忽略。耐心等待10-20分钟即可制作完成。</p>
-<p>接下来是 BIOS 的设置。重启电脑前，找到电脑电源设置，关闭快速启动；然后重启电脑，找到本电脑型号进入 BIOS 的快捷键，我的电脑是 DELETE；进入 BIOS 之后，将 Secure Boot 设置为 Disabled，再确认一下 Legacy Boot 为 UEFI，然后插入u盘，将u盘的BOOT优先级提到最高，保存设置并启动。这时候电脑启动时就会进入选择的界面，我们直接选择 ubuntu，这样就进入系统安装的界面了。</p>
-<p>系统安装过程中，没有什么要特别注意的。更新和其他软件那里我选择的是正常安装；安装类型里，网上有教程称需要选择其他选项，在这里我选择了与 Windows Boot Manager 共存，目前并未出现太大问题。等待一阵子，系统应当就准备就绪了。</p>
-<h2 id="对于系统的配置"><a href="#对于系统的配置" class="headerlink" title="对于系统的配置"></a>对于系统的配置</h2><h3 id="替换国内源"><a href="#替换国内源" class="headerlink" title="替换国内源"></a>替换国内源</h3><p>在 <strong>Software &amp; Updates</strong> 中选择国内的镜像，我选择的是阿里云(mirrors.aliyun.com)的镜像</p>
-<p>选择之后 Ctrl+Alt+T 打开终端，输入以下指令更新：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br></pre></td></tr></table></figure>
-<h3 id="中文输入法"><a href="#中文输入法" class="headerlink" title="中文输入法"></a>中文输入法</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ibus-libpinyin</span><br><span class="line">sudo apt install ibus-clutter</span><br></pre></td></tr></table></figure>
-<p>然后重启，找到输入法选项，在 Input Sources 中新增 Chinese(Intelligent Pinyin) 就可以了。</p>
-<h3 id="双系统时间不统一"><a href="#双系统时间不统一" class="headerlink" title="双系统时间不统一"></a>双系统时间不统一</h3><p>这个是系统看待硬件时间方式不一造成的，终端输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl set-local-rtc 1 --adjust-system-clock</span><br></pre></td></tr></table></figure>
-<p>禁用 Ubuntu 中的 UTC 即可。</p>
-<h3 id="取消-sudo-密码（有风险）"><a href="#取消-sudo-密码（有风险）" class="headerlink" title="取消 sudo 密码（有风险）"></a>取消 sudo 密码（有风险）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/sudoers</span><br><span class="line">sudo visudo</span><br></pre></td></tr></table></figure>
-<p>找到 <code>%sudo ALL=(ALL:ALL) ALL</code> 修改为 <code>%sudo ALL=(ALL:ALL) NOPASSWD:ALL</code> 然后 Ctrl+s, Ctrl+x, 重启即可。</p>
-<h3 id="安装与配置-CMake"><a href="#安装与配置-CMake" class="headerlink" title="安装与配置 CMake"></a>安装与配置 CMake</h3><p>在 CMake 官网下载源码，本次安装使用的版本是 3.18.3 的版本。下载完成后打开终端：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf cmake-3.18.3.tar.gz</span><br><span class="line">cd cmake-3.18.3 </span><br><span class="line">./bootstrap</span><br></pre></td></tr></table></figure>
-<p>出现报错：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cannot find a C++ compiler that supports both C++11 and the specified C++ flags.</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
-<p>通过指令更新 g++：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install g++</span><br></pre></td></tr></table></figure>
-<p>继续报错：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cannot find appropriate Makefile processor on this system.</span><br><span class="line">Please specify one using environment variable MAKE.</span><br></pre></td></tr></table></figure>
-<p> 输入指令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br></pre></td></tr></table></figure>
-<p><code>./bootstrap</code> 运行到最后再次出错：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Could not find OpenSSL. Install an OpenSSL development package or configure CMake with -DCMAIKE_USE_OPENSSL=OFF to build without OpenSSL.</span><br></pre></td></tr></table></figure>
-<p>安装 openssl 的编译依赖：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libssl-dev</span><br></pre></td></tr></table></figure>
-<p>成功运行，输入<code>make</code> ，耐心等待，这一步时间较长。完成后，输入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<p>完成，查看版本 <code>cmake --version</code> 看到 <code>cmake version 3.18.3</code> 安装成功</p>
-<h3 id="配置-boost"><a href="#配置-boost" class="headerlink" title="配置 boost"></a>配置 boost</h3><p>这里选用的版本是 boost 1.69.0 (其实我也不知道该装哪一个版本)</p>
-<p>首先官网下载，解包，进入文件夹：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap.sh</span><br></pre></td></tr></table></figure>
-<p>没有问题，下一步</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./b2</span><br></pre></td></tr></table></figure>
-<p>这一步也比较长，完成之后：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./b2 install</span><br></pre></td></tr></table></figure>
-<p>配置完成。</p>
-<h3 id="配置-OpenCV"><a href="#配置-OpenCV" class="headerlink" title="配置 OpenCV"></a>配置 OpenCV</h3><p>到现在再配置 OpenCV 是考虑到 OpenCV 需要使用 CMake 以及个人感觉配置可能需要一些库的安装。</p>
-<p>同样首先到官网下载源码，<code>unzip</code> 解压，进入目录：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
-<p>如果没有问题，下一步：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-<p>配置完成</p>
-<h3 id="配置-git"><a href="#配置-git" class="headerlink" title="配置 git"></a>配置 git</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br><span class="line">git --version</span><br></pre></td></tr></table></figure>
-<p>控制台输出 <code>git version 2.25.1</code> 安装完成</p>
-<h2 id="使用过程中的其他经验在之后进行补充"><a href="#使用过程中的其他经验在之后进行补充" class="headerlink" title="使用过程中的其他经验在之后进行补充"></a>使用过程中的其他经验在之后进行补充</h2><p>总体来说，由于很早之前有安装的经验，这次的安装并没有碰到太大的问题，还算顺利。</p>
-<p>CSDN链接：<a href="https://blog.csdn.net/wwh010802/article/details/108857863">https://blog.csdn.net/wwh010802/article/details/108857863</a></p>
+          <h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p><a href="https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip">SteamCMD</a></p>
+<p>下载<code>SteamCMD</code>，<strong>打开</strong><code>steamcmd.exe</code>，启动命令行。</p>
+<p>第一次启动需要等待更新。</p>
+<p>等到可以输入时，<strong>输入</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">login anonymous</span><br><span class="line">app_update 740 validate</span><br></pre></td></tr></table></figure>
+<p>（复制代码后，在命令窗口右键可以直接粘贴）</p>
+<p><img src="https://i.imgur.com/J6pjONd.png" alt="命令行_1"></p>
+<p>等待服务器下载（约29G）</p>
+<hr>
+<p>等待过程中先去做一些准备工作</p>
+<p><strong>下载</strong>两个mod：</p>
+<p><a href="https://mms.alliedmods.net/mmsdrop/1.11/mmsource-1.11.0-git1145-windows.zip">Metamod</a></p>
+<p><a href="https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6528-windows.zip">SourceMod</a></p>
+<p>分别<strong>解压</strong>待用</p>
+<hr>
+<p>顺便<strong>检查</strong>一下电脑里是否有命令行工具（建议使用 Windows Terminal）</p>
+<p><a href="https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701?activetab=pivot:overviewtab">Windows Terminal</a></p>
+<p>安装好命令行工具后，在<code>Windows徽标</code>右键，可以看到<code>Windows终端(管理员)</code></p>
+<p><strong>输入如下代码</strong>（用来打开电脑的端口）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">netsh advfirewall firewall add rule name=&quot;CSGO 27015 TCP&quot; dir=in action=allow protocol=TCP localport=27015</span><br><span class="line">netsh advfirewall firewall add rule name=&quot;CSGO 27015 UDP&quot; dir=in action=allow protocol=UDP localport=27015</span><br><span class="line">netsh advfirewall firewall add rule name=&quot;CSGO 27020 UDP&quot; dir=in action=allow protocol=UDP localport=27020</span><br><span class="line">netsh advfirewall firewall add rule name=&quot;CSGO 27015 TCP-o&quot; dir=out action=allow protocol=TCP localport=27015</span><br><span class="line">netsh advfirewall firewall add rule name=&quot;CSGO 27015 UDP-o&quot; dir=out action=allow protocol=UDP localport=27015</span><br><span class="line">netsh advfirewall firewall add rule name=&quot;CSGO 27020 UDP-o&quot; dir=out action=allow protocol=UDP localport=27020</span><br></pre></td></tr></table></figure>
+<hr>
+<p>尝试启动游戏</p>
+<p>在 <code>SteamCMD</code> 的目录下，右键<strong>打开命令行工具</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd &#x27;.\steamapps\common\Counter-Strike Global Offensive Beta - Dedicated Server\&#x27;</span><br><span class="line"></span><br><span class="line">.\srcds.exe -game csgo -console +map de_dust2</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/xsnDsVz.png" alt="命令行_2"></p>
+<p>初步启动完成，可以暂时关闭窗口</p>
+<hr>
+<p>在 <code>csgo/cfg</code> 文件夹里<strong>创建</strong> <code>server.cfg</code>，文件内容复制粘贴如下链接里的内容即可：</p>
+<p><a href="https://hackmd.io/@1099255210/rk7UMX5Vq">server.cfg</a></p>
+<hr>
+<p>接下来<strong>安装</strong><code>Metamod</code>和<code>Sourcemod</code></p>
+<p>将 <code>mmsource-1.11.0-git1145-windows</code> 里的文件夹 <code>addons</code> 拖到<code>csgo</code> 文件夹中</p>
+<p><img src="https://i.imgur.com/5JdYipL.png" alt=""></p>
+<p>将 <code>sourcemod-1.10.0-git6528-windows</code> 里的文件夹 <code>addons</code> 和 <code>cfg</code> 拖到 <code>csgo</code> 文件夹中</p>
+<p><img src="https://i.imgur.com/gXHPlEr.png" alt=""></p>
+<p>安装完成</p>
+<hr>
+<p>接下来<strong>配置服务器管理员</strong></p>
+<p>打开 <code>\csgo\addons\sourcemod\configs\admins_simple.ini</code></p>
+<p><a href="https://steamid.io/">获取SteamID</a></p>
+<p>搜索到自己，第一个 steamID 就是我们需要的</p>
+<p>在文件末尾<strong>加一行</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;STEAM_0:0:......&quot; &quot;99:z&quot;</span><br></pre></td></tr></table></figure>
+<p>前面替换成你的 steamID</p>
+<hr>
+<p>启动测试，还是来到 <code>\Counter-Strike Global Offensive Beta - Dedicated Server\</code> 文件夹，<strong>打开命令行</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\srcds -game csgo -console -usercon +game_type 1 +game_mode 2 +mapgroup mg_allclassic +map de_dust</span><br></pre></td></tr></table></figure>
+<p>这时候服务器应该已经正常启动了</p>
+<p>我们<strong>重新打开一个命令行</strong>，输入 <code>ipconfig</code>，在结果里找到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 这是我自己电脑的信息</span><br><span class="line">无线局域网适配器 WLAN:</span><br><span class="line"></span><br><span class="line">   连接特定的 DNS 后缀 . . . . . . . :</span><br><span class="line">   本地链接 IPv6 地址. . . . . . . . : fe80::7d80:a5ec:6d19:69a7%18</span><br><span class="line">   IPv4 地址 . . . . . . . . . . . . : 192.168.31.196</span><br><span class="line">   子网掩码  . . . . . . . . . . . . : 255.255.255.0</span><br><span class="line">   默认网关. . . . . . . . . . . . . : 192.168.31.1</span><br></pre></td></tr></table></figure>
+<p>记住其中的 <code>IPv4地址</code></p>
+<p>游玩游戏的电脑需要和服务器连在同一个wifi内</p>
+<p>在游戏端<strong>输入</strong> <code>connect [IPv4地址:27015]</code> 应该能正常进入服务器</p>
+<p>在聊天框内<strong>输入</strong> <code>!admin</code> 如果左边弹出选项，说明管理员认证成功</p>
+<hr>
+<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p><strong>安装</strong>mysql</p>
+<p><a href="https://dev.mysql.com/get/Downloads/MySQLInstaller/mysql-installer-community-8.0.28.0.msi">mysql</a></p>
+<p><img src="https://i.imgur.com/3jjhOrh.png" alt=""></p>
+<p>这个页面选择下面一个</p>
+<p>其他按照默认选项安装即可，有错误直接跳过</p>
+<p>密码设置自己记得住的，后面要使用</p>
+<p><strong>添加</strong>系统环境变量</p>
+<p>设置 &gt; 系统 &gt; 设备规格 &gt; 高级系统设置 &gt; 环境变量 &gt; 用户变量 &gt; Path &gt; 编辑 &gt; 新建</p>
+<p>粘贴 <code>C:\Program Files\MySQL\MySQL Server 8.0\bin</code></p>
+<p>确定即可</p>
+<p>重新打开终端，<strong>输入</strong> <code>mysql -uroot -p</code> 以及密码，测试是否设置成功。</p>
+<p>若可以正常使用 <code>mysql</code> 命令行，<strong>执行</strong>如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE `sticker`;</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>打开</strong> <code>\csgo\addons\sourcemod\configs\databases.cfg</code></p>
+<p>在 <code>Databases</code> 下一级<strong>添加</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;csgo_weaponstickers&quot;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;driver&quot;    &quot;mysql&quot;</span><br><span class="line">    &quot;host&quot;      &quot;localhost&quot;</span><br><span class="line">    &quot;database&quot;  &quot;sticker&quot;</span><br><span class="line">    &quot;user&quot;      &quot;root&quot;</span><br><span class="line">    &quot;pass&quot;      &quot;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/hC4FIhC.png" alt=""></p>
+<h2 id="附加内容"><a href="#附加内容" class="headerlink" title="附加内容"></a>附加内容</h2><h3 id="开放到公网"><a href="#开放到公网" class="headerlink" title="开放到公网"></a>开放到公网</h3><p>首先到 <a href="https://steamcommunity.com/dev/managegameservers">Steam服务器管理页面</a> <strong>申请一个令牌</strong>：</p>
+<p><img src="https://i.imgur.com/uPAi8Om.png" alt="令牌_1"></p>
+<p>App ID 必须填写730，备忘录无所谓</p>
+<p><img src="https://i.imgur.com/1XOFGKW.png" alt="令牌_2"></p>
+<p>申请得到的登录令牌复制<strong>保存</strong>好，不要泄露</p>
+<p>在 <code>server.cfg</code> 中<strong>加入一行</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sv_setsteamaccount &quot;你的令牌&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>修改</strong>文件中的 <code>sv_lan 1</code> 改为 <code>sv_lan 0</code></p>
+<p>重启服务器即可</p>
+<hr>
+<h3 id="启用远程控制台"><a href="#启用远程控制台" class="headerlink" title="启用远程控制台"></a>启用远程控制台</h3><p>在 <code>server.cfg</code> 中找到 <code>rcon_password &quot;&quot;</code> 添加你的密码</p>
+<p>然后在游戏中连接到服务器，在控制台输入 <code>rcon_password &quot;你的密码&quot;</code></p>
+<p>之后你就可以在你需要使用的指令前加 <code>rcon</code> 来执行</p>
+<hr>
 
       
     </div>
@@ -280,7 +310,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -348,7 +378,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -376,7 +406,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

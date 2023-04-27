@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/12/%E6%AF%8F%E5%91%A8%E6%8A%A5%E5%91%8A%2020220906/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/17/%E5%9C%A8%E6%A0%91%E8%8E%93%E6%B4%BE%E4%B8%8A%E4%BB%8E%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85Paddlepaddle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/12/%E6%AF%8F%E5%91%A8%E6%8A%A5%E5%91%8A%2020220906/" class="post-title-link" itemprop="url">每周报告 20220906</a>
+            <a href="/2023/03/17/%E5%9C%A8%E6%A0%91%E8%8E%93%E6%B4%BE%E4%B8%8A%E4%BB%8E%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85Paddlepaddle/" class="post-title-link" itemprop="url">在树莓派上从源码编译安装 Paddlepaddle</a>
         </h2>
 
         <div class="post-meta">
@@ -184,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-12 19:09:08" itemprop="dateCreated datePublished" datetime="2022-09-12T19:09:08+08:00">2022-09-12</time>
+              <time title="创建时间：2023-03-17 23:09:08" itemprop="dateCreated datePublished" datetime="2023-03-17T23:09:08+08:00">2023-03-17</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-14 15:11:06" itemprop="dateModified" datetime="2022-09-14T15:11:06+08:00">2022-09-14</time>
+                <time title="修改时间：2023-04-27 10:24:09" itemprop="dateModified" datetime="2023-04-27T10:24:09+08:00">2023-04-27</time>
               </span>
 
           
@@ -205,133 +205,47 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="2022-09-06"><a href="#2022-09-06" class="headerlink" title="2022/09/06"></a>2022/09/06</h1><p>论文阅读：</p>
+          <p>在树莓派上没有办法直接 <code>pip install paddlepaddle</code>，需要从源码编译安装，这里踩了很多的坑，于是记录于此。</p>
+<p>(这篇文章是从我的 github 上搬下来的，仓库<a href="https://github.com/1099255210/Paddle-raspberry-pi-64-bit">在此</a>)</p>
+<h2 id="快速上手（从本人编译好的-whl安装）"><a href="#快速上手（从本人编译好的-whl安装）" class="headerlink" title="快速上手（从本人编译好的.whl安装）"></a>快速上手（从本人编译好的.whl安装）</h2><p>安装要求：</p>
+<p>硬件与系统： <code>Raspberry Pi 4B 64-bit(aarch64/armv8)</code></p>
+<p>Python版本： <code>Python=3.9</code></p>
+<p>下载 <code>.whl</code> 安装包 <a href="https://github.com/1099255210/Paddle-raspberry-pi-64-bit/releases/download/2.4/paddlepaddle-0.0.0-cp39-cp39-linux_aarch64.whl">Paddle2.4-Raspberry-pi-64bit</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install paddlepaddle-0.0.0-cp39-cp39-linux_aarch64.whl</span><br></pre></td></tr></table></figure>
+<p>安装完成后检查是否安装成功：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; import paddle</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; paddle.utils.run_check()</span></span><br></pre></td></tr></table></figure>
+<p>如果看到 <code>PaddlePaddle is installed successfully!</code>， 说明安装成功。</p>
+<h2 id="详细信息"><a href="#详细信息" class="headerlink" title="详细信息"></a>详细信息</h2><p>编译这个安装包的系统如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">aarch64</span><br><span class="line">PRETTY_NAME=&quot;Debian GNU/Linux 11 (bullseye)&quot;</span><br><span class="line">NAME=&quot;Debian GNU/Linux&quot;</span><br><span class="line">VERSION_ID=&quot;11&quot;</span><br><span class="line">VERSION=&quot;11 (bullseye)&quot;</span><br><span class="line">VERSION_CODENAME=bullseye</span><br><span class="line">ID=debian</span><br><span class="line">HOME_URL=&quot;https://www.debian.org/&quot;</span><br><span class="line">SUPPORT_URL=&quot;https://www.debian.org/support&quot;</span><br><span class="line">BUG_REPORT_URL=&quot;https://bugs.debian.org/&quot;</span><br></pre></td></tr></table></figure>
+<p>用下面这行命令查看你的操作系统：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -m &amp;&amp; cat /etc/*release</span><br></pre></td></tr></table></figure>
+<p>查看你的 Python 版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &quot;import sys; print(sys.version)&quot;</span><br></pre></td></tr></table></figure>
+<p>本安装包需要 Python=3.9</p>
+<h2 id="编译指南"><a href="#编译指南" class="headerlink" title="编译指南"></a>编译指南</h2><p>树莓派 4B 64位 系统镜像：<a href="https://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2023-02-22/2023-02-21-raspios-bullseye-arm64.img.xz">下载链接</a></p>
+<p>PaddlePaddle 编译流程基本参考 <a href="https://www.paddlepaddle.org.cn/install/quick?docurl=/documentation/docs/zh/install/compile/linux-compile.html">飞桨官方源码编译指南</a></p>
+<p>对于 树莓派4B 64bit 而言，下面是可以参考的指南：</p>
+<p>安装 CMAKE, protobuf, patchelf:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install cmake patchelf</span><br><span class="line">pip install protobuf</span><br></pre></td></tr></table></figure>
+<p>克隆 <code>PaddlePaddle</code> 仓库：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/PaddlePaddle/Paddle.git &amp;&amp; cd Paddle </span><br></pre></td></tr></table></figure>
+<p>切换到 <code>develop</code> 分支, 新建 <code>build</code> 目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout develop &amp;&amp; mkdir build &amp;&amp; cd build</span><br></pre></td></tr></table></figure>
+<p>开始编译：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cmake .. -DPY_VERSION=3 -DPYTHON_EXECUTABLE=`which python3` -DWITH_ARM=ON -DWITH_GPU=OFF -DON_INFER=ON -DWITH_XBYAK=OFF</span><br><span class="line">ulimit -n 8192</span><br><span class="line">make TARGET=ARMV8 -j$(nproc)</span><br></pre></td></tr></table></figure>
+<p>这里有一些需要注意的点：</p>
 <ul>
-<li>Learning Transferable Visual Models From Natural Language Supervision (CLIP)</li>
-<li>PointCLIP: Point Cloud Understanding by CLIP</li>
-<li>CLIPstyler: Image Style Transfer with a Single Text Condition</li>
-<li>StyleCLIP: Text-Driven Manipulation of StyleGAN Imagery</li>
-<li>A Style-Based Generator Architecture for Generative Adversarial Networks (StyleGAN)</li>
+<li>make 过程中可能会需要克隆一些仓库，如果速度特别慢可以考虑更换 git 代理。</li>
+<li>多线程编译会导致一些问题，中途会报错，此时请切换到单线程（<code>make TARGET=ARMV8</code>）继续。</li>
+<li>单线程编译到约 90% 以上时会报错，此时再切换到多线程编译，直到出错后再切换回单线程，可以进行至编译成功。</li>
+<li>整个编译过程可能长达一整天，请留足时间。</li>
 </ul>
-<p>实验：</p>
-<ul>
-<li>利用 CLIP 做简单的图片检索</li>
-</ul>
-<hr>
-<h2 id="Learning-Transferable-Visual-Models-From-Natural-Language-Supervision"><a href="#Learning-Transferable-Visual-Models-From-Natural-Language-Supervision" class="headerlink" title="Learning Transferable Visual Models From Natural Language Supervision"></a>Learning Transferable Visual Models From Natural Language Supervision</h2><p>CLIP 模型的本质就是将分类任务化成了图文匹配任务，效果可与全监督方法相当。</p>
-<p>CLIP 模型使用的方法：对比学习，预测 n*n 对图像与文本数据，将图片分类任务转换成图文匹配任务。这个过程实际上就是引入了 NLP 给出的监督信号。</p>
-<hr>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904193225832.png" alt="image-20220904193225832"></p>
-<p>图中左侧，得到文本特征与图片的特征后可以看到，对角线上的元素都是图文匹配的，共有 N 个正样本，其余的元素都是负样本，共有 N*N-N 个。其中，文本数据使用Transformer，图片数据用了两种模型，ResNet 和 Vision Transformer (ViT)。</p>
-<p>CLIP 模型训练所用的数据集较为庞大，包含从互联网上各种公开资源收集的4亿对图像、文本，CLIP是从头开始训练的，没有使用预训练的初始参数。</p>
-<hr>
-<h2 id="PointCLIP-Point-Cloud-Understanding-by-CLIP"><a href="#PointCLIP-Point-Cloud-Understanding-by-CLIP" class="headerlink" title="PointCLIP: Point Cloud Understanding by CLIP"></a>PointCLIP: Point Cloud Understanding by CLIP</h2><p>这是第一篇把 CLIP 用在点云上的工作，重点解决的是如何利用 CLIP 去理解点云数据。</p>
-<p>对于点云这种 3D 数据的形式，为了抽取点云的特征，采用了投影的方式，把三维的点朝 M 个方向投影，得到 M 张不同方向的 2D 点云深度图。这种图文章中提到是符合透视画法的特征：近大远小，即更加符合照片的特征。每个方向上得到的图片都是没有色彩信息的，作者这里出于运算时间与资源消耗的考虑，直接将图层复制成三个完全一致的通道传入编码器。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220911090624239.png" alt="image-20220911090624239"></p>
-<hr>
-<p>关于这种方法（PointCLIP）的效果，文章先是做了 zero-shot 分类的实验，在 ModelNet40 数据集上准确率是 20.18%，在 ScanObjectNN 数据 集上的准确率只有 15.38%，虽然这说明这样的方法是有一定效果的，但依然没法与现有的训练好的直接学习 3D 数据的网络相比较。</p>
-<p>然后作者提到 ModelNet40 需要六个方向的视图以不同的权重贡献作出最后的分类结果，在 ScanObjectNN 这样带有噪点（地板和天花板）的数据中，顶视图与底视图几乎提供不了任何有效信息（所以效果不好）。对于视图的数目，作者尝试了 1,4,6,8,10,12，在 zero-shot 任务里 6 个视角效果最佳（后面16-shot实验里10视角最佳）；关于不同视图的贡献，实验里右视图和左视图最多。</p>
-<p>当然，和 CLIP 有关的任务里，肯定也要涉及到 Prompt Design 的问题，作者这里用了以下的 Prompt:</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a photo of a [CLASS].</span><br><span class="line">a point cloud photo of a [CLASS].</span><br><span class="line">point cloud of a [CLASS].</span><br><span class="line">point cloud of a big [CLASS].		    # 16-shot best</span><br><span class="line">point cloud depth map of a [CLASS]. # zero-shot best</span><br></pre></td></tr></table></figure>
-<p> 再就是图像编码器的选择，作者使用RN.*16的效果在zero-shot中表现最佳，使用RN101在16-shot中表现最佳。</p>
-<hr>
-<p>zero-shot 的方式相对于有监督的方法效果较差，于是作者又加了一个小网络 few-shot finetune 一下。将 M 个特征图拉成一维然后经过两个全连接得到一个全局特征，然后用这个全局特征在通过以下公式得到 M 个特征，与原先的特征残差连接得到新的 M 个特征。</p>
-<script type="math/tex; mode=display">
-f^a_i = f_i + ReLU(f_{global}W^T_{3i})</script><p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220912100708331.png" alt="image-20220912100708331"></p>
-<p>这样一来，效果就有了大幅度的提升，在 ModelNet40上的结果从20.18%提升到了87.20%，据说是只用了1/10的数据就达到了这样的效果。</p>
-<hr>
-<p>最后，作者考虑是否可以通过模型融合的方式得到更好的效果，简单地说就是将不同模型预测的各类别分数相加得到最终分数。通过实验，用 PointCLIP 和其他有监督方法得到的模型融合，结果有所提升。PointCLIP 和 CurveNet 融合的结果达到了 sota。两个效果最好的有监督模型融合得到的效果与之相比反而达不到最高。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220912102819460.png" alt="image-20220912102819460"></p>
-<hr>
-<h2 id="CLIPstyler-Image-Style-Transfer-with-a-Single-Text-Condition"><a href="#CLIPstyler-Image-Style-Transfer-with-a-Single-Text-Condition" class="headerlink" title="CLIPstyler: Image Style Transfer with a Single Text Condition"></a>CLIPstyler: Image Style Transfer with a Single Text Condition</h2><p>现有的神经风格迁移需要提供参考图像才能将纹理信息转移给目标图像，但是在很多情况下用户手头是没有参考图像的。这篇文章提出了 CLIPstyler，旨在使用简单的对风格的文字描述来进行风格迁移。</p>
-<p>问题的两个难点在于：1）如何释放来自 CLIP 模型的语义化的“材质”信息，将其应用到目标图片上；2）如何规范化训练，使得输出的图像不会受质量上的影响。</p>
-<p>作者这里设计了一个 StyleNet 用来捕捉内容图像的分层视觉特征，同时在深度特征空间中对图像进行风格化处理，以获得真实的纹理表示。</p>
-<p>关于损失函数，作者这里阐述了几个他们用到的概念：</p>
-<hr>
-<p>1) CLIP loss </p>
-<p>最简单的基于CLIP的最小化全局损失函数如下：</p>
-<script type="math/tex; mode=display">
-L_{global}=D_{CLIP}(f(I_c),t_{sty})</script><p>$D_{CLIP}$ 指在 CLIP 空间的余弦距离。但是如果用这样的损失函数，图像的质量会受损，而且图像优化过程的稳定性无法保证，于是他们参考了 StyleGAN-NADA 提出的一种定向的 CLIP loss 函数，将图像-文本对的输入和输出在CLIP空间对齐，从而解决了上面的问题，这个损失函数如下：</p>
-<script type="math/tex; mode=display">
-\Delta T = E_T (t_{sty}) − E_T (t_{src}), \\
-\Delta I = E_I (f (I_c)) − E_I (I_c), \\
-L_{dir} = 1 − \frac{\Delta I · \Delta T }{\lvert \Delta I \rvert \lvert \Delta T\rvert }</script><p>其中 $E_T, E_I$ 指的就是 CLIP 的文本和图像编码器，$t_{sty},t_{src}$ 则是风格描述文本和原图像文本（默认设置为：Photo）</p>
-<hr>
+<p>如果在编译中遇到了其它问题，请参考以下流程：</p>
 <ol>
-<li>PatchCLIP loss </li>
+<li>在 google 必应等平台搜索（适用于普遍问题）</li>
+<li>在 paddlepaddle 的<a href="https://github.com/PaddlePaddle/Paddle/issues">官方仓库的issues</a>中寻找关键字。(可参考的关键词：<code>aarch64/armv8</code>)</li>
+<li>以上都无法寻找到答案，请在本仓库提出 <code>issue</code>，如果有我们碰到的问题可以帮助解答。</li>
 </ol>
-<p>上文的 $L_{dir}$ 在调整预训练的生成式模型效果较好，但是和作者的目标不完全一样，单纯使用这个损失函数也会造成输出质量的降低。为了解决这个问题，作者提出了一种新的专为纹理迁移设计的损失函数 PatchCLIP loss。他们将通过 StyleNet 得到的图像随机地分成一些块（块的尺寸固定），然后对不同的块做不同的数据增强，这里的增强统一使用了透视变换</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220912203957486.png" alt="image-20220912203957486"></p>
-<p>透视变换的好处是，所有的分块在不同的点观察时都能够具有相同（或类似）的语义，CLIP 模型的语义信息也就可以被重建为更类似于 3D 的结构。</p>
-<hr>
-<ol>
-<li>Threshold rejection</li>
-</ol>
-<p>由于分块的随机性，以上的方法很可能导致在某些已经具有较为符合目标风格的分块上进行过度的风格化（因为这样的分块更加容易被优化），针对这个情况，作者加入正则化，设定了一个阈值，当分块得分低于这一阈值时忽略这一分块的梯度优化过程。这样就得到了整个$L_{patch}$的定义：</p>
-<script type="math/tex; mode=display">
-\Delta T = E_T (t_{sty}) − E_T (t_{src}), \\
-\Delta I = E_I (aug(\hat{I}^i_{cs})) − E_I (I_c), \\
-L_{dir} = 1 − \frac{\Delta I · \Delta T }{\lvert \Delta I \rvert \lvert \Delta T\rvert } \\
-L_{patch}=\frac{1}{N}\sum^N_iR(l^i_{patch},\tau) \\
-
-
-\begin{aligned}
-    \text{where} \quad R(s,\tau)=
-    \begin{cases}
-        0,&if\quad s\le\tau \\
-        s,&\text{otherwise}
-    \end{cases}
-\end{aligned}</script><hr>
-<ol>
-<li>Total loss</li>
-</ol>
-<p>最终总体的损失函数还加入了 content loss $L_c$ 和 total varation regularization loss $L_{tv}$：</p>
-<script type="math/tex; mode=display">
-L_{total} = λ_dL_{dir} + λ_pL_{patch} + λ_cL_c + λ_{tv}L_{tv}</script><hr>
-<p>CLIPstyler 有可供尝试的 demo，网址：<a href="https://replicate.com/paper11667/clipstyler">https://replicate.com/paper11667/clipstyler</a></p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/clipstyler.gif" alt="clipstyler"></p>
-<p>左图原图，文本 “Chinese style” ，训练迭代次数 100 次，右图为输出图像</p>
-<hr>
-<h2 id="StyleCLIP-Text-Driven-Manipulation-of-StyleGAN-Imagery"><a href="#StyleCLIP-Text-Driven-Manipulation-of-StyleGAN-Imagery" class="headerlink" title="StyleCLIP: Text-Driven Manipulation of StyleGAN Imagery"></a>StyleCLIP: Text-Driven Manipulation of StyleGAN Imagery</h2><p>StyleGAN 可以用于生成高质量且真实的图像。然而，想要发掘潜层对于图像的影响对应怎样的语义信息，则需要大量的人工检查以及注释。在这项工作中，作者引入了 CLIP 模型，以帮助 StyleGAN 解除大量人力工作的限制。</p>
-<p>StyleGAN 的原理主要是通过 latent code 去控制图像的风格。对于一张图片，先通过 image inversion 将图片表示为latent code，然后去编辑它们，就可以达到编辑图像的目的。</p>
-<p>StyleGAN 的网络结构包含两个部分，第一个是 Mapping network，由隐藏变量 z 生成 中间隐藏变量 w的过程，这个 w 就是用来控制生成图像的风格； 第二个是 Synthesis network，它的作用是生成图像。</p>
-<hr>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220913083904923.png" alt="image-20220913083904923"></p>
-<hr>
-<p>作者总结了三种将 CLIP 和 StyleGAN 结合的方式：</p>
-<h3 id="Latent-optimization"><a href="#Latent-optimization" class="headerlink" title="Latent optimization"></a>Latent optimization</h3><p>这里利用 CLIP 模型计算损失，通过对 latent code 不断迭代，达到图像编辑的目的，需要很多次的迭代，耗时较长。</p>
-<p>要解算的是下面这个问题：</p>
-<script type="math/tex; mode=display">
-\mathop{arg\:min}_{w∈W+}D_{CLIP}(G(w), t) + λ_{L2} ∥w − ws∥_2 + λ_{ID}L_{ID}(w),</script><hr>
-<h3 id="Latent-Mapper"><a href="#Latent-Mapper" class="headerlink" title="Latent Mapper"></a>Latent Mapper</h3><p>这个方法是指定一些 text prompt 进行训练，模型训练好后只需一次 forward 可以得到结果，通过指定 text prompt，可以预先控制图像编辑的范围区域，这就类似于利用属性分类器来辅助训练，只不过利用CLIP模型可以省略掉分类器，这种方法效率更高。</p>
-<p>StyleGAN2 的不同分辨率层控制了不同程度的图像语义，一般分为 coarse, medium, fine 三组。作者通过三个全连接层网络，对 latent code 进行重新编辑，残差连接后进入 StyleGAN 用来生成图像。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220912235028225.png" alt="image-20220912235028225"></p>
-<hr>
-<h3 id="Global-Directions"><a href="#Global-Directions" class="headerlink" title="Global Directions"></a>Global Directions</h3><p>这部分比较复杂，还没有搞明白。</p>
-<hr>
-<h2 id="实验：利用-CLIP-做简单的图片检索"><a href="#实验：利用-CLIP-做简单的图片检索" class="headerlink" title="实验：利用 CLIP 做简单的图片检索"></a>实验：利用 CLIP 做简单的图片检索</h2><p>基本流程就是先读入用户的输入，即搜索图片的关键词/句，然后将文本编码得到特征，然后分别对应所有图片的特征计算相似度，取相似度最高的三张图片输出。</p>
-<p>图片我没有找网上的一些数据集（因为大部分应该已经有人测试过了），我想看一看这个模型到底有多强大，于是我选取了三十几张我自己拍的一些生活照，进行了一下图像压缩，控制在500kb之内。</p>
-<p>展示的部分是利用 Gradio 搭建的，可以迅速将模型转化为交互式的界面。</p>
-<p>下面展示几张效果：</p>
-<hr>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220913084627975.png" alt="image-20220913084627975"></p>
-<hr>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220913084705720.png" alt="image-20220913084705720"></p>
-<hr>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220913084744050.png" alt="image-20220913084744050"></p>
-<hr>
-<p>测试的时候发现有意思的地方是这个例子：我这里是输入了这个midi键盘的名称（是刻在键盘上的文字），结果它也能给我识别出来：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220913084843362.png" alt="image-20220913084843362"></p>
-<hr>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200950871.png" alt="image-20220904200950871"></p>
-<p>这是否说明 CLIP 模型直接具有 OCR 的能力呢？我的理解是 CLIP 在大量的样本训练中，将每个字母也看做一个对象去学习了他们的特征，所以能够直接识别到图片中的文字了。</p>
-<hr>
-<p>代码：(github仓库：<a href="https://github.com/1099255210/simple-CLIP-based-image-retrival">https://github.com/1099255210/simple-CLIP-based-image-retrival</a>)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gradio <span class="keyword">as</span> gr</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> clip</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> display</span><br><span class="line"><span class="keyword">from</span> tqdm.notebook <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line">device = <span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span></span><br><span class="line">model, preprocess = clip.load(<span class="string">&quot;ViT-B/32&quot;</span>, device=device)</span><br><span class="line"></span><br><span class="line">data_location =  <span class="string">&quot;./imgs&quot;</span></span><br><span class="line">img_dict = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> inx, f <span class="keyword">in</span> <span class="built_in">enumerate</span>(os.listdir(data_location)):</span><br><span class="line">  img_dict[inx] = f</span><br><span class="line">img_nums = <span class="built_in">len</span>(img_dict)</span><br></pre></td></tr></table></figure>
-<hr>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fn</span>(<span class="params">instr</span>):</span><br><span class="line">  text_input = clip.tokenize(instr).to(device)</span><br><span class="line">  <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    text_f = model.encode_text(text_input)</span><br><span class="line">  text_f /= text_f.norm(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">  sim = &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(img_nums):</span><br><span class="line">    </span><br><span class="line">    image_path = <span class="string">f&#x27;<span class="subst">&#123;data_location&#125;</span>/<span class="subst">&#123;img_dict[i]&#125;</span>&#x27;</span></span><br><span class="line">    img = Image.<span class="built_in">open</span>(image_path)</span><br><span class="line">    img_input = preprocess(img).unsqueeze(<span class="number">0</span>).to(device)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">      img_f = model.encode_image(img_input)</span><br><span class="line"></span><br><span class="line">    img_f /= img_f.norm(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">    similarity = <span class="number">100</span> * img_f @ text_f.T</span><br><span class="line">    sim[i] = similarity</span><br><span class="line"></span><br><span class="line">  res = <span class="built_in">sorted</span>(sim.items(), key=<span class="keyword">lambda</span> s:s[<span class="number">1</span>], reverse=<span class="literal">True</span>)</span><br><span class="line">  retval = [ <span class="string">f&#x27;<span class="subst">&#123;data_location&#125;</span>/<span class="subst">&#123;img_dict[res[i][<span class="number">0</span>]]&#125;</span>&#x27;</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>) ]</span><br><span class="line">  <span class="keyword">return</span> retval</span><br></pre></td></tr></table></figure>
-<hr>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">css_output = <span class="string">&quot;.object-contain &#123;height: 100px !important&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">demo = gr.Interface(</span><br><span class="line">  fn = fn,</span><br><span class="line">  inputs = <span class="string">&#x27;text&#x27;</span>, </span><br><span class="line">  outputs = [gr.Image(<span class="built_in">type</span>=<span class="string">&#x27;file&#x27;</span>, label=<span class="literal">None</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>)],</span><br><span class="line">  css = css_output,</span><br><span class="line">)</span><br><span class="line">demo.launch(enable_queue = <span class="literal">True</span>,)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -350,7 +264,7 @@ L_{total} = λ_dL_{dir} + λ_pL_{patch} + λ_cL_c + λ_{tv}L_{tv}</script><hr>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -418,7 +332,7 @@ L_{total} = λ_dL_{dir} + λ_pL_{patch} + λ_cL_c + λ_{tv}L_{tv}</script><hr>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -446,7 +360,7 @@ L_{total} = λ_dL_{dir} + λ_pL_{patch} + λ_cL_c + λ_{tv}L_{tv}</script><hr>
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -505,61 +419,6 @@ L_{total} = λ_dL_{dir} + λ_pL_{patch} + λ_cL_c + λ_{tv}L_{tv}</script><hr>
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-          load: ['[tex]/mhchem'],
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-          packages: {'[+]': ['mhchem']},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 

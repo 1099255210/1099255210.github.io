@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/25/windows%20%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/04/CLIP%20%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/08/25/windows%20%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">Windows 无法修改代理设置的解决方法</a>
+            <a href="/2022/09/04/CLIP%20%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">Clip 模型与其应用</a>
         </h2>
 
         <div class="post-meta">
@@ -184,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-08-25 21:25:08" itemprop="dateCreated datePublished" datetime="2022-08-25T21:25:08+08:00">2022-08-25</time>
+              <time title="创建时间：2022-09-04 20:09:08" itemprop="dateCreated datePublished" datetime="2022-09-04T20:09:08+08:00">2022-09-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-26 06:19:23" itemprop="dateModified" datetime="2022-08-26T06:19:23+08:00">2022-08-26</time>
+                <time title="修改时间：2022-09-05 22:43:22" itemprop="dateModified" datetime="2022-09-05T22:43:22+08:00">2022-09-05</time>
               </span>
 
           
@@ -205,15 +205,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近碰到很头疼的问题：我的系统代理打不开了。</p>
-<p>问题出现在几周前，我出去旅游了一趟，回来的时候突然代理就无法使用了，当时我以为只是订阅的网站忘记续费了，打开之后发现还有余额。那么我又以为是游戏加速器导致的问题，于是重启了电脑，但还是无法使用。奇怪的是，在 clash 软件里面显示的节点都是可以 ping 通的。这我就很纳闷了：明明节点没有任何问题，为什么没法走代理？而且我不管打开什么网页，软件里都没有显示有任何一点的流量通过。</p>
-<p>此时补充一下配置：我使用的是 win11 的系统，平时浏览器多使用火狐，系统里 edge 和 chrome 也都有。这次出问题时我使用的是火狐浏览器。此时，我立马想到的是先用其他浏览器试试，当然，其它的浏览器也没法连接到外网。</p>
-<p>这时候，我首先怀疑的问题就是系统代理没有正常打开。于是我就来到 windows 的 [设置]-[网络和Internet]-[代理] 处，查看了一下代理的情况。原来代理状态是关闭的，那我就手动打开，填入地址 <code>127.0.0.1</code> 和端口号 <code>7890</code>，并且保存，然后尝试连接，结果没有任何变化，依然无法连接外网。这时我瞟了一眼设置的代理，欸，为什么又关闭了，明明我是刚才打开并保存的。于是我再次打开，然而我只要一切换界面，回去一看，又自动关闭了，这也太奇怪了。</p>
-<p>我从来没有见过这种情况，便上网搜索一番，在 github 上找到了一个 clash for windows 项目的 <a href="https://github.com/Fndroid/clash_for_windows_pkg/issues/312">issue</a> 被很多人提到，讲的就是系统代理自动被关闭的情况。按照该 issue 下方各路大神提供的方法，我使用 <code>Process Monitor</code> 观察修改 <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings\</code> 项目的应用。但令人头疼的是，我始终只能在该软件里看到我自己修改的动作，却没有观察到任何其他的软件对该注册表进行修改。我百思不得其解：既然我修改了，又被改回去了，为什么找不到是什么东西修改了它呢？当时已经是比较晚的时候了，我出于无奈，只能先将火狐浏览器的代理手动设置成 <code>127.0.0.1:7890</code>，能凑合用，把系统代理的问题留到后面解决。</p>
-<p>本来我想着可能我也不需要在浏览器之外的软件里使用代理，然而几天后我有安装 python 库的需求，当时我像往常一样输入 <code>pip install ...</code>，结果报错 <code>ValueError: check_hostname requires server_hostname</code>。这是挺常见的，一般来说是系统设置了代理的原因。我习惯性地准备关闭 clash，可是我突然一想，不对啊，我的系统代理不是本来就没有打开吗？一时半会我还真没想明白，那我就把 vscode 设置从代理走试试？结果又报了另外的错误，似乎也是连接上的错误。</p>
-<p>于是，我想在 powershell 里用命令查看一下我的网络代理情况，使用指令 <code>netsh winhttp show proxy</code> 结果是 <code>直接连接（无代理）</code> 那我的代理确实没有打开呀。如果我想要用指令打开呢？我尝试了指令 <code>netsh winhttp set proxy &#39;127.0.0.1:7890&#39;</code>，再次查看状态，依然显示直连，完全没有变化，看来这时候系统代理无法修改的问题依然存在。我只能又去搜搜看遇到 pip 无法安装的时候大伙都是怎么解决的，搜出来一个修改注册表项的方法：将 <code>HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings</code> 中的 <code>ProxyEnable</code> 项值修改为 0。这样做居然临时解决了问题。</p>
-<p>当然，临时解决了问题，却没有完全修复问题。我的系统代理目前是处于完全没有办法配置的情况，这势必在后面给我带来各种各样的麻烦，我肯定要找方法完全解决。于是又是各种各样地找解决方案，终于有一条修改注册表项的方法：修改 <code>HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\Internet Settings</code> 中的 <code>ProxySettingsPerUser</code> 为 1，这样我的代理设置就神奇地可以修改了，直接用 clash 软件打开系统代理即可。当然这时候要把之前上一步的注册表项 <code>ProxyEnable</code> 恢复为 1 才行。</p>
-<p>踩了不少坑，系统才恢复正常。其实这个问题很让我意外的地方是，解决问题的中途我因为系统还残留一些其他的问题，将系统重装为 win10，然后正好还换了一块全新的主板，结果重装之后过一阵子居然重现了这个问题，这就让我感到很不理解了，理论上重装不是能解决 100% 的问题吗？虽然我最终也没有想出来问题发生的根源在何处，但是我猜测是我常用的某款软件修改了最后的这个注册表项，毕竟我重装了系统，常用的软件也不能落下，那么可能就有一款软件导致了这样的问题发生。在此记录下解决问题的全过程，供之后参考。</p>
+          <h1 id="Clip-模型与其应用"><a href="#Clip-模型与其应用" class="headerlink" title="Clip 模型与其应用"></a>Clip 模型与其应用</h1><h2 id="CLIP-模型的介绍"><a href="#CLIP-模型的介绍" class="headerlink" title="CLIP 模型的介绍"></a>CLIP 模型的介绍</h2><p>CLIP 模型使用的方法：对比学习，预测 n*n 对图像与文本数据，将图片分类任务转换成图文匹配任务。这个过程实际上就是引入了 NLP 给出的监督信号。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904193225832.png" alt="image-20220904193225832"></p>
+<p>图中左侧，得到文本特征与图片的特征后可以看到，对角线上的元素都是图文匹配的，共有 N 个正样本，其余的元素都是负样本，共有 N*N-N 个。其中，文本数据使用Transformer，图片数据用了两种模型，ResNet 和 Vision Transformer (ViT)。</p>
+<p>CLIP 模型训练所用的数据集较为庞大，包含从互联网上各种公开资源收集的4亿对图像、文本，CLIP是从头开始训练的，没有使用预训练的初始参数。</p>
+<h2 id="CLIP-的应用"><a href="#CLIP-的应用" class="headerlink" title="CLIP 的应用"></a>CLIP 的应用</h2><h2 id="利用-CLIP-做简单的图片检索"><a href="#利用-CLIP-做简单的图片检索" class="headerlink" title="利用 CLIP 做简单的图片检索"></a>利用 CLIP 做简单的图片检索</h2><p>在 jupyter notebook 中做一个简单的问答系统：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> clip</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> display</span><br><span class="line"><span class="keyword">from</span> tqdm.notebook <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line">device = <span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span></span><br><span class="line">model, preprocess = clip.load(<span class="string">&quot;ViT-B/32&quot;</span>, device=device)</span><br><span class="line"></span><br><span class="line"><span class="comment"># load images</span></span><br><span class="line"></span><br><span class="line">data_location =  <span class="string">&quot;./imgs&quot;</span></span><br><span class="line">img_dict = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> inx, f <span class="keyword">in</span> <span class="built_in">enumerate</span>(os.listdir(data_location)):</span><br><span class="line">  img_dict[inx] = f</span><br><span class="line">img_nums = <span class="built_in">len</span>(img_dict)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;There are &#123;&#125; images.&quot;</span>.<span class="built_in">format</span>(img_nums))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> img_nums == <span class="number">0</span>:</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;no image in the folder.&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>这一段用来加载模型 以及 读取文件夹中所有的图片</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># get text input from user &amp;&amp; text encode</span></span><br><span class="line">instr = <span class="built_in">input</span>(<span class="string">&#x27;Pleaze input description:&#x27;</span>)</span><br><span class="line">text_input = clip.tokenize(instr).to(device)</span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">  text_f = model.encode_text(text_input)</span><br><span class="line"></span><br><span class="line">sim = &#123;&#125;</span><br><span class="line">pbar = tqdm(total=img_nums)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(img_nums):</span><br><span class="line">  </span><br><span class="line">  image_path = <span class="string">f&#x27;<span class="subst">&#123;data_location&#125;</span>/<span class="subst">&#123;img_dict[i]&#125;</span>&#x27;</span></span><br><span class="line">  img = Image.<span class="built_in">open</span>(image_path)</span><br><span class="line">  img_input = preprocess(img).unsqueeze(<span class="number">0</span>).to(device)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># image encode</span></span><br><span class="line">  <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    img_f = model.encode_image(img_input)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># calculate similarity</span></span><br><span class="line">  img_f /= img_f.norm(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">  text_f /= text_f.norm(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">  similarity = <span class="number">100</span> * img_f @ text_f.T</span><br><span class="line">  sim[i] = similarity</span><br><span class="line">  pbar.update(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># display top3 result</span></span><br><span class="line">res = <span class="built_in">sorted</span>(sim.items(), key=<span class="keyword">lambda</span> s:s[<span class="number">1</span>], reverse=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;query:<span class="subst">&#123;instr&#125;</span>&#x27;</span>)</span><br><span class="line">MAX_SIZE = (<span class="number">300</span>, <span class="number">300</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">  image_path = <span class="string">f&#x27;<span class="subst">&#123;data_location&#125;</span>/<span class="subst">&#123;img_dict[res[i][<span class="number">0</span>]]&#125;</span>&#x27;</span></span><br><span class="line">  img = Image.<span class="built_in">open</span>(image_path)</span><br><span class="line">  img.thumbnail(MAX_SIZE)</span><br><span class="line">  display(img)</span><br></pre></td></tr></table></figure>
+<p>这里先读入用户的输入，即搜索图片的关键词/句，然后将文本编码得到特征，然后分别对应所有图片的特征计算相似度，取相似度最高的三张图片输出。</p>
+<p>图片我没有找网上的一些数据集（因为大部分应该已经有人测试过了），我想看一看这个模型到底有多强大，于是我选取了26张我自己拍的一些生活照，进行了一下图像压缩，控制在500kb之内，作为本实验的数据集。</p>
+<p>经过我的一些尝试，发现准确度还是很高的，得到的结果令人满意。下面展示一些查询的结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904195212924.png" alt="image-20220904195212924"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904195756669.png" alt="image-20220904195756669"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200643952.png" alt="image-20220904200643952"></p>
+<p>值得一提的是，一开始我并没有预料到他能学习到图像中的文本特征，但是实验中我发现，如果图片中有文字的话，也能被它检索到，比如这个关键词：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200822620.png" alt="image-20220904200822620"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220904200950871.png" alt="image-20220904200950871"></p>
+<p>我这里是输入了这个midi键盘的名称（是刻在键盘上的文字），结果它也能给我识别出来，感觉非常的神奇。</p>
 
       
     </div>
@@ -232,7 +241,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -300,7 +309,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -328,7 +337,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

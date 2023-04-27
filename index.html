@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/22/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Squoosh%20%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E5%9B%BE%E7%89%87/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/27/%E5%AD%A6%E7%9D%80%E5%85%8B%E6%9C%8D%E5%9B%BD%E5%86%85%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83.jpg/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Hg-icon-10.png">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/22/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Squoosh%20%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E5%9B%BE%E7%89%87/" class="post-title-link" itemprop="url">如何使用 Squoosh 命令行批量压缩图片</a>
+            <a href="/2023/04/27/%E5%AD%A6%E7%9D%80%E5%85%8B%E6%9C%8D%E5%9B%BD%E5%86%85%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83.jpg/" class="post-title-link" itemprop="url">学着克服国内网络环境.jpg</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-09-22 23:09:08 / 修改时间：01:24:10" itemprop="dateCreated datePublished" datetime="2022-09-22T23:09:08+08:00">2022-09-22</time>
+              <time title="创建时间：2023-04-27 23:09:08 / 修改时间：10:10:50" itemprop="dateCreated datePublished" datetime="2023-04-27T23:09:08+08:00">2023-04-27</time>
             </span>
 
           
@@ -199,25 +199,59 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>先说明：windows 上无法批量压缩，原因：</p>
-<p><a href="https://github.com/GoogleChromeLabs/squoosh/issues/973">https://github.com/GoogleChromeLabs/squoosh/issues/973</a></p>
-<p>因为 squoosh-cli 暂不支持 windows 上的通配符。这么一个小问题，给我整崩溃了。</p>
-<p>完整过程如下</p>
-<p>先在 (<a href="https://squoosh.app">https://squoosh.app</a>) 上测试一下图片压缩的设置：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220922011515991.png" alt="image-20220922011515991"></p>
-<p>一切就绪后，点击右侧菜单 <code>Edit</code> 右边的控制台小图标，将命令复制下来，应该类似于这样：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx @squoosh/cli --resize &#x27;&#123;&quot;enabled&quot;:true,&quot;width&quot;:970,&quot;height&quot;:970,&quot;method&quot;:&quot;lanczos3&quot;,&quot;fitMethod&quot;:&quot;stretch&quot;,&quot;premultiply&quot;:true,&quot;linearRGB&quot;:true&#125;&#x27; --mozjpeg &#x27;&#123;&quot;quality&quot;:75,&quot;baseline&quot;:false,&quot;arithmetic&quot;:false,&quot;progressive&quot;:true,&quot;optimize_coding&quot;:true,&quot;smoothing&quot;:0,&quot;color_space&quot;:3,&quot;quant_table&quot;:3,&quot;trellis_multipass&quot;:false,&quot;trellis_opt_zero&quot;:false,&quot;trellis_opt_table&quot;:false,&quot;trellis_loops&quot;:1,&quot;auto_subsample&quot;:true,&quot;chroma_subsample&quot;:2,&quot;separate_chroma_quality&quot;:false,&quot;chroma_quality&quot;:75&#125;&#x27;</span><br></pre></td></tr></table></figure>
-<p>如果想要先安装再使用，可以先用以下命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g @squoosh/cli</span><br></pre></td></tr></table></figure>
-<p>然后就可以用 <code>squoosh-cli</code> 命令了，将上面的命令改写一下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squoosh-cli --resize &#x27;&#123;&quot;enabled&quot;:true,&quot;width&quot;:970,&quot;height&quot;:970,&quot;method&quot;:&quot;lanczos3&quot;,&quot;fitMethod&quot;:&quot;stretch&quot;,&quot;premultiply&quot;:true,&quot;linearRGB&quot;:true&#125;&#x27; --mozjpeg &#x27;&#123;&quot;quality&quot;:75,&quot;baseline&quot;:false,&quot;arithmetic&quot;:false,&quot;progressive&quot;:true,&quot;optimize_coding&quot;:true,&quot;smoothing&quot;:0,&quot;color_space&quot;:3,&quot;quant_table&quot;:3,&quot;trellis_multipass&quot;:false,&quot;trellis_opt_zero&quot;:false,&quot;trellis_opt_table&quot;:false,&quot;trellis_loops&quot;:1,&quot;auto_subsample&quot;:true,&quot;chroma_subsample&quot;:2,&quot;separate_chroma_quality&quot;:false,&quot;chroma_quality&quot;:75&#125;&#x27;</span><br></pre></td></tr></table></figure>
-<p>还有需要改动的地方就是：目标文件夹，目标文件，长宽</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squoosh-cli --resize &#x27;&#123;&quot;enabled&quot;:true,&quot;width&quot;:970,&quot;height&quot;:970,&quot;method&quot;:&quot;lanczos3&quot;,&quot;fitMethod&quot;:&quot;stretch&quot;,&quot;premultiply&quot;:true,&quot;linearRGB&quot;:true&#125;&#x27; --mozjpeg &#x27;&#123;&quot;quality&quot;:75,&quot;baseline&quot;:false,&quot;arithmetic&quot;:false,&quot;progressive&quot;:true,&quot;optimize_coding&quot;:true,&quot;smoothing&quot;:0,&quot;color_space&quot;:3,&quot;quant_table&quot;:3,&quot;trellis_multipass&quot;:false,&quot;trellis_opt_zero&quot;:false,&quot;trellis_opt_table&quot;:false,&quot;trellis_loops&quot;:1,&quot;auto_subsample&quot;:true,&quot;chroma_subsample&quot;:2,&quot;separate_chroma_quality&quot;:false,&quot;chroma_quality&quot;:75&#125;&#x27; -d &quot;[destinationfolder]&quot; &quot;*.png&quot;</span><br></pre></td></tr></table></figure>
-<p>在 <code>-d</code> 参数后写上输出的文件夹，后面再跟需要压缩的图片，可以使用通配符（windows不行！），然后前面 <code>--resize</code> 的参数里长宽可以只保留一个参数，就不会压缩图片长宽比了：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squoosh-cli --resize &#x27;&#123;&quot;enabled&quot;:true,&quot;width&quot;:500,&quot;method&quot;:&quot;lanczos3&quot;,&quot;fitMethod&quot;:&quot;stretch&quot;,&quot;premultiply&quot;:true,&quot;linearRGB&quot;:true&#125;&#x27; --mozjpeg &#x27;&#123;&quot;quality&quot;:75,&quot;baseline&quot;:false,&quot;arithmetic&quot;:false,&quot;progressive&quot;:true,&quot;optimize_coding&quot;:true,&quot;smoothing&quot;:0,&quot;color_space&quot;:3,&quot;quant_table&quot;:3,&quot;trellis_multipass&quot;:false,&quot;trellis_opt_zero&quot;:false,&quot;trellis_opt_table&quot;:false,&quot;trellis_loops&quot;:1,&quot;auto_subsample&quot;:true,&quot;chroma_subsample&quot;:2,&quot;separate_chroma_quality&quot;:false,&quot;chroma_quality&quot;:75&#125;&#x27; -d &quot;[destinationfolder]&quot; &quot;*.png&quot;</span><br></pre></td></tr></table></figure>
-<p>然后就可以舒适地观看转换过程：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/1099255210/blogimgrepo@main/img/image-20220922012116526.png" alt="image-20220922012116526"></p>
-
+          <p>创意来源：<a href="https://redcontritio.github.io">地霊殿</a></p>
+<p>捡了一些自己常用的设置放在这里方便查看~</p>
+<h2 id="Github-换源"><a href="#Github-换源" class="headerlink" title="Github 换源"></a>Github 换源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global url.&quot;https://ghproxy.com/https://github.com/&quot;.insteadOf &quot;https://github.com/&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="Anaconda-换源"><a href="#Anaconda-换源" class="headerlink" title="Anaconda 换源"></a>Anaconda 换源</h2><p>编辑 <code>.condarc</code> 文件，换北外源：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">channels:</span><br><span class="line">  - defaults</span><br><span class="line">show_channel_urls: true</span><br><span class="line">default_channels:</span><br><span class="line">  - https://mirrors.bfsu.edu.cn/anaconda/pkgs/main</span><br><span class="line">  - https://mirrors.bfsu.edu.cn/anaconda/pkgs/r</span><br><span class="line">  - https://mirrors.bfsu.edu.cn/anaconda/pkgs/msys2</span><br><span class="line">custom_channels:</span><br><span class="line">  conda-forge: https://mirrors.bfsu.edu.cn/anaconda/cloud</span><br><span class="line">  msys2: https://mirrors.bfsu.edu.cn/anaconda/cloud</span><br><span class="line">  bioconda: https://mirrors.bfsu.edu.cn/anaconda/cloud</span><br><span class="line">  menpo: https://mirrors.bfsu.edu.cn/anaconda/cloud</span><br><span class="line">  pytorch: https://mirrors.bfsu.edu.cn/anaconda/cloud</span><br><span class="line">  pytorch-lts: https://mirrors.bfsu.edu.cn/anaconda/cloud</span><br><span class="line">  simpleitk: https://mirrors.bfsu.edu.cn/anaconda/cloud</span><br></pre></td></tr></table></figure>
+<p> 再用 <code>conda clean -i</code> 清理缓存即可</p>
+<h2 id="Pypi-换源"><a href="#Pypi-换源" class="headerlink" title="Pypi 换源"></a>Pypi 换源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install -i https://mirrors.bfsu.edu.cn/pypi/web/simple --upgrade pip</span><br><span class="line">pip config set global.index-url https://mirrors.bfsu.edu.cn/pypi/web/simple</span><br></pre></td></tr></table></figure>
+<h2 id="Docker-换源"><a href="#Docker-换源" class="headerlink" title="Docker 换源"></a>Docker 换源</h2><p>编辑 <code>/etc/docker/daemon.json</code> 文件，换源：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>镜像加速器</th>
+<th>镜像加速器地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Docker 中国官方镜像</td>
+<td><a href="https://registry.docker-cn.com">https://registry.docker-cn.com</a></td>
+</tr>
+<tr>
+<td>DaoCloud 镜像站</td>
+<td><a href="http://f1361db2.m.daocloud.io">http://f1361db2.m.daocloud.io</a></td>
+</tr>
+<tr>
+<td>Azure 中国镜像</td>
+<td><a href="https://dockerhub.azk8s.cn">https://dockerhub.azk8s.cn</a></td>
+</tr>
+<tr>
+<td>科大镜像站</td>
+<td><a href="https://docker.mirrors.ustc.edu.cn">https://docker.mirrors.ustc.edu.cn</a></td>
+</tr>
+<tr>
+<td>阿里云</td>
+<td><a href="https://ud6340vz.mirror.aliyuncs.com">https://ud6340vz.mirror.aliyuncs.com</a></td>
+</tr>
+<tr>
+<td>七牛云</td>
+<td><a href="https://reg-mirror.qiniu.com">https://reg-mirror.qiniu.com</a></td>
+</tr>
+<tr>
+<td>网易云</td>
+<td><a href="https://hub-mirror.c.163.com">https://hub-mirror.c.163.com</a></td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td><a href="https://mirror.ccs.tencentyun.com">https://mirror.ccs.tencentyun.com</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="待更新-…"><a href="#待更新-…" class="headerlink" title="待更新 …"></a>待更新 …</h2>
       
     </div>
 
@@ -235,7 +269,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -303,7 +337,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -331,7 +365,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
